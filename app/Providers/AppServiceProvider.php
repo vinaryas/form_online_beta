@@ -58,14 +58,14 @@ class AppServiceProvider extends ServiceProvider
                 'permission' => 'auth',
                 'submenu' => [
                     [
-                        'text' => 'Role',
+                        'text' => 'Role User',
                         'url' => route('role.index'),
                         'icon' => 'fas fa-user-tag',
                         'active' => ['role*'],
                         'permission' => 'auth'
                     ],
                     [
-                        'text' => 'Store',
+                        'text' => 'Store User',
                         'url' => route('store.index'),
                         'icon' => 'fas fa-user-tag ',
                         'active' => ['store*'],

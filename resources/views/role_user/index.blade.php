@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Role')
+@section('title', 'Role User')
 
 @section('content_header')
-<h1 class="m-0 text-dark">Role</h1>
+<h1 class="m-0 text-dark">Role User</h1>
 @stop
 
 @section('content')
@@ -14,7 +14,8 @@
         <table class="table table-bordered table-striped" id="table" style="width: 100%;">
             <thead>
                 <tr>
-                    <th>Username</th>
+                    <th>Created At</th>
+                    <th>NIK</th>
                     <th>Nama</th>
                     <th>Region</th>
                     <th>Dapartemen</th>
@@ -25,6 +26,7 @@
             <tbody>
                 @foreach ($user as $detail)
                     <tr>
+                        <td>{{ $detail->created_at }}</td>
                         <td>{{ $detail->username }}</td>
                         <td>{{ $detail->name}}</td>
                         <td>{{ $detail->region_name }}</td>

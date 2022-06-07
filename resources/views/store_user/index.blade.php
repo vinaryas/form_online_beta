@@ -13,7 +13,7 @@
         <table class="table table-bordered table-striped" id="table" style="width: 100%;">
             <thead>
                 <tr>
-                    <th> Username </th>
+                    <th> NIK </th>
                     <th> Name </th>
                     <th> Region </th>
                     <th> Dapartemen </th>

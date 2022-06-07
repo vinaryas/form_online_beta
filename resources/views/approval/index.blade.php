@@ -13,8 +13,8 @@
         <table class="table table-bordered table-striped" id="table" style="width: 100%;">
             <thead>
                 <tr>
-                    <th>tgl</th>
-                    <th>Username</th>
+                    <th>Waktu Pembuatan</th>
+                    <th>NIK</th>
                     <th>Name</th>
                     <th>Dapartemen</th>
                     <th>Aplikasi</th>
@@ -29,7 +29,9 @@
                         <td>{{ $detail->name }}</td>
                         <td>{{ $detail->dapartemen }}</td>
                         <td>{{ $detail->aplikasi }}</td>
-                        <td><a href="{{ route('approval.create', $detail->form_aplikasi_id) }}" class="btn btn-info btn-sm"> Detail <i class="fas fa-angle-right"></i>  </a></td>
+                        <td><a href="{{ route('approval.create', $detail->form_aplikasi_id) }}"
+                            class="btn btn-info btn-sm"> Detail <i class="fas fa-angle-right"></i>
+                        </a></td>
                     </tr>
                 @endforeach
             </tbody>

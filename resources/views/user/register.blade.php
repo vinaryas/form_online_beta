@@ -1,15 +1,5 @@
 @extends('adminlte::auth.auth-page', ['auth_type' => 'register'])
 
-{{-- @php( $login_url = View::getSection('login_url') ?? config('adminlte.login_url', 'login') )
-@php( $register_url = View::getSection('register_url') ?? config('adminlte.register_url', 'register') )
-
-@if (config('adminlte.use_route_url', false))
-    @php( $login_url = $login_url ? route($login_url) : '' )
-    @php( $register_url = $register_url ? route($register_url) : '' )
-@else
-    @php( $login_url = $login_url ? url($login_url) : '' )
-    @php( $register_url = $register_url ? url($register_url) : '' )
-@endif --}}
 @section('title', 'Register')
 
 @section('auth_header')
@@ -40,7 +30,7 @@
           {{-- UserName --}}
           <div class="input-group mb-3">
             <input type="text" name="username" id="username" class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}"
-            value="{{ old('username') }}" placeholder="NIK" autofocus>
+            value="{{ old('username') }}" placeholder="NIK" autofocus maxlength="9">
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
@@ -76,7 +66,7 @@
           {{-- dapartemens --}}
           <div class="input-group mb-3">
             <select class="form-control {{ $errors->has('dapartemen') ? 'is-invalid' : '' }}" name="dapartemen_id" id="dapartemen_id"
-            value="{{ old('dapartemen') }}" placeholder="Dapartemen" autofocus>
+            value="{{ old('dapartemen') }}" placeholder="Departemen" autofocus>
                 @foreach ($dapartemens as $dapartemen)
                     <option value="{{ $dapartemen->id }}">{{ $dapartemen->dapartemen }}</option>
                 @endforeach
@@ -94,9 +84,9 @@
         </div>
 
         {{-- Email field --}}
-        <div class="input-group mb-3">
-            <input type="email" name="email" id="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
-                   value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}">
+        {{-- <div class="input-group mb-3">
+            <input type="hidden" name="email" id="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
+                   value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}" value="tester@gmail.com">
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-envelope {{ config('adminlte.classes_auth_icon', '') }}"></span>
@@ -107,18 +97,13 @@
                     <strong>{{ $errors->first('email') }}</strong>
                 </div>
             @endif
-        </div>
-
-        <div class="input-group mb-3">
-            <label class="text-danger font-weight-bold">Password Selalu "12345"</label>
-        </div>
-
+        </div> --}}
 
         {{-- Password field --}}
         <div class="input-group mb-3">
-            <input type="hidden" name="password" id="password" value="{{ 12345 }}">
-                   {{-- class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
-                   placeholder="{{ __('adminlte::adminlte.password') }}">
+            <input type="password" name="password"
+                   class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
+                   placeholder="password (5 digit angka)" maxlength="5">
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
@@ -128,14 +113,14 @@
                 <div class="invalid-feedback">
                     <strong>{{ $errors->first('password') }}</strong>
                 </div>
-            @endif --}}
+            @endif
         </div>
 
         {{-- Confirm password field --}}
         <div class="input-group mb-3">
-            <input type="hidden" name="password_confirmation" id="password_confirmation" value="{{ 12345 }}">
-                   {{-- class="form-control {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}"
-                   placeholder="{{ __('adminlte::adminlte.retype_password') }}">
+            <input type="password" name="password_confirmation"
+                   class="form-control {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}"
+                   placeholder="{{ __('adminlte::adminlte.retype_password') }}" maxlength="5">
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
@@ -145,7 +130,7 @@
                 <div class="invalid-feedback">
                     <strong>{{ $errors->first('password_confirmation') }}</strong>
                 </div>
-            @endif --}}
+            @endif
         </div>
 
         {{-- Register button --}}

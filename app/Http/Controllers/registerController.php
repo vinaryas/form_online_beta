@@ -30,7 +30,7 @@ class registerController extends Controller
     {
         DB::beginTransaction();
         $request->request->add(['password' => Hash::make($request->password)]);
-        $save = userService::store($request->except('_token', 'password_confirmation'));
+        $save = userService::store($request->except('_token'));
 
         try{
             $data = [

@@ -43,8 +43,8 @@
         <table class="table table-bordered table-striped" id="table" style="width: 100%;">
             <thead>
                 <tr>
-                    <th>tgl</th>
-                    <th>Username</th>
+                    <th>Waktu Pembuatan</th>
+                    <th>NIK</th>
                     <th>Region</th>
                     <th>Dapartemen</th>
                     <th>Aplikasi</th>
