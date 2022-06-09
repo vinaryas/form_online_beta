@@ -48,13 +48,15 @@
         </div>
             <div class="col-md-20">
                 @if ($form->pass != null)
-                <label>Password</label>
+                <input type="hidden" name="pass" id="pass[]" value="{{ $form->pass}}" class="form-control">
+                {{-- <label>Password</label>
                 <select name="pass" id="pass[]"  class="form-control" readonly>
                     <option value="{{ $form->pass}}"> {{ $form->pass }}</option>
-                </select>
+                </select> --}}
                 @endif
             </div>
         </div>
+        @if(Auth::user()->role_id != 3)
         <div class="card-footer">
             <div class="float-left">
                 <button type="submit" class="btn btn-danger" name="disapprove" id="disapprove" value="disapprove">
@@ -67,6 +69,7 @@
                 </button>
             </div>
         </div>
+        @endif
     </div>
 </form>
 

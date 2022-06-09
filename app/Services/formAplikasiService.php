@@ -125,6 +125,10 @@ class formAplikasiService
         ->whereIn('store', $store);
     }
 
+    public function countApprovalIt($roleId){
+        return $this->getDetail()->where('form_aplikasi.role_next_app', $roleId);
+    }
+
     public function countAplikasiForAdmin(){
         return $this->getDetail();
     }

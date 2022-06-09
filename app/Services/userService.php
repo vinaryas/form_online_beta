@@ -70,6 +70,10 @@ class userService
         return $this->users->create($data);
     }
 
+    public function finId($id){
+        return $this->all()->where('id', $id);
+    }
+
     public function update($data, $id)
     {
         return $this->users->where('id', $id)->update($data);
@@ -98,9 +102,6 @@ class userService
         return $data;
     }
 
-    public function finId($id){
-        return $this->all()->where('id', $id);
-    }
 
     public function findRoleUser($RoleId){
         return $this->all()->where('role_id', $RoleId);

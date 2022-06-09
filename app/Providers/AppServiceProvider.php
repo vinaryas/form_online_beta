@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
                 'url' => route('form.index'),
                 'icon' => 'fas fa-file-invoice',
                 'active' => [route('form.index').'/*',route('form.create')],
-                'permission' => 'dashboard',
+                'permission' => 'form',
             ]);
 
             $event->menu->add([
@@ -57,6 +57,13 @@ class AppServiceProvider extends ServiceProvider
                 'icon' => 'fas fa-user',
                 'permission' => 'auth',
                 'submenu' => [
+                    [
+                        'text' => 'User Management',
+                        'url' => route('management.index'),
+                        'icon' => 'fas fa-user-tag',
+                        'active' => ['management*'],
+                        'permission' => 'auth'
+                    ],
                     [
                         'text' => 'Role User',
                         'url' => route('role.index'),

@@ -16,6 +16,7 @@ class CreateAplikasiTable extends Migration
         Schema::create('aplikasi', function (Blueprint $table) {
             $table->id();
             $table->string('aplikasi');
+            $table->string('multi_store');
         });
     }
 

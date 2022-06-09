@@ -12,7 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use RealRashid\SweetAlert\Facades\Alert;
 
 class approvalController extends Controller
 {
@@ -108,12 +108,13 @@ class approvalController extends Controller
 
                 DB::commit();
 
+                Alert::success('Approved', 'form has been approved');
                 return redirect()->route('approval.index');
             } catch (\Throwable $th) {
                 DB::rollback();
 
                 dd($th->getMessage());
-
+                Alert::error('Error!!',);
                 return redirect()->route('approval.index');
             }
         }
@@ -142,12 +143,13 @@ class approvalController extends Controller
 
                 DB::commit();
 
+                Alert::error('Disapproved', 'form has been disapproved');
                 return redirect()->route('approval.index');
             }catch (\Throwable $th) {
                 DB::rollback();
 
                 dd($th->getMessage());
-
+                Alert::error('Error!!',);
                 return redirect()->route('approval.index');
             }
         }

@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class formController extends Controller
 {
@@ -65,11 +66,14 @@ class formController extends Controller
 
                 foreach ($request->aplikasi_id as $aplikasi_id) {
 
-                    $pass = ($aplikasi_id >= 1 and $aplikasi_id <= 2) ? $request->pass[$index] : null;
+                    $id_vega = ($aplikasi_id == 1) ? $request->id_vega[$index] : null;
+
+                    $pass = ($aplikasi_id >= 1 && $aplikasi_id <= 2) ? $request->pass[$index] : null;
 
                     $dataApp = [
                         'aplikasi_id' => $aplikasi_id,
                         'form_id' => $storeForm->id,
+                        'id_vega'=> $id_vega,
                         'pass'=> $pass,
                         'store' => $storeForm->store_id,
                         'type' => 's',
@@ -84,14 +88,15 @@ class formController extends Controller
                     $storeFormApp = formAplikasiService::store($dataApp);
 
                     $index++;
-                }
+            }
+
                 DB::commit();
 
-                toast('Form Berhasil Disimpan!', 'success');
+                Alert::success('succes', 'form berhasil disimpan');
                 return redirect()->route('form.index');
                 }catch (\Throwable $th){
                     dd($th);
-                    toast($th->getMessage(), 'error');
+                    Alert::error('Error!!',);
                     return redirect()->route('form.index');
                 }
             }
@@ -110,11 +115,14 @@ class formController extends Controller
 
                     foreach ($request->aplikasi_id as $aplikasi_id) {
 
-                        $pass = ($aplikasi_id >= 1 and $aplikasi_id <= 2) ? $request->pass[$index] : null;
+                        $id_vega = ($aplikasi_id == 1) ? $request->id_vega[$index] : null;
+
+                        $pass = ($aplikasi_id >= 1 && $aplikasi_id <= 2) ? $request->pass[$index] : null;
 
                         $dataApp = [
                             'aplikasi_id' => $aplikasi_id,
                             'form_id' => $storeForm->id,
+                            'id_vega'=> $id_vega,
                             'pass'=> $pass,
                             'store' => $storeForm->store_id,
                             'type' => 's',
@@ -130,13 +138,14 @@ class formController extends Controller
 
                         $index++;
                     }
+
                     DB::commit();
 
-                    toast('Form Berhasil Disimpan!', 'success');
+                    Alert::success('succes', 'form berhasil disimpan');
                     return redirect()->route('form.index');
                     }catch (\Throwable $th){
                         dd($th);
-                        toast($th->getMessage(), 'error');
+                        Alert::error('Error!!',);
                         return redirect()->route('form.index');
                     }
             }
@@ -154,11 +163,14 @@ class formController extends Controller
 
                 foreach ($request->aplikasi_id as $aplikasi_id) {
 
-                    $pass = ($aplikasi_id >= 1 and $aplikasi_id <= 2) ? $request->pass[$index] : null;
+                    $id_vega = ($aplikasi_id == 1) ? $request->id_vega[$index] : null;
+
+                    $pass = ($aplikasi_id >= 1 && $aplikasi_id <= 2) ? $request->pass[$index] : null;
 
                     $dataApp = [
                         'aplikasi_id' => $aplikasi_id,
                         'form_id' => $storeForm->id,
+                        'id_vega'=> $id_vega,
                         'pass'=> $pass,
                         'store' => $storeForm->store_id,
                         'type' => 'b',
@@ -177,11 +189,11 @@ class formController extends Controller
                 }
                 DB::commit();
 
-                toast('Form Berhasil Disimpan!', 'success');
+                Alert::success('succes', 'form berhasil disimpan');
                 return redirect()->route('form.index');
                 }catch (\Throwable $th){
                     dd($th);
-                    toast($th->getMessage(), 'error');
+                    Alert::error('Error!!',);
                     return redirect()->route('form.index');
                 }
         }

@@ -16,7 +16,8 @@ class formAplikasi extends Model
         'role_next_app',
         'status',
         'created_by',
-        'type'
+        'type',
+        'id_vega'
     ];
 
     public function form(){

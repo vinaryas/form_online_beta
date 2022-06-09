@@ -9,6 +9,7 @@ use App\Services\Support\userService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class registerController extends Controller
 {
@@ -43,9 +44,11 @@ class registerController extends Controller
 
             DB::commit();
 
+            Alert::success('SUCCESS', "Register Berhasil");
             return redirect()->route('login');
         }catch(\Throwable $th){
-
+            dd($th);
+            Alert::error('ERROR', "Register Gagal");
             return redirect()->route('login');
         }
     }

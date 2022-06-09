@@ -23,7 +23,22 @@
     </div>
 </div>
 
-@elseif (Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
+@elseif (Auth::user()->role_id == 1)
+<div class="row">
+    <div class="col-lg-12 col-6">
+		<div class="small-box bg-info">
+			<div class="inner text-center">
+                <h3> {{ $countApproval }} </h3>
+				<p> <b> Total Aplikasi Butuh Approval </b> </p>
+			</div>
+			<div class="icon">
+				<i class="fas fa-file-invoice" style="color: rgba(255, 255, 255, 0.5);"></i>
+			</div>
+		</div>
+	</div>
+</div>
+
+@elseif (Auth::user()->role_id == 2)
 <div class="row">
     <div class="col-lg-12 col-6">
 		<div class="small-box bg-info">

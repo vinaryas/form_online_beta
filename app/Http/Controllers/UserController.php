@@ -2,183 +2,62 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Requests\UserPost;
-use App;
-use App\Helper\MyHelper;
+use App\Services\Support\dapartemenService;
+use App\Services\Support\regionService;
 use App\Services\Support\userService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\Facades\DataTables;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
-    private $userService;
+    public function index(){
+        $user = userService::getDetail()->get();
 
-    public function __construct(userService $userService)
-    {
-        $this->userService = $userService;
+        return view('user_management.index', compact('user'));
     }
 
-    public function index()
-    {
-        return view ('rbac.user.index');
+    public function edit($id){
+        $user = userService::finId($id)->first();
+        $dapartemens = dapartemenService::all()->get();
+        $regions = regionService::all()->get();
+
+        return view('user_management.edit', compact('user', 'dapartemens', 'regions'));
     }
 
-    public function dt()
-    {
-        $users = userService::all();
-
-        return DataTables::of($users)
-            ->addColumn('action', function ($model) {
-                $actions = [
-                    [
-                        'onclick' => 'editForm(' . $model->id . ')',
-                        'class' => 'btn_edit',
-                        'label' => 'Edit',
-                        'icon' => 'fas fa-edit',
-                        'can' => 'update-user'
-                    ],
-                    [
-                        'onclick' => 'deleteData(' . $model->id . ')',
-                        'class' => 'btn_edit',
-                        'label' => 'Delete',
-                        'icon' => 'fas fa-edit',
-                        'can' => 'delete-user'
-                    ],
-                    [
-                        'url' => route('user_store.index') . '?user_id=' . $model->id,
-                        'class' => 'btn_store',
-                        'label' => 'Store',
-                        'icon' => 'fas fa-store',
-                    ]
+    public function update(Request $request){
+        if(isset($_POST["update"]))
+        {
+            try{
+                $data = [
+                    'name' => $request->name,
+                    'username' => $request->username,
+                    'region_id'=> $request->region_id,
+                    'dapartemen_id' => $request->dapartemen_id,
                 ];
-                return view('component.action-button')
-                    ->with('id', $model->id)
-                    ->with('actions', $actions);
-            })->make(true);
-    }
 
-    public function create()
-    {
+                $updatData = userService::update($data, $request->user_id);
 
-    }
+                DB::commit();
 
-    public function store(UserPost $request)
-    {
-        DB::beginTransaction();
+                return redirect()->route('management.index');
+            }catch(\Throwable $th){
+                dd($th);
+                return redirect()->route('management.index');
+            }
+        }elseif(isset($_POST["delete"])){
+            try{
 
-        try {
+                $delet = userService::deleteData($request->user_id);
 
-            $user = userService::saveData($request->except('_token'));
+                DB::commit();
 
-            $role = App\Role::find($request->role_id);
-
-            $user->attachRole($role);
-
-            DB::commit();
-
-            $output = [
-                'icon' => 'success',
-                'text' => "User {$request->name} added succesfully",
-            ];
-        } catch (\Throwable $th) {
-            DB::rollback();
-
-            $output = [
-                'icon' => 'error',
-                'text' => $th->getMessage(),
-            ];
+                return redirect()->route('management.index');
+            }catch(\Throwable $th){
+                dd($th);
+                return redirect()->route('management.index');
+            }
         }
-
-        return MyHelper::toastNotification($output);
-
     }
 
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        $user = userService::find($id);
-
-        return $user;
-    }
-
-    public function update(UserPost $request, $id)
-    {
-        DB::beginTransaction();
-
-        try {
-
-            userService::updateData($request->except('_token', '_method'), $id);
-
-            $user = App\User::find($id);
-
-            $user->syncRoles([$request->role_id]);
-
-            DB::commit();
-
-            $output = [
-                'icon' => 'success',
-                'text' => "User {$request->name} updated succesfully",
-            ];
-        } catch (\Throwable $th) {
-            DB::rollback();
-
-            $output = [
-                'icon' => 'error',
-                'text' => $th->getMessage(),
-            ];
-        }
-
-        return MyHelper::toastNotification($output);
-    }
-
-    public function destroy($id)
-    {
-        DB::beginTransaction();
-
-        try {
-
-            $user = userService::deleteData($id);
-
-            DB::commit();
-
-            $output = [
-                'icon' => 'success',
-                'text' => "Data deleted succesfully",
-            ];
-        } catch (\Throwable $th) {
-            DB::rollback();
-
-            $output = [
-                'icon' => 'error',
-                'text' => $th->getMessage(),
-            ];
-        }
-
-        return MyHelper::toastNotification($output);
-    }
-
-    public function selectLecturer(Request $request)
-    {
-        $role = DB::table('users')->select('*');
-        $role->join('role_user', 'users.id', '=', 'role_user.user_id');
-        $role->where('role_user.role_id', '=', 4);
-
-        if (!empty(trim($request->input))) {
-            $role->where(function($input)use($request){
-                $input->where('name','LIKE','%'.trim($request->input).'%');
-            });
-
-        }
-        $tag = [];
-        foreach ($role->get() as $index => $value) {
-            $tag[] = ['id' => $value->id, 'text' => ($value->id . ' - ' . $value->name)];
-        }
-
-        return response()->json($tag);
-    }
 }

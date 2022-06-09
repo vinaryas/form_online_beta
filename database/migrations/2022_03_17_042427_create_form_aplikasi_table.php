@@ -17,6 +17,7 @@ class CreateFormAplikasiTable extends Migration
             $table->id();
             $table->integer('aplikasi_id');
             $table->bigInteger('form_id');
+            $table->string('id_vega');
             $table->string('pass')->nullable();
             $table->integer('store')->nullable();
             $table->string('type')->nullable();

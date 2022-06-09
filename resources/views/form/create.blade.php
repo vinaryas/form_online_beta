@@ -2,13 +2,19 @@
 
 @section('title', 'Form')
 
-@section('content_header')
-<h1 class="m-0 text-dark">Form</h1>
-@stop
+{{-- @section('content_header')
+<h1 class="m-0 text-dark"> <b> Form </b> </h1>
+@stop --}}
 
 @section('content')
 <form class="card" action="{{ route('form.store') }}" method="POST">
     {{ csrf_field() }}
+    <div class="card-header">
+        <h3 class="m-0 text-dark">
+            <i class="fas fa-file"> </i>
+            <b> Form </b>
+        </h3>
+    </div>
     <div class="card-body">
         <div class="form-group row">
             <input type="hidden" value="{{ $user->id }}" name="user_id" id="user_id">
@@ -48,16 +54,19 @@
         <div class="row">
             @foreach ( $app as $aplikasi)
                 <div class="col-md-2">
-                    <input class="checkbox" type="checkbox" name="aplikasi_id[]" id="aplikasi_id" value="{{ $aplikasi->id }}">
-                    <label class="checkbox">{{ $aplikasi->aplikasi }}</label>
+                    <div class="">
+                        <input class="form-check-inline" type="checkbox" name="aplikasi_id[]" id="aplikasi_id" value="{{ $aplikasi->id }}">
+                        <label class="form-check-inline">{{ $aplikasi->aplikasi }}</label>
+                    </div>
                 </div>
                 @if ($aplikasi->id == 1)
-                <div class="col-md-10">
-                    <input type="text" class="form-control form-control-sm" aria-label="Text input with checkbox" placeholder="password" style="display: inline-flex" name="pass[]" id="pass" maxlength="8">
-                </div>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control form-group" aria-label="Text input with checkbox" placeholder="ID" style="display: inline-flex" name="id_vega[]" id="id_vega" maxlength="10">
+                        <input type="text" class="form-control form-group" aria-label="Text input with checkbox" placeholder="password" style="display: inline-flex" name="pass[]" id="pass" maxlength="8">
+                    </div>
                 @elseif ($aplikasi->id == 2)
                 <div class="col-md-10">
-                    <input type="text" class="form-control form-control-sm" aria-label="Text input with checkbox" placeholder="password" style="display: inline-flex" name="pass[]" id="pass" maxlength="6">
+                    <input type="text" class="form-control form-group" aria-label="Text input with checkbox" placeholder="password" style="display: inline-flex" name="pass[]" id="pass" maxlength="6">
                 </div>
                 @else
                 <div class="col-md-10"><input type="hidden" dissable></div>

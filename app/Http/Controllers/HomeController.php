@@ -35,7 +35,9 @@ class HomeController extends Controller
         $countDisapproved = 0;
         $thisMonth = Carbon::now()->month;
 
-        if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2){
+        if(Auth::user()->role_id == 1){
+            $countApproval = formAplikasiService::countApprovalIt(Auth::user()->roles->first()->id, UserService::authStoreArray(), $thisMonth)->get()->count();
+        }elseif(Auth::user()->role_id == 2){
             $countApproval = formAplikasiService::countApproval(Auth::user()->roles->first()->id, UserService::authStoreArray(), $thisMonth)->get()->count();
             $countForm = formService::countForm(Auth::user()->id, $thisMonth)->get()->count();
             $countApproved = approvalService::countApproved(Auth::user()->id, $thisMonth)->get()->count();
