@@ -26,6 +26,8 @@ class UserController extends Controller
     }
 
     public function update(Request $request){
+        DB::beginTransaction();
+        
         if(isset($_POST["update"]))
         {
             try{
@@ -40,6 +42,7 @@ class UserController extends Controller
 
                 DB::commit();
 
+                Alert::success('succes', 'berhasil diupdate');
                 return redirect()->route('management.index');
             }catch(\Throwable $th){
                 dd($th);
@@ -52,6 +55,7 @@ class UserController extends Controller
 
                 DB::commit();
 
+                Alert::error('succes', 'form berhasil dihapus');
                 return redirect()->route('management.index');
             }catch(\Throwable $th){
                 dd($th);

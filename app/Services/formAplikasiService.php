@@ -42,6 +42,7 @@ class formAplikasiService
         ->join('aplikasi', 'form_aplikasi.aplikasi_id', '=', 'aplikasi.id')
         ->select(
             'form_aplikasi.id as form_aplikasi_id',
+            'form_aplikasi.aplikasi_id',
             'form.id as form_id',
             'form.user_id as user_id',
             'aplikasi.id as aplikasi_id',
@@ -57,7 +58,8 @@ class formAplikasiService
             'dapartemen.dapartemen',
             'aplikasi.aplikasi',
             'form_aplikasi.pass',
-            'users.name'
+            'users.name',
+            'form_aplikasi.id_vega as id_vega'
         );
 
         return $data;
@@ -69,6 +71,12 @@ class formAplikasiService
 
     public function adminViewForm(){
         return $this->getDetail();
+    }
+    
+    public function getVega(){
+        return $this->getDetail()
+        ->where('form_aplikasi.aplikasi_id', 1)
+        ->where('form_aplikasi.role_next_app', 0);
     }
 
     public function adminViewApproval(){

@@ -53,8 +53,16 @@ class AppServiceProvider extends ServiceProvider
             ]);
 
             $event->menu->add([
+                'text' => 'Vega_void',
+                'url' => route('vega.index'),
+                'icon' => 'fas fa-edit',
+                'active' => [route('vega.index')],
+                'permission' => 'auth',
+            ]);
+
+            $event->menu->add([
                 'text' => 'User',
-                'icon' => 'fas fa-user',
+                'icon' => 'fas fa-user-edit',
                 'permission' => 'auth',
                 'submenu' => [
                     [

@@ -78,7 +78,7 @@
             <a href="{{ route('form.index') }}" class="btn btn-danger"><i class="fas fa-times"></i> Batal </a>
         </div>
         <div class="float-right">
-            <button type="submit" class="btn btn-success">
+            <button type="submit" class="btn btn-success" onclick="this.form.submit(); this.disabled = true; this.value = 'Submitting the form';">
                 <i class="fas fa-save"></i> Simpan
             </button>
         </div>

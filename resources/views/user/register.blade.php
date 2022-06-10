@@ -12,6 +12,7 @@
         {{ csrf_field() }}
 
         {{-- Name field --}}
+        <label> Full Name </label>
         <div class="input-group mb-3">
             <input type="text" name="name" id="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
             value="{{ old('name') }}" placeholder="{{ __('adminlte::adminlte.full_name') }}" autofocus>
@@ -28,6 +29,7 @@
         </div>
 
           {{-- UserName --}}
+          <label> NIK <i class="text-sm">(ex.123456789)</i></label>
           <div class="input-group mb-3">
             <input type="text" name="username" id="username" class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}"
             value="{{ old('username') }}" placeholder="NIK" autofocus maxlength="9">
@@ -44,26 +46,27 @@
         </div>
 
           {{-- regions --}}
-        <div class="input-group mb-3">
-            <select class="form-control {{ $errors->has('region') ? 'is-invalid' : '' }}" name="region_id" id="region_id"
-            value="{{ old('region') }}" placeholder="region" autofocus>
+          <label> Region </label>
+          <div class="input-group mb-3">
+              <select class="form-control {{ $errors->has('region') ? 'is-invalid' : '' }}" name="region_id" id="region_id" value="{{ old('region') }}" placeholder="region" autofocus>
                 @foreach ($regions as $region)
-                    <option value="{{ $region->id }}">{{ $region->name }}</option>
-                @endforeach
-            </select>
+                <option value="{{ $region->id }}">{{ $region->name }}</option>
+                 @endforeach
+                </select>
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
                 </div>
             </div>
             @if($errors->has('region'))
-                <div class="invalid-feedback">
-                    <strong>{{ $errors->first('region') }}</strong>
-                </div>
+            <div class="invalid-feedback">
+                <strong>{{ $errors->first('region') }}</strong>
+            </div>
             @endif
-        </div>
+            </div>
 
           {{-- dapartemens --}}
+          <label> Region </label>
           <div class="input-group mb-3">
             <select class="form-control {{ $errors->has('dapartemen') ? 'is-invalid' : '' }}" name="dapartemen_id" id="dapartemen_id"
             value="{{ old('dapartemen') }}" placeholder="Departemen" autofocus>
@@ -100,6 +103,7 @@
         </div> --}}
 
         {{-- Password field --}}
+        <label> password <i class="text-sm">(ex.12345)</i></label>
         <div class="input-group mb-3">
             <input type="password" name="password"
                    class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"

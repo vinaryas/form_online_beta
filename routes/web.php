@@ -45,6 +45,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/history', 'approvalController@historyApproval')->name('history');
 
     Route::group(['middleware' => 'permission:auth'], function (){
+        Route::group(['prefix' => 'vega_void'], function(){
+            Route::get('/vega/index', 'vegaEditController@index')->name('vega.index');
+            Route::get('/vega/{id}', 'vegaEditController@edit')->name('vega.edit');
+            Route::post('/vega/update', 'vegaEditController@update')->name('vega.update');
+        });
+
         Route::group(['prefix' => 'management'], function(){
             Route::get('/management/index', 'UserController@index')->name('management.index');
             Route::get('/management/{id}', 'UserController@edit')->name('management.edit');

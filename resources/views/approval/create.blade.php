@@ -48,11 +48,15 @@
         </div>
             <div class="col-md-20">
                 @if ($form->pass != null)
-                <input type="hidden" name="pass" id="pass[]" value="{{ $form->pass}}" class="form-control">
-                {{-- <label>Password</label>
-                <select name="pass" id="pass[]"  class="form-control" readonly>
-                    <option value="{{ $form->pass}}"> {{ $form->pass }}</option>
-                </select> --}}
+                    @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 3)
+                    <label>Password</label>
+                    <input type="text" name="pass" id="pass[]" value="{{ $form->pass}}" class="form-control" readonly>
+                    @elseif (Auth::user()->role_id == 2)
+                    <label>Password</label>
+                    <input type="password" name="pass" id="pass[]" value="{{ $form->pass}}" class="form-control" readonly>
+                    @endif
+                @else
+                <input type="hidden" name="pass" id="pass[]" value="{{ $form->pass}}" class="form-control" readonly>
                 @endif
             </div>
         </div>

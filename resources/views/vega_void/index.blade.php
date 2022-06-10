@@ -1,44 +1,41 @@
 @extends('adminlte::page')
 
-@section('title', 'Form')
+@section('title', 'vega')
 
 @section('content_header')
-<h1 class="m-0 text-dark">Form</h1>
+<h1 class="m-0 text-dark">vega</h1>
 @stop
 
 @section('content')
-<form class="card" action="{{ route('form.index') }}" method="GET">
-    {{ csrf_field() }}
-     <div class="card-body">
+<form class="card" action="{{ route('vega.index') }}" method="GET">{{ csrf_field() }}
+    <div class="card-body">
+        <br>
         <table class="table table-bordered table-striped" id="table" style="width: 100%;">
             <thead>
                 <tr>
                     <th>Waktu Pembuatan</th>
-                    <th>Name</th>
                     <th>NIK</th>
-                    <th>Region</th>
+                    <th>Name</th>
                     <th>Dapartemen</th>
-                    <th>Detail</th>
+                    <th>Edit</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($user as $detail)
+                @foreach ($vega as $detail)
                     <tr>
                         <td>{{ $detail->created_at }}</td>
-                        <td>{{ $detail->name }}</td>
                         <td>{{ $detail->username }}</td>
-                        <td>{{ $detail->region_name }}</td>
+                        <td>{{ $detail->name }}</td>
                         <td>{{ $detail->dapartemen }}</td>
-                        <td> <a href="{{ route('management.edit', $detail->user_id) }}"
-                            class="btn btn-info btn-sm"> Edit <i class="fas fa-angle-right"> </i></a>
-                        </td>
+                        <td><a href="{{ route('vega.edit', $detail->form_aplikasi_id) }}"
+                            class="btn btn-info btn-sm"> Edit <i class="fas fa-angle-right"></i>
+                        </a></td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
 </form>
-
 @stop
 
 @section('js')
