@@ -30,8 +30,8 @@
                         <td>{{ $detail->region_name }}</td>
                         <td>{{ $detail->dapartemen }}</td>
                         <td>{{ $detail->display_name }}
-                        <td> <a href="{{ route('store.detail', $detail->user_id) }}" class="btn btn-info btn-sm"> detail <i class="fas fa-angle-right"></i>  </a> </td>
-                        <td> <a href="{{ route('store.create', $detail->user_id) }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> create </a> </td>
+                        <td> <a href="{{ route('store.detail', $detail->user_id) }}" class="btn btn-info btn-sm"> Detail <i class="fas fa-angle-right"></i>  </a> </td>
+                        <td> <a href="{{ route('store.create', $detail->user_id) }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> Tambah Toko </a> </td>
                     </tr>
                 @endforeach
             </tbody>

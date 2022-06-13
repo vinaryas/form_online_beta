@@ -6,7 +6,6 @@
 <h1 class="m-0 text-dark">Registration</h1>
 @stop
 
-
 @section('auth_body')
     <form action="{{ route('user.store') }}" method="post">
         {{ csrf_field() }}
@@ -15,7 +14,7 @@
         <label> Full Name </label>
         <div class="input-group mb-3">
             <input type="text" name="name" id="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-            value="{{ old('name') }}" placeholder="{{ __('adminlte::adminlte.full_name') }}" autofocus>
+            value="{{ old('name') }}" placeholder="{{ __('adminlte::adminlte.full_name') }}" autofocus required>
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
@@ -32,7 +31,7 @@
           <label> NIK <i class="text-sm">(ex.123456789)</i></label>
           <div class="input-group mb-3">
             <input type="text" name="username" id="username" class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}"
-            value="{{ old('username') }}" placeholder="NIK" autofocus maxlength="9">
+            value="{{ old('username') }}" placeholder="NIK" autofocus minlength="9" maxlength="9" required>
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
@@ -48,7 +47,7 @@
           {{-- regions --}}
           <label> Region </label>
           <div class="input-group mb-3">
-              <select class="form-control {{ $errors->has('region') ? 'is-invalid' : '' }}" name="region_id" id="region_id" value="{{ old('region') }}" placeholder="region" autofocus>
+              <select class="form-control {{ $errors->has('region') ? 'is-invalid' : '' }}" name="region_id" id="region_id" value="{{ old('region') }}" placeholder="region" autofocus required>
                 @foreach ($regions as $region)
                 <option value="{{ $region->id }}">{{ $region->name }}</option>
                  @endforeach
@@ -69,7 +68,7 @@
           <label> Region </label>
           <div class="input-group mb-3">
             <select class="form-control {{ $errors->has('dapartemen') ? 'is-invalid' : '' }}" name="dapartemen_id" id="dapartemen_id"
-            value="{{ old('dapartemen') }}" placeholder="Departemen" autofocus>
+            value="{{ old('dapartemen') }}" placeholder="Departemen" autofocus required>
                 @foreach ($dapartemens as $dapartemen)
                     <option value="{{ $dapartemen->id }}">{{ $dapartemen->dapartemen }}</option>
                 @endforeach
@@ -107,7 +106,7 @@
         <div class="input-group mb-3">
             <input type="password" name="password"
                    class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}"
-                   placeholder="password (5 digit angka)" maxlength="5">
+                   placeholder="password (5 digit angka)" autofocus minlength="5" maxlength="5" required>
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
@@ -124,7 +123,7 @@
         <div class="input-group mb-3">
             <input type="password" name="password_confirmation"
                    class="form-control {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}"
-                   placeholder="{{ __('adminlte::adminlte.retype_password') }}" maxlength="5">
+                   placeholder="{{ __('adminlte::adminlte.retype_password') }}" autofocus minlength="5" maxlength="5" required>
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>

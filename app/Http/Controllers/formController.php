@@ -88,12 +88,11 @@ class formController extends Controller
                     $storeFormApp = formAplikasiService::store($dataApp);
 
                     $index++;
-                    Alert::success('succes', 'form berhasil disimpan');
                 }
 
                 DB::commit();
 
-               
+                Alert::success('succes', 'form berhasil disimpan');
                 return redirect()->route('form.index');
                 }catch (\Throwable $th){
                     dd($th);

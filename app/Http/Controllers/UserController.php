@@ -27,7 +27,7 @@ class UserController extends Controller
 
     public function update(Request $request){
         DB::beginTransaction();
-        
+
         if(isset($_POST["update"]))
         {
             try{

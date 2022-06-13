@@ -61,12 +61,12 @@
                 </div>
                 @if ($aplikasi->id == 1)
                     <div class="col-md-10">
-                        <input type="text" class="form-control form-group" aria-label="Text input with checkbox" placeholder="ID" style="display: inline-flex" name="id_vega[]" id="id_vega" maxlength="10">
-                        <input type="text" class="form-control form-group" aria-label="Text input with checkbox" placeholder="password" style="display: inline-flex" name="pass[]" id="pass" maxlength="8">
+                        <input type="text" class="form-control form-group" aria-label="Text input with checkbox" placeholder="ID" style="display: inline-flex" name="id_vega[]" id="id_vega" minlength="10" maxlength="10">
+                        <input type="text" class="form-control form-group" aria-label="Text input with checkbox" placeholder="password" style="display: inline-flex" name="pass[]" id="pass" minlength="8" maxlength="8">
                     </div>
                 @elseif ($aplikasi->id == 2)
                 <div class="col-md-10">
-                    <input type="text" class="form-control form-group" aria-label="Text input with checkbox" placeholder="password" style="display: inline-flex" name="pass[]" id="pass" maxlength="6">
+                    <input type="text" class="form-control form-group" aria-label="Text input with checkbox" placeholder="password" style="display: inline-flex" name="pass[]" id="pass" minlength="6" maxlength="6">
                 </div>
                 @else
                 <div class="col-md-10"><input type="hidden" dissable></div>

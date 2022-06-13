@@ -23,13 +23,38 @@
     </div>
 </div>
 
-@elseif (Auth::user()->role_id == 1)
-<div class="jumbotron">
-    <div class="col col-md-12">
-        <h1 class="text-danger font-weight-bolder">Sight!</h1>
-        <h1 class="text-danger font-weight-bolder">IT need no form!</h1>
+@elseif (Auth::user()->role_id == 3)
+<form class="card" action="{{ route('form.index') }}" method="GET">
+    {{ csrf_field() }}
+     <div class="card-body">
+        <table class="table table-bordered table-striped" id="table" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>Waktu Pembuatan</th>
+                    <th>NIK</th>
+                    <th>Region</th>
+                    <th>Dapartemen</th>
+                    <th>Aplikasi</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($formAplikasi as $detail)
+                    <tr>
+                        <td>{{ $detail->created_at }}</td>
+                        <td>{{ $detail->username }}</td>
+                        <td>{{ $detail->nama_region }}</td>
+                        <td>{{ $detail->dapartemen }}</td>
+                        <td>{{ $detail->aplikasi }}</td>
+                        <td> <a href="{{ route('form.status', $detail->form_aplikasi_id) }}"
+                            class="btn btn-info btn-sm"> status <i class="fas fa-angle-right"> </i></a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
-</div>
+</form>
 
 @else
 <form class="card" action="{{ route('form.index') }}" method="GET">
