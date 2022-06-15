@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 
 // user Register
 Route::get('/user', 'registerController@create')->name('user.create');
-Route::get('/user/Toko', 'registerController@createToko')->name('user.createCs');
 Route::post('/user', 'registerController@store')->name('user.store');
 
 Route::get('/', function () {
@@ -32,14 +31,21 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['middleware' => 'permission:form'], function (){
         Route::get('/form', 'formController@index')->name('form.index');
         Route::get('/form/create', 'formController@create')->name('form.create');
+        Route::get('/form/detail/{id}', 'formController@detail')->name('form.detail');
         Route::post('/form/create', 'formController@store')->name('form.store');
-        Route::get('/form/status{id}', 'formController@status')->name('form.status');
+        Route::get('/form/status/{id}', 'formController@status')->name('form.status');
     });
 
     Route::group(['middleware' => 'permission:approval'], function (){
         Route::get('/approval', 'approvalController@index')->name('approval.index');
         Route::get('/approval/{id}', 'approvalController@create')->name('approval.create');
         Route::post('/approval/store', 'approvalController@approve')->name('approval.store');
+    });
+
+    Route::group(['middleware' => 'permission:rj-server-status'], function (){
+        Route::get('rj_server', 'rj_server_statusController@index')->name('rj_server.index');
+        Route::get('/rj_server/{id}', 'rj_server_statusController@detail')->name('rj_server.detail');
+        Route::post('/rj_server/update', 'rj_server_statusController@status')->name('rj_server.status');
     });
 
     Route::get('/history', 'approvalController@historyApproval')->name('history');

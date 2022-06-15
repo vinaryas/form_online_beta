@@ -24,6 +24,14 @@ class cashierService
         return $this->model->create($data);
     }
 
+    public function update($data, $id){
+        return $this->model->where('id', $id)->update($data);
+    }
+
+    public function getById($id){
+        return $this->model->where('id', $id);
+    }
+
     public function getDetail()
     {
         $data = DB::table('form_aplikasi')

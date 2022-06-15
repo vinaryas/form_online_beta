@@ -6,6 +6,7 @@ use App\Services\Support\approvalService;
 use App\Services\Support\cashierService;
 use App\Services\Support\formAplikasiService;
 use App\Services\Support\formService;
+use App\Services\Support\rj_serverService;
 use App\Services\Support\StoreService;
 use App\Services\Support\userService;
 use Carbon\Carbon;
@@ -73,11 +74,13 @@ class approvalController extends Controller
                             'password' => $getPos->pass,
                             'roles' => $getPos->role_id,
                             'store' => $getPos->store_id,
-                            'status' => $getPos->status,
+                            'status' => 'A',
                             'acc' => 2,
                         ];
 
-                        $storeData = cashierService::store($dataPos);
+                        $storeOnFormOnline = rj_serverService::store($dataPos);
+
+                        $storeOnMMSoft = cashierService::store($dataPos);
 
                     }elseif($formAplikasi->role_next_app == 1){
 
@@ -89,11 +92,13 @@ class approvalController extends Controller
                                 'password' => $getPos->pass,
                                 'roles' => $getPos->role_id,
                                 'store' => $getPos->store_id,
-                                'status' => $getPos->status,
+                                'status' => 'A',
                                 'acc' => 2,
                             ];
 
-                            $storeData = cashierService::store($dataPos);
+                            $storeInFormOnline = rj_serverService::store($dataPos);
+
+                            $storeInMMSoft = cashierService::store($dataPos);
                     }
 
                 }

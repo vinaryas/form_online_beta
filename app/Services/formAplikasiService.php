@@ -72,7 +72,7 @@ class formAplikasiService
     public function adminViewForm(){
         return $this->getDetail();
     }
-    
+
     public function getVega(){
         return $this->getDetail()
         ->where('form_aplikasi.aplikasi_id', 1)

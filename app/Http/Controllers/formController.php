@@ -29,6 +29,12 @@ class formController extends Controller
         return view('form.index', compact('formAplikasi', 'user'));
     }
 
+    public function detail($id){
+        $form = formAplikasiService::getById($id)->first();
+
+        return view('form.detail', compact('form'));
+    }
+
     public function status($id){
         $history = approvalService::getStatusApprovalById($id)
         ->orderBy('history_approval.created_at', 'ASC')

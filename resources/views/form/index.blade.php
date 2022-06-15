@@ -36,6 +36,7 @@
                     <th>Dapartemen</th>
                     <th>Aplikasi</th>
                     <th>Status</th>
+                    <th>Detail</th>
                 </tr>
             </thead>
             <tbody>
@@ -48,6 +49,9 @@
                         <td>{{ $detail->aplikasi }}</td>
                         <td> <a href="{{ route('form.status', $detail->form_aplikasi_id) }}"
                             class="btn btn-info btn-sm"> status <i class="fas fa-angle-right"> </i></a>
+                        </td>
+                        <td><a href="{{ route('form.detail', $detail->form_aplikasi_id) }}"
+                            class="btn btn-info btn-sm"> detail <i class="fas fa-angle-right"> </i></a>
                         </td>
                     </tr>
                 @endforeach
@@ -74,6 +78,7 @@
                     <th>Dapartemen</th>
                     <th>Aplikasi</th>
                     <th>Status</th>
+                    <th>Detail</th>
                 </tr>
             </thead>
             <tbody>
@@ -86,6 +91,9 @@
                         <td>{{ $detail->aplikasi }}</td>
                         <td> <a href="{{ route('form.status', $detail->form_aplikasi_id) }}"
                             class="btn btn-info btn-sm"> status <i class="fas fa-angle-right"> </i></a>
+                         </td>
+                        <td><a href="{{ route('form.detail', $detail->form_aplikasi_id) }}"
+                            class="btn btn-info btn-sm"> detail <i class="fas fa-angle-right"> </i></a>
                         </td>
                     </tr>
                 @endforeach

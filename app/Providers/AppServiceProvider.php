@@ -53,6 +53,14 @@ class AppServiceProvider extends ServiceProvider
             ]);
 
             $event->menu->add([
+                'text' => 'Rj Server',
+                'url' => route('rj_server.index'),
+                'icon' => 'fas fa-file-invoice',
+                'active' => [route('rj_server.index').'/*'],
+                'permission' => 'rj-server-status',
+            ]);
+
+            $event->menu->add([
                 'text' => 'Vega_void',
                 'url' => route('vega.index'),
                 'icon' => 'fas fa-edit',

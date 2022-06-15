@@ -7,6 +7,7 @@ use App\Services\Support\userService;
 use App\Services\Support\UserStoreService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class storeApprovalController extends Controller
 {
@@ -34,9 +35,11 @@ class storeApprovalController extends Controller
 
             DB::commit();
 
+            Alert::success('SUCCESS', 'Store has beed added');
             return redirect()->route('store.index');
         }catch(\Throwable $th){
             dd($th);
+            Alert::error('error!!');
             return redirect()->route('store.index');
         }
     }
@@ -61,9 +64,11 @@ class storeApprovalController extends Controller
 
             DB::commit();
 
+            Alert::warning('WARNING!!', 'Store has been deleted');
             return redirect()->route('store.index');
         }catch(\Throwable $th){
             dd($th);
+            Alert::error('error!!');
             return redirect()->route('store.index');
         }
     }

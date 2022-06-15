@@ -34,7 +34,7 @@
             </div>
         </div>
         <label>Role</label>
-        <select name="role_id" id="role_id" class="select2 form-control">
+        <select name="role_id" id="role_id" class="select2 form-control" required>
             @foreach ($roles as $role)
             <option value="{{ $role->id }}" {{$user->role_id == $role->id ? 'selected' : '' }}>{{ $role->display_name }}</option>
             @endforeach

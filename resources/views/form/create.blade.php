@@ -40,7 +40,7 @@
         <div class="row">
             <div class="col-md-12">
                 <label>Store</label>
-                <select name="store_id" id="store_id" class="select2 form-control form-control-sm" placeholder="Select Store">
+                <select name="store_id" id="store_id" class="select2 form-control form-control-sm" placeholder="Select Store" required>
                     <option value="">Select Store</option>
                     @foreach ($stores as $store )
                     <option value="{{ $store->id }}">{{ $store->name }}</option>

@@ -15,9 +15,13 @@ class CreateRjServerTable extends Migration
     {
         Schema::create('rj_server', function (Blueprint $table) {
             $table->id();
-            $table->integer('form_id');
-            $table->string('pass');
-            $table->integer('store');
+            $table->integer('cashnum');
+            $table->string('nama');
+            $table->string('password');
+            $table->integer('roles');
+            $table->integer('store')->nullable();
+            $table->string('status');
+            $table->integer('acc');
             $table->timestamps();
         });
     }
