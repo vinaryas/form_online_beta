@@ -9,6 +9,7 @@ use App\Services\Support\userService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class roleApprovalController extends Controller
 {
@@ -57,6 +58,7 @@ class roleApprovalController extends Controller
 
                 DB::commit();
 
+                Alert::success('Success', 'role change');
                 return redirect()->route('role.index');
             }catch(\Throwable $th){
                 dd($th);
@@ -72,6 +74,7 @@ class roleApprovalController extends Controller
 
                 DB::commit();
 
+                Alert::warning('Deleted', 'role deleted');
                 return redirect()->route('role.index');
             }catch(\Throwable $th){
                 dd($th);

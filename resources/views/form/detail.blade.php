@@ -15,7 +15,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-6">
-                <label class="">Username</label>
+                <label class="">NIK</label>
                 <input type="text" value="{{ $form->username }}" id="username" name="username" class="form-control" readonly>
             </div>
             <div class="col-md-6">

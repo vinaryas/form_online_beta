@@ -42,10 +42,15 @@ class rj_serverService{
         return $data;
     }
 
-    public function getAll($store){
+    public function getAllStore($store){
         return $this->getDetail()
         ->where('roles', 0)
         ->where('store', $store);
+    }
+
+    public function getAllBo(){
+        return $this->getDetail()
+        ->where('roles', '!=', 0);
     }
 
     public function getById($id){

@@ -14,7 +14,7 @@
         <input type="hidden" value="{{ $form->form_aplikasi_id }}" id="form_aplikasi_id"name="form_aplikasi_id">
         <div class="row">
             <div class="col-md-6">
-                <label class="">Username</label>
+                <label class="">NIK</label>
                 <input type="text" value="{{ $form->username }}" id="username" name="username" class="form-control" readonly>
             </div>
             <div class="col-md-6">

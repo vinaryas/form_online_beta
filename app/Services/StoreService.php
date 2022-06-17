@@ -22,11 +22,6 @@ class StoreService
         return $this->store::create($data);
     }
 
-    public function find($id)
-    {
-        return $this->all()->where('id', $id);
-    }
-
     public function getById($storeId)
     {
         return $this->all()->where('id', $storeId);

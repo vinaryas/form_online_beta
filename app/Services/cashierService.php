@@ -2,7 +2,7 @@
 
 namespace App\services;
 
-use App\Models\cashier;
+use App\ModelsConnection\cashier;
 use Illuminate\Support\Facades\DB;
 
 class cashierService

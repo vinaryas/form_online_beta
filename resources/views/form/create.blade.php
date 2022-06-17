@@ -20,7 +20,7 @@
             <input type="hidden" value="{{ $user->id }}" name="user_id" id="user_id">
             <input type="hidden" value="{{ $user->name }}" name="name" id="name">
             <div class="col-md-4">
-                <label>Username</label>
+                <label>NIK</label>
                 <input type="text" value="{{ $user->username }}" id="username"name="username" class="form-control form-control-sm" readonly>
             </div>
             <div class="col-md-4">

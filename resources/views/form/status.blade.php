@@ -17,7 +17,7 @@
                 <tr>
                     <th>tgl Approved</th>
                     <th>Aplikasi</th>
-                    <th>Username</th>
+                    <th>NIK</th>
                     <th>Approved by</th>
                     <th>Status</th>
                 </tr>

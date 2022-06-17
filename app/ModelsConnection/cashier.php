@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\ModelsConnection;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,4 +13,3 @@ class cashier extends Model
     const UPDATED_AT = null;
     const CREATED_AT = null;
 }
-

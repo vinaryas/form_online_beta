@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\Support\approvalService;
 use App\Services\Support\cashierService;
+use App\Services\Support\first_time_syncService;
 use App\Services\Support\formAplikasiService;
 use App\Services\Support\formService;
 use App\Services\Support\rj_serverService;
@@ -44,7 +45,7 @@ class approvalController extends Controller
     {
     	DB::beginTransaction();
         $authRole = Auth::user()->role_id;
-        $store = StoreService::find($request->store)->first();
+        $stores = StoreService::all()->get();
         $nextApp = formService::getNextApp($request->aplikasi_id[0], $authRole, $request->region_id);
         $formAplikasi = formAplikasiService::getFormAplikasiById($request->form_aplikasi_id)->first();
 
@@ -65,7 +66,7 @@ class approvalController extends Controller
 
                 if($formAplikasi->aplikasi_id == config('setting_app.aplikasi_id.rjserver'))
                 {
-                    if($formAplikasi->role_next_app == 2){
+                    if($formAplikasi->role_last_app === 0){
                         $getPos =  cashierService::getPosStore()->first();
 
                         $dataPos = [
@@ -82,8 +83,13 @@ class approvalController extends Controller
 
                         $storeOnMMSoft = cashierService::store($dataPos);
 
-                    }elseif($formAplikasi->role_next_app == 1){
+                        $first_sync = [
+                            'status' => 1
+                        ];
 
+                        $storeOnFormOnline = first_time_syncService::update($first_sync, $request->store_id);
+
+                    }elseif($formAplikasi->role_last_app == 2){
                         $getPos =  cashierService::getPosBO()->first();
 
                             $dataPos = [
@@ -99,6 +105,39 @@ class approvalController extends Controller
                             $storeInFormOnline = rj_serverService::store($dataPos);
 
                             $storeInMMSoft = cashierService::store($dataPos);
+
+                            $first_sync = [
+                                'status' => 1
+                            ];
+
+                            $storeOnFormOnline = first_time_syncService::update($first_sync, $request->store_id);
+
+                    }elseif($formAplikasi->role_last_app == 4 ){
+                        $getPos =  cashierService::getPosBO()->first();
+
+                        foreach ($stores as $store) {
+
+                            $dataPos = [
+                                'cashnum' => substr($getPos->username, 3),
+                                'nama' => $getPos->name,
+                                'password' => $getPos->pass,
+                                'roles' => $getPos->role_id,
+                                'store' => $store->id,
+                                'status' => 'A',
+                                'acc' => 2,
+                            ];
+
+                            $storeInFormOnline = rj_serverService::store($dataPos);
+
+                            $storeInMMSoft = cashierService::store($dataPos);
+
+                            $first_sync = [
+                                'status' => 1
+                            ];
+
+                            $storeOnFormOnline = first_time_syncService::update($first_sync, $store->id);
+                        }
+
                     }
 
                 }
@@ -148,7 +187,7 @@ class approvalController extends Controller
 
                 DB::commit();
 
-                Alert::error('Disapproved', 'form has been disapproved');
+                Alert::warning('Disapproved', 'form has been disapproved');
                 return redirect()->route('approval.index');
             }catch (\Throwable $th) {
                 DB::rollback();

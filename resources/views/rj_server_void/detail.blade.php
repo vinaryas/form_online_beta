@@ -22,7 +22,8 @@
             </div>
             <div class="col-lg-6 col-6">
                 <label> Store </label>
-                <input type="text" value="{{ $rj->nama_store }}"  name="dapartemen_id" id="dapartemen_id" class="select2 form-control" readonly>
+                <input type="text" value="{{ $rj->nama_store }}"  name="store" id="store" class="select2 form-control" readonly>
+                <input type="hidden" value="{{ $rj->store_id }}"  name="store_id" id="store_id">
             </div>
             <div class="col-lg-6 col-6">
                 <label>Status</label>
