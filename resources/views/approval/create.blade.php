@@ -11,7 +11,7 @@
     {{ csrf_field() }}
     <div class="card-body">
         <input type="hidden" value="{{ $form->user_id }}" name="user_id" id="user_id">
-        <input type="hidden" value="{{ $form->form_aplikasi_id }}" id="form_aplikasi_id"name="form_aplikasi_id">
+        <input type="hidden" value="{{ $form->form_pembuatan_id }}" id="form_pembuatan_id"name="form_pembuatan_id">
         <div class="row">
             <div class="col-md-6">
                 <label class="">NIK</label>
@@ -33,12 +33,12 @@
                     <option value="{{ $form->store_id }}">{{ $form->nama_store }}</option>
                 </select>
             </div>
-            <div class="col-md-6">
-                <label>Dapartemen</label>
-                <select name="dapartemen_id" id="dapartemen_id" class="form-control" readonly>
-                    <option value="{{ $form->dapartemen_id }}">{{ $form->dapartemen }}</option>
+            {{-- <div class="col-md-6">
+                <label>departemen</label>
+                <select name="departemen_id" id="departemen_id" class="form-control" readonly>
+                    <option value="{{ $form->departemen_id }}">{{ $form->departemen }}</option>
                 </select>
-            </div>
+            </div> --}}
             <div class="col-md-6">
                 <label>Aplikasi</label>
                 <select name="aplikasi_id[]" id="aplikasi_id"  class="form-control" readonly>

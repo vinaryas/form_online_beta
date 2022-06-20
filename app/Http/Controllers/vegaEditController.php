@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\Support\formAplikasiService;
+use App\Services\Support\formPembuatanService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -10,13 +10,13 @@ use RealRashid\SweetAlert\Facades\Alert;
 class vegaEditController extends Controller
 {
     public function index(){
-        $vega = formAplikasiService::getVega()->get();
+        $vega = formPembuatanService::getVega()->get();
 
         return view('vega_void.index', compact('vega'));
     }
 
     public function edit($id){
-        $vega = formAplikasiService::getById($id)->first();
+        $vega = formPembuatanService::getById($id)->first();
 
         return view('vega_void.edit', compact('vega'));
     }
@@ -32,7 +32,7 @@ class vegaEditController extends Controller
                     'pass' => $request->pass,
                 ];
 
-                $updateData = formAplikasiService::update($data, $request->form_aplikasi_id);
+                $updateData = formPembuatanService::update($data, $request->form_pembuatan_id);
 
                 DB::commit();
 
@@ -45,7 +45,7 @@ class vegaEditController extends Controller
         }elseif(isset($_POST["delete"])){
             try{
 
-                $delete = formAplikasiService::deleteData($request->form_aplikasi_id);
+                $delete = formPembuatanService::deleteData($request->form_pembuatan_id);
 
                 DB::commit();
 

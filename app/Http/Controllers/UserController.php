@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\Support\dapartemenService;
+use App\Services\Support\departemenService;
 use App\Services\Support\regionService;
+use App\Services\Support\StoreService;
 use App\Services\Support\userService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,10 +20,9 @@ class UserController extends Controller
 
     public function edit($id){
         $user = userService::finId($id)->first();
-        $dapartemens = dapartemenService::all()->get();
         $regions = regionService::all()->get();
 
-        return view('user_management.edit', compact('user', 'dapartemens', 'regions'));
+        return view('user_management.edit', compact('user', 'regions'));
     }
 
     public function update(Request $request){
@@ -35,7 +35,6 @@ class UserController extends Controller
                     'name' => $request->name,
                     'username' => $request->username,
                     'region_id'=> $request->region_id,
-                    'dapartemen_id' => $request->dapartemen_id,
                 ];
 
                 $updatData = userService::update($data, $request->user_id);

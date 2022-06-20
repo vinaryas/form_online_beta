@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Services\Support\aplikasiService;
 use App\Services\Support\approvalService;
-use App\Services\Support\formAplikasiService;
-use App\Services\Support\formService;
+use App\Services\Support\form_headService;
+use App\Services\Support\formPembuatanService;
+use App\Services\Support\formHeadService;
 use App\Services\Support\StoreService;
 use App\Services\Support\userService;
 use Carbon\Carbon;
@@ -21,23 +22,23 @@ class formController extends Controller
         $thisMonth = Carbon::now()->month;
         $user = UserService::find(Auth::user()->id);
         if(Auth::user()->role_id == 3){
-            $formAplikasi = formAplikasiService::adminViewForm($thisMonth)->get();
+            $formPembuatan = formPembuatanService::adminViewForm($thisMonth)->get();
         }else{
-            $formAplikasi = formAplikasiService::getFormByUserId(Auth::user()->id, $thisMonth)->get();
+            $formPembuatan = formPembuatanService::getFormByUserId(Auth::user()->id, $thisMonth)->get();
         }
 
-        return view('form.index', compact('formAplikasi', 'user'));
+        return view('form.index', compact('formPembuatan', 'user'));
     }
 
     public function detail($id){
-        $form = formAplikasiService::getById($id)->first();
+        $form = formPembuatanService::getById($id)->first();
 
         return view('form.detail', compact('form'));
     }
 
     public function status($id){
         $history = approvalService::getStatusApprovalById($id)
-        ->orderBy('history_approval.created_at', 'ASC')
+        ->orderBy('history_pembuatan.created_at', 'ASC')
         ->get();
 
         return view('form.status', compact('history'));
@@ -65,10 +66,10 @@ class formController extends Controller
                     'username' => $request->username,
                     'store_id' => $request->store_id,
                     'region_id'=>$request->region_id,
-                    'dapartemen_id' => $request->dapartemen_id,
+                    'store_id' => $request->store_id,
                 ];
 
-                $storeForm = formService::store($dataForm);
+                $storeForm = form_headService::store($dataForm);
 
                 foreach ($request->aplikasi_id as $aplikasi_id) {
 
@@ -84,14 +85,14 @@ class formController extends Controller
                         'store' => $storeForm->store_id,
                         'type' => 's',
                         'role_last_app' =>  Auth::user()->role_id,
-                        'role_next_app' => formService::getNextApp($request->aplikasi_id[0], $user->role_id, $storeForm->region_id),
+                        'role_next_app' => form_headService::getNextApp($request->aplikasi_id[0], $user->role_id, $storeForm->region_id),
                         'status' => 0,
                         'created_by' => Auth::user()->id,
                         'created_at' => now(),
                         'updated_at' => now(),
                     ];
 
-                    $storeFormApp = formAplikasiService::store($dataApp);
+                    $storeFormApp = formPembuatanService::store($dataApp);
 
                     $index++;
                 }
@@ -114,10 +115,10 @@ class formController extends Controller
                         'username' => $request->username,
                         'store_id' => $request->store_id,
                         'region_id'=>$request->region_id,
-                        'dapartemen_id' => $request->dapartemen_id,
+                        'store_id' => $request->store_id,
                     ];
 
-                    $storeForm = formService::store($dataForm);
+                    $storeForm = form_headService::store($dataForm);
 
                     foreach ($request->aplikasi_id as $aplikasi_id) {
 
@@ -133,14 +134,14 @@ class formController extends Controller
                             'store' => $storeForm->store_id,
                             'type' => 's',
                             'role_last_app' =>  Auth::user()->role_id,
-                            'role_next_app' => formService::getNextApp($request->aplikasi_id[0], $user->role_id, $storeForm->region_id),
+                            'role_next_app' => form_headService::getNextApp($request->aplikasi_id[0], $user->role_id, $storeForm->region_id),
                             'status' => 1,
                             'created_by' => Auth::user()->id,
                             'created_at' => now(),
                             'updated_at' => now(),
                         ];
 
-                        $storeFormApp = formAplikasiService::store($dataApp);
+                        $storeFormApp = formPembuatanService::store($dataApp);
 
                         $index++;
                     }
@@ -162,10 +163,10 @@ class formController extends Controller
                     'user_id' => $request->user_id,
                     'username' => $request->username,
                     'region_id'=>$request->region_id,
-                    'dapartemen_id' => $request->dapartemen_id,
+                    'store_id' => $request->store_id,
                 ];
 
-                $storeForm = formService::store($dataForm);
+                $storeForm = form_headService::store($dataForm);
 
                 foreach ($request->aplikasi_id as $aplikasi_id) {
 
@@ -182,14 +183,14 @@ class formController extends Controller
                         'type' => 'b',
                         'role_last_app' =>  Auth::user()->role_id,
                         'role_next_app' => 1,
-                        // 'role_next_app' => formService::getNextApp($request->aplikasi_id[0], $user->role_id, $storeForm->region_id),
+                        // 'role_next_app' => form_headService::getNextApp($request->aplikasi_id[0], $user->role_id, $storeForm->region_id),
                         'status' => 1,
                         'created_by' => Auth::user()->id,
                         'created_at' => now(),
                         'updated_at' => now(),
                     ];
 
-                    $storeFormApp = formAplikasiService::store($dataApp);
+                    $storeFormApp = formPembuatanService::store($dataApp);
 
                     $index++;
                 }

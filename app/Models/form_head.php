@@ -4,16 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class form extends Model
+class form_head extends Model
 {
-    protected $table = 'form';
+    protected $table = 'form_head';
     protected $fillable = ([
         'username',
         'user_id',
         'region_id',
         'store_id',
         'role_id',
-        'dapartemen_id',
+        'store_id',
         'pass',
         'aplikasi_id',
     ]);
@@ -33,11 +33,6 @@ class form extends Model
         return $this->hasOne(Role::class, 'id', 'role_id');
     }
 
-    public function dapartemen()
-    {
-        return $this->hasOne(dapartemen::class, 'id', 'dapartemen_id');
-    }
-
     public function user()
     {
         return $this->hasOne(user::class,'id', 'user_id');
@@ -48,9 +43,9 @@ class form extends Model
         return $this->hasMany(aplikasi::class,'id', 'aplikasi_id');
     }
 
-    public function formAplikasi()
+    public function formPembuatan()
     {
-        return $this->belongsTo(formAplikasi::class, 'id', 'form_id');
+        return $this->belongsTo(formPembuatan::class, 'id', 'form_id');
     }
 
 }

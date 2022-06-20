@@ -30,10 +30,10 @@
                 <label>Store</label>
                 <input type="text"value="{{ $form->nama_store }}" name="store_id" id="store_id" class="form-control" readonly>
             </div>
-            <div class="col-md-6">
-                <label>Dapartemen</label>
-                <input type="text"value="{{ $form->dapartemen }}" name="dapartemen_id" id="dapartemen_id" class="form-control" readonly>
-            </div>
+            {{-- <div class="col-md-6">
+                <label>departemen</label>
+                <input type="text"value="{{ $form->departemen }}" name="departemen_id" id="departemen_id" class="form-control" readonly>
+            </div> --}}
             <div class="col-md-6">
                 <label>Aplikasi</label>
                 <input type="text"value=" {{ $form->aplikasi }}" name="aplikasi_id[]" id="aplikasi_id" class="form-control" readonly>

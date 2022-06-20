@@ -2,10 +2,10 @@
 
 namespace App\Services\Support;
 
-use App\Services\dapartemenService as SupportService;
+use App\Services\departemenService as SupportService;
 use Illuminate\Support\Facades\Facade;
 
-class dapartemenService extends Facade
+class departemenService extends Facade
 {
 	/**
      * Get the registered name of the component.

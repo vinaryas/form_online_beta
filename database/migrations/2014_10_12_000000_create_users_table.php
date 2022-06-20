@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->integer('username')->unique();
             $table->integer('region_id');
             $table->integer('role_id')->nullable();
-            $table->integer('dapartemen_id')->nullable();
+            $table->integer('store_id')->nullable();
             $table->string('all_store')->nullable();
             $table->string('email')->nullable();
             $table->timestamp('email_verified_at')->nullable();

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFormAplikasiTable extends Migration
+class CreateFormPembuatanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateFormAplikasiTable extends Migration
      */
     public function up()
     {
-        Schema::create('form_aplikasi', function (Blueprint $table) {
+        Schema::create('form_pembuatan', function (Blueprint $table) {
             $table->id();
             $table->integer('aplikasi_id');
             $table->bigInteger('form_id');
-            $table->string('id_vega');
+            $table->string('id_vega')->nullable();
             $table->string('pass')->nullable();
             $table->integer('store')->nullable();
             $table->string('type')->nullable();
@@ -36,6 +36,6 @@ class CreateFormAplikasiTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('form_aplikasi');
+        Schema::dropIfExists('form_pembuatan');
     }
 }

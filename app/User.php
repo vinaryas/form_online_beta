@@ -2,12 +2,10 @@
 
 namespace App;
 
-use App\Models\dapartemen;
-use App\Models\jabatan;
+use App\Models\departemen;
 use App\Models\region;
 use App\Models\Store;
 use App\Role;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laratrust\Traits\LaratrustUserTrait;
@@ -23,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name','username', 'region_id','dapartemen_id', 'email', 'password','remember_token'
+        'name','username', 'region_id','store_id', 'email', 'password','remember_token'
     ];
 
     /**
@@ -53,9 +51,9 @@ class User extends Authenticatable
         return $this->hasOne(Role::class,'id', 'role_id' );
     }
 
-    public function dapartemen()
+    public function departemen()
     {
-        return $this->hasOne(dapartemen::class, 'id', 'dapartemen_id');
+        return $this->hasOne(departemen::class, 'id', 'departemen_id');
     }
 
     public function region()

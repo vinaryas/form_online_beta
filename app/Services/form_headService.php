@@ -2,29 +2,26 @@
 
 namespace App\Services;
 
-use App\Helper\MyHelper;
-use App\Models\form;
+use App\Models\form_head;
 use App\Services\Support\MappingApprovalService;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 
-class formService
+class form_headService
 {
-   private $form;
+   private $form_head;
 
-   public function __construct(form $form)
+   public function __construct(form_head $form_head)
     {
-        $this->form = $form;
+        $this->form_head = $form_head;
     }
 
    public function all()
 	{
-		return $this->form->query()->with('user', 'formAplikasi', 'aplikasi');
+		return $this->form_head->query()->with('user', 'formPembuatan', 'aplikasi');
 	}
 
     public function store($data)
     {
-        return $this->form->create($data);
+        return $this->form_head->create($data);
     }
 
     public function getNextApp($aplikasi, $roleId, $regionId)
@@ -37,11 +34,11 @@ class formService
     }
 
     public function countForm($userId){
-        return $this->form->where('user_id', $userId);
+        return $this->form_head->where('user_id', $userId);
     }
 
     public function countAdmin(){
-        return $this->form->query();
+        return $this->form_head->query();
     }
 
 }

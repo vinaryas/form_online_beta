@@ -9,13 +9,13 @@ class aplikasi extends Model
     protected $table ='aplikasi';
     protected $guarded = [];
 
-    public function form()
+    public function form_head()
     {
-        return $this->hasOne(form::class, 'id', 'aplikasi_id');
+        return $this->hasOne(form_head::class, 'id', 'aplikasi_id');
     }
 
-    public function formAplikasi()
+    public function formPembuatan()
     {
-        return $this->belongsTo(formAplikasi::class, 'id', 'aplikasi_id');
+        return $this->belongsTo(formPembuatan::class, 'id', 'aplikasi_id');
     }
 }

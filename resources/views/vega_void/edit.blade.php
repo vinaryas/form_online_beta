@@ -11,7 +11,7 @@
     {{ csrf_field() }}
     <div class="card-header">
         <div class="row">
-            <input type="hidden" value="{{ $vega->form_aplikasi_id }}" id="form_aplikasi_id"name="form_aplikasi_id" readonly>
+            <input type="hidden" value="{{ $vega->form_pembuatan_id }}" id="form_pembuatan_id"name="form_pembuatan_id" readonly>
             <div class="col-lg-6 col-6">
                 <label> Name </label>
                 <input type="text" value="{{ $vega->name }}" id="name"name="name" class="form-control" readonly>
@@ -24,10 +24,10 @@
                 <label>Region</label>
                 <input type="text" value="{{ $vega->nama_region }}" name="region_id" id="region_id" class="select2 form-control" readonly>
             </div>
-            <div class="col-lg-6 col-6">
-                <label>Dapartemen</label>
-                <input type="text" value="{{ $vega->dapartemen }}"  name="dapartemen_id" id="dapartemen_id" class="select2 form-control" readonly>
-            </div>
+            {{-- <div class="col-lg-6 col-6">
+                <label>departemen</label>
+                <input type="text" value="{{ $vega->departemen }}"  name="departemen_id" id="departemen_id" class="select2 form-control" readonly>
+            </div> --}}
             <div class="col-lg-6 col-6">
                 <label>ID Vega</label>
                 <input type="text" value="{{ $vega->id_vega }}" id="id_vega" name="id_vega" class="form-control" maxlength="10">

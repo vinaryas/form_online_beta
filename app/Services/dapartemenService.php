@@ -2,20 +2,20 @@
 
 namespace App\Services;
 
-use App\Models\dapartemen;
+use App\Models\departemen;
 
-class dapartemenService
+class departemenService
 {
-   private $dapartemen;
+   private $departemen;
 
-   public function __construct(dapartemen $dapartemen)
+   public function __construct(departemen $departemen)
     {
-        $this->dapartemen = $dapartemen;
+        $this->departemen = $departemen;
     }
 
    public function all()
 	{
-		return $this->dapartemen->query();
+		return $this->departemen->query();
 	}
 
 }

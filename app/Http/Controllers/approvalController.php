@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Services\Support\approvalService;
 use App\Services\Support\cashierService;
 use App\Services\Support\first_time_syncService;
-use App\Services\Support\formAplikasiService;
-use App\Services\Support\formService;
+use App\Services\Support\formPembuatanService;
+use App\Services\Support\form_headService;
 use App\Services\Support\rj_serverService;
 use App\Services\Support\StoreService;
 use App\Services\Support\userService;
@@ -22,20 +22,20 @@ class approvalController extends Controller
         $user = UserService::find(Auth::user()->id);
         $thisMonth = Carbon::now()->month;
         if(Auth::user()->role_id == 3){
-            $formAplikasi = formAplikasiService::adminViewApproval($thisMonth)->get();
+            $formPembuatan = formPembuatanService::adminViewApproval($thisMonth)->get();
         }else{
             if(Auth::user()->all_store == 'y'){
-                $formAplikasi = formAplikasiService::getApproveFilter(Auth::user()->roles->first()->id, $thisMonth)->orderBy('form_aplikasi.created_at', 'ASC')->get();
+                $formPembuatan = formPembuatanService::getApproveFilter(Auth::user()->roles->first()->id, $thisMonth)->orderBy('form_pembuatan.created_at', 'ASC')->get();
             }else{
-                $formAplikasi = formAplikasiService::getApproveFilterByStore(Auth::user()->roles->first()->id, UserService::authStoreArray(), $thisMonth)->orderBy('form_aplikasi.created_at', 'ASC')->get();
+                $formPembuatan = formPembuatanService::getApproveFilterByStore(Auth::user()->roles->first()->id, UserService::authStoreArray(), $thisMonth)->orderBy('form_pembuatan.created_at', 'ASC')->get();
             }
         }
 
-        return view('approval.index', compact('formAplikasi', 'user'));
+        return view('approval.index', compact('formPembuatan', 'user'));
     }
 
     public function create($id){
-        $form = formAplikasiService::getById($id)->first();
+        $form = formPembuatanService::getById($id)->first();
         $authApp = approvalService::isApprovalExitst($id, Auth::user()->role_id, $form->region_id);
 
         return view('approval.create', compact('form', 'authApp'));
@@ -46,14 +46,14 @@ class approvalController extends Controller
     	DB::beginTransaction();
         $authRole = Auth::user()->role_id;
         $stores = StoreService::all()->get();
-        $nextApp = formService::getNextApp($request->aplikasi_id[0], $authRole, $request->region_id);
-        $formAplikasi = formAplikasiService::getFormAplikasiById($request->form_aplikasi_id)->first();
+        $nextApp = form_headService::getNextApp($request->aplikasi_id[0], $authRole, $request->region_id);
+        $formPembuatan = formPembuatanService::getformPembuatanById($request->form_pembuatan_id)->first();
 
         if (isset($_POST["approve"]))
         {
             try{
                 $data = [
-                    'form_aplikasi_id' => $request->form_aplikasi_id,
+                    'form_pembuatan_id' => $request->form_pembuatan_id,
                     'region_id'=> $request->region_id,
                     'user_id' => Auth::user()->id,
                     'username'=>Auth::user()->username,
@@ -64,9 +64,9 @@ class approvalController extends Controller
 
                 $storeApprove = approvalService::store($data);
 
-                if($formAplikasi->aplikasi_id == config('setting_app.aplikasi_id.rjserver'))
+                if($formPembuatan->aplikasi_id == config('setting_app.aplikasi_id.rjserver'))
                 {
-                    if($formAplikasi->role_last_app === 0){
+                    if($formPembuatan->role_last_app === 0){
                         $getPos =  cashierService::getPosStore()->first();
 
                         $dataPos = [
@@ -89,7 +89,7 @@ class approvalController extends Controller
 
                         $storeOnFormOnline = first_time_syncService::update($first_sync, $request->store_id);
 
-                    }elseif($formAplikasi->role_last_app == 2){
+                    }elseif($formPembuatan->role_last_app == 2){
                         $getPos =  cashierService::getPosBO()->first();
 
                             $dataPos = [
@@ -112,7 +112,7 @@ class approvalController extends Controller
 
                             $storeOnFormOnline = first_time_syncService::update($first_sync, $request->store_id);
 
-                    }elseif($formAplikasi->role_last_app == 4 ){
+                    }elseif($formPembuatan->role_last_app == 4 ){
                         $getPos =  cashierService::getPosBO()->first();
 
                         foreach ($stores as $store) {
@@ -148,7 +148,7 @@ class approvalController extends Controller
                     'status'=>1
                 ];
 
-                $updateStatus = formAplikasiService::update($dataUpdate, $storeApprove->form_aplikasi_id);
+                $updateStatus = formPembuatanService::update($dataUpdate, $storeApprove->form_pembuatan_id);
 
                 DB::commit();
 
@@ -166,7 +166,7 @@ class approvalController extends Controller
             try
             {
                 $data = [
-                    'form_aplikasi_id' => $request->form_aplikasi_id,
+                    'form_pembuatan_id' => $request->form_pembuatan_id,
                     'region_id'=> $request->region_id,
                     'user_id' => Auth::user()->id,
                     'username'=>Auth::user()->username,
@@ -183,7 +183,7 @@ class approvalController extends Controller
                     'status'=>2
                 ];
 
-                $updateStatus = formAplikasiService::update($dataUpdate, $storeApprove->form_aplikasi_id);
+                $updateStatus = formPembuatanService::update($dataUpdate, $storeApprove->form_pembuatan_id);
 
                 DB::commit();
 

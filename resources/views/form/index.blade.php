@@ -33,24 +33,24 @@
                     <th>Waktu Pembuatan</th>
                     <th>NIK</th>
                     <th>Region</th>
-                    <th>Dapartemen</th>
+                    <th>departemen</th>
                     <th>Aplikasi</th>
                     <th>Status</th>
                     <th>Detail</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($formAplikasi as $detail)
+                @foreach ($formPembuatan as $detail)
                     <tr>
                         <td>{{ $detail->created_at }}</td>
                         <td>{{ $detail->username }}</td>
                         <td>{{ $detail->nama_region }}</td>
-                        <td>{{ $detail->dapartemen }}</td>
+                        <td>{{ $detail->departemen }}</td>
                         <td>{{ $detail->aplikasi }}</td>
-                        <td> <a href="{{ route('form.status', $detail->form_aplikasi_id) }}"
+                        <td> <a href="{{ route('form.status', $detail->form_pembuatan_id) }}"
                             class="btn btn-info btn-sm"> status <i class="fas fa-angle-right"> </i></a>
                         </td>
-                        <td><a href="{{ route('form.detail', $detail->form_aplikasi_id) }}"
+                        <td><a href="{{ route('form.detail', $detail->form_pembuatan_id) }}"
                             class="btn btn-info btn-sm"> detail <i class="fas fa-angle-right"> </i></a>
                         </td>
                     </tr>
@@ -75,24 +75,24 @@
                     <th>Waktu Pembuatan</th>
                     <th>NIK</th>
                     <th>Region</th>
-                    <th>Dapartemen</th>
+                    <th>departemen</th>
                     <th>Aplikasi</th>
                     <th>Status</th>
                     <th>Detail</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($formAplikasi as $detail)
+                @foreach ($formPembuatan as $detail)
                     <tr>
                         <td>{{ $detail->created_at }}</td>
                         <td>{{ $detail->username }}</td>
                         <td>{{ $detail->nama_region }}</td>
-                        <td>{{ $detail->dapartemen }}</td>
+                        <td>{{ $detail->departemen }}</td>
                         <td>{{ $detail->aplikasi }}</td>
-                        <td> <a href="{{ route('form.status', $detail->form_aplikasi_id) }}"
+                        <td> <a href="{{ route('form.status', $detail->form_pembuatan_id) }}"
                             class="btn btn-info btn-sm"> status <i class="fas fa-angle-right"> </i></a>
                          </td>
-                        <td><a href="{{ route('form.detail', $detail->form_aplikasi_id) }}"
+                        <td><a href="{{ route('form.detail', $detail->form_pembuatan_id) }}"
                             class="btn btn-info btn-sm"> detail <i class="fas fa-angle-right"> </i></a>
                         </td>
                     </tr>

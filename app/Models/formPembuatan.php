@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class formAplikasi extends Model
+class formPembuatan extends Model
 {
-    protected $table ='form_aplikasi';
+    protected $table ='form_pembuatan';
     protected $fillable = [
         'aplikasi_id',
         'form_id',
@@ -34,7 +34,7 @@ class formAplikasi extends Model
 
     public function approval()
     {
-        return $this->hasMany(Approval::class, 'form_aplikasi_id', 'id');
+        return $this->hasMany(Approval::class, 'form_pembuatan_id', 'id');
     }
 
     public function lastApproval()

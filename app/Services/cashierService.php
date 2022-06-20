@@ -34,29 +34,29 @@ class cashierService
 
     public function getDetail()
     {
-        $data = DB::table('form_aplikasi')
-        ->join('history_approval', 'form_aplikasi.id', '=', 'history_approval.form_aplikasi_id')
-        ->join('form', 'form_aplikasi.form_id', '=', 'form.id')
-        ->join('users', 'form.user_id', '=', 'users.id')
+        $data = DB::table('form_pembuatan')
+        ->join('history_pembuatan', 'form_pembuatan.id', '=', 'history_pembuatan.form_pembuatan_id')
+        ->join('form_head', 'form_pembuatan.form_id', '=', 'form_head.id')
+        ->join('users', 'form_head.user_id', '=', 'users.id')
         ->join('regions', 'users.region_id', '=', 'regions.id')
-        ->leftJoin('stores', 'form.store_id', '=', 'stores.id')
+        ->leftJoin('stores', 'form_head.store_id', '=', 'stores.id')
         ->leftjoin('roles', 'users.role_id', '=', 'roles.id')
-        ->join('aplikasi', 'form_aplikasi.aplikasi_id', '=', 'aplikasi.id')
+        ->join('aplikasi', 'form_pembuatan.aplikasi_id', '=', 'aplikasi.id')
         ->select(
-            'form_aplikasi.id as form_aplikasi_id',
-            'form.id as form_id',
+            'form_pembuatan.id as form_pembuatan_id',
+            'form_head.id as form_id',
             'form.user_id as user_id',
             'aplikasi.id as aplikasi_id',
             'stores.id as store_id',
             'roles.id as role_id',
             'roles.display_name',
-            'form.username',
+            'form_head.username',
             'users.name',
             'stores.name as nama_store',
             'aplikasi.aplikasi',
-            'form_aplikasi.pass',
-            'history_approval.status',
-            'form_aplikasi.role_next_app'
+            'form_pembuatan.pass',
+            'history_pembuatan.status',
+            'form_pembuatan.role_next_app'
         );
 
         return $data;
@@ -67,7 +67,7 @@ class cashierService
         return $this->getDetail()
         ->where('role_next_app', 2)
         ->where('aplikasi_id', 2)
-        ->where('history_approval.status', 'Approved');
+        ->where('history_pembuatan.status', 'Approved');
     }
 
     public function getPosBO()

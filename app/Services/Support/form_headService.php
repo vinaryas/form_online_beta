@@ -2,10 +2,10 @@
 
 namespace App\Services\Support;
 
-use App\Services\formAplikasiService as SupportService;
+use App\Services\form_headService as SupportService;
 use Illuminate\Support\Facades\Facade;
 
-class formAplikasiService extends Facade
+class form_headService extends Facade
 {
 	/**
      * Get the registered name of the component.

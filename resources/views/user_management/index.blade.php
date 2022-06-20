@@ -17,7 +17,7 @@
                     <th>Name</th>
                     <th>NIK</th>
                     <th>Region</th>
-                    <th>Dapartemen</th>
+                    <th>Store</th>
                     <th>Detail</th>
                 </tr>
             </thead>
@@ -28,7 +28,7 @@
                         <td>{{ $detail->name }}</td>
                         <td>{{ $detail->username }}</td>
                         <td>{{ $detail->region_name }}</td>
-                        <td>{{ $detail->dapartemen }}</td>
+                        <td>{{ $detail->store }}</td>
                         <td> <a href="{{ route('management.edit', $detail->user_id) }}"
                             class="btn btn-info btn-sm"> Edit <i class="fas fa-angle-right"> </i></a>
                         </td>

@@ -16,20 +16,20 @@
                     <th>Waktu Pembuatan</th>
                     <th>NIK</th>
                     <th>Name</th>
-                    <th>Dapartemen</th>
+                    <th>departemen</th>
                     <th>Aplikasi</th>
                     <th>Approve</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($formAplikasi as $detail)
+                @foreach ($formPembuatan as $detail)
                     <tr>
                         <td>{{ $detail->created_at }}</td>
                         <td>{{ $detail->username }}</td>
                         <td>{{ $detail->name }}</td>
-                        <td>{{ $detail->dapartemen }}</td>
+                        <td>{{ $detail->departemen }}</td>
                         <td>{{ $detail->aplikasi }}</td>
-                        <td><a href="{{ route('approval.create', $detail->form_aplikasi_id) }}"
+                        <td><a href="{{ route('approval.create', $detail->form_pembuatan_id) }}"
                             class="btn btn-info btn-sm"> Detail <i class="fas fa-angle-right"></i>
                         </a></td>
                     </tr>

@@ -29,12 +29,12 @@
                     <option value="{{ $user->region_id }}">{{ $user->region->name }}</option>
                 </select>
             </div>
-            <div class="col-md-4">
-                <label>Dapartemen</label>
-                <select name="dapartemen_id" id="dapartemen_id" class="form-control form-control-sm" readonly>
-                    <option value="{{ $user->dapartemen_id }}">{{ $user->dapartemen->dapartemen }}</option>
+            {{-- <div class="col-md-4">
+                <label>departemen</label>
+                <select name="departemen_id" id="departemen_id" class="form-control form-control-sm" readonly>
+                    <option value="{{ $user->departemen_id }}">{{ $user->departemen->departemen }}</option>
                 </select>
-            </div>
+            </div> --}}
         </div>
         @if ($user->all_store == 'n')
         <div class="row">

@@ -38,10 +38,31 @@ class AppServiceProvider extends ServiceProvider
 
             $event->menu->add([
                 'text' => 'Form',
-                'url' => route('form.index'),
-                'icon' => 'fas fa-file-invoice',
-                'active' => [route('form.index').'/*',route('form.create')],
-                'permission' => 'form',
+                'icon' => 'fas fa-layer-group',
+                'submenu' => [
+                    [
+                        'text' => 'Form Pembuatan ID',
+                        'url' => route('form.index'),
+                        'icon' => 'fas fa-file-alt',
+                        'active' => [route('form.index').'/*',route('form.create')],
+                        'permission' => 'form',
+                    ],
+                    [
+                        'text' => 'Form Penghapusan ID',
+                        // 'url' => route('form.index'),
+                        'icon' => 'fas fa-file-alt',
+                        // 'active' => [route('form.index').'/*',route('form.create')],
+                        'permission' => 'form',
+                    ],
+                    [
+                        'text' => 'Form Pemindahan ID',
+                        // 'url' => route('form.index'),
+                        'icon' => 'fas fa-file-alt',
+                        // 'active' => [route('form.index').'/*',route('form.create')],
+                        'permission' => 'form',
+                    ],
+
+                ],
             ]);
 
             $event->menu->add([
@@ -53,44 +74,80 @@ class AppServiceProvider extends ServiceProvider
             ]);
 
             $event->menu->add([
-                'text' => 'Rj Server',
-                'url' => route('rj_server.index'),
-                'icon' => 'fas fa-edit',
-                'active' => [route('rj_server.index').'/*'],
+                'text' => 'Aplikasi',
+                'icon' => '	fas fa-server',
                 'permission' => 'rj-server-status',
+                'submenu' => [
+                    [
+                        'text' => 'Rj Server',
+                        'url' => route('rj_server.index'),
+                        'icon' => '	far fa-square',
+                        'active' => ['rj_server*'],
+                        'permission' => 'rj-server-status',
+                    ],
+                    [
+                        'text' => 'Vega',
+                        'url' => route('vega.index'),
+                        'icon' => '	far fa-square',
+                        'active' => ['vega*'],
+                        'permission' => 'auth',
+                    ],
+                    [
+                        'text' => 'RRAK',
+                        // 'url' => route('vega.index'),
+                        'icon' => '	far fa-square',
+                        // 'active' => ['vega*'],
+                        'permission' => 'auth',
+                    ],
+                    [
+                        'text' => 'BAP',
+                        // 'url' => route('vega.index'),
+                        'icon' => '	far fa-square',
+                        // 'active' => ['vega*'],
+                        'permission' => 'auth',
+                    ],
+                ],
             ]);
 
-            $event->menu->add([
-                'text' => 'Vega_void',
-                'url' => route('vega.index'),
-                'icon' => 'fas fa-edit',
-                'active' => ['vega_void*'],
-                'permission' => 'auth',
-            ]);
+            // $event->menu->add([
+            //     'text' => 'Rj Server',
+            //     'url' => route('rj_server.index'),
+            //     'icon' => 'fas fa-edit',
+            //     'active' => [route('rj_server.index').'/*'],
+            //     'permission' => 'rj-server-status',
+            // ]);
+
+            // $event->menu->add([
+            //     'text' => 'Vega',
+            //     'url' => route('vega.index'),
+            //     'icon' => 'fas fa-edit',
+            //     'active' => ['vega_void*'],
+            //     'permission' => 'auth',
+            // ]);
 
             $event->menu->add([
                 'text' => 'User',
-                'icon' => 'fas fa-user-edit',
+                'icon' => 'fas fa-users',
                 'permission' => 'auth',
                 'submenu' => [
                     [
-                        'text' => 'User Management',
+                        'text' => 'Management',
                         'url' => route('management.index'),
-                        'icon' => 'fas fa-user-tag',
+                        'icon' => '	fas fa-user-edit',
                         'active' => ['management*'],
                         'permission' => 'auth'
                     ],
                     [
-                        'text' => 'Role User',
+                        'text' => 'Role',
                         'url' => route('role.index'),
-                        'icon' => 'fas fa-user-tag',
+                        'icon' => 'fas fa-user-shield',
                         'active' => ['role*'],
                         'permission' => 'auth'
                     ],
                     [
-                        'text' => 'Store User',
+                        'text' => 'Store',
                         'url' => route('store.index'),
-                        'icon' => 'fas fa-user-tag ',
+                        'icon' => 'fas fa-house-user',
                         'active' => ['store*'],
                         'permission' => 'auth'
                     ],

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\Support\dapartemenService;
 use App\Services\Support\regionService;
 use App\Services\Support\roleUserService;
+use App\Services\Support\StoreService;
 use App\Services\Support\userService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,9 +22,9 @@ class registerController extends Controller
 
     public function create(){
         $regions = regionService::all()->get();
-        $dapartemens = dapartemenService::all()->get();
+        $stores = StoreService::all()->get();
 
-        return view('user.register', compact('regions', 'dapartemens'));
+        return view('user.register', compact('regions', 'stores'));
     }
 
     public function store(Request $request)

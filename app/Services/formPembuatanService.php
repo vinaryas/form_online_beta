@@ -2,64 +2,63 @@
 
 namespace App\Services;
 
-use App\Models\form;
-use App\Models\formAplikasi;
+use App\Models\formPembuatan;
 use Illuminate\Support\Facades\DB;
 
-class formAplikasiService
+class formPembuatanService
 {
-   private $formAplikasi;
+   private $formPembuatan;
 
-   public function __construct(formAplikasi $formAplikasi)
+   public function __construct(formPembuatan $formPembuatan)
     {
-        $this->formAplikasi = $formAplikasi;
+        $this->formPembuatan = $formPembuatan;
     }
 
    public function all()
 	{
-		return $this->formAplikasi->query()->with('aplikasi', 'form', 'store');
+		return $this->formPembuatan->query()->with('aplikasi', 'form', 'store');
 	}
 
     public function store($data)
     {
-        return $this->formAplikasi->create($data);
+        return $this->formPembuatan->create($data);
     }
 
     public function update($data, $id)
     {
-        return $this->formAplikasi->where('id', $id)->update($data);
+        return $this->formPembuatan->where('id', $id)->update($data);
     }
 
     public function getDetail()
     {
         //note: bikin yang berelasi terlebih dahulu.
-        $data = DB::table('form_aplikasi')
-        ->join('form', 'form_aplikasi.form_id', '=', 'form.id')
-        ->join('users', 'form.user_id', '=', 'users.id')
-        ->join('regions', 'form.region_id', '=', 'regions.id')
-        ->leftJoin('stores', 'form.store_id', '=', 'stores.id')
-        ->join('dapartemen', 'form.dapartemen_id', '=', 'dapartemen.id')
-        ->join('aplikasi', 'form_aplikasi.aplikasi_id', '=', 'aplikasi.id')
+        $data = DB::table('form_pembuatan')
+        ->join('form_head', 'form_pembuatan.form_id', '=', 'form_head.id')
+        ->join('users', 'form_head.user_id', '=', 'users.id')
+        ->join('regions', 'form_head.region_id', '=', 'regions.id')
+        ->leftJoin('stores', 'form_head.store_id', '=', 'stores.id')
+        ->join('departemen', 'form_head.store_id', '=', 'departemen.id')
+        ->join('aplikasi', 'form_pembuatan.aplikasi_id', '=', 'aplikasi.id')
         ->select(
-            'form_aplikasi.id as form_aplikasi_id',
-            'form_aplikasi.aplikasi_id',
-            'form.id as form_id',
-            'form.user_id as user_id',
+            'form_pembuatan.id as form_pembuatan_id',
+            'form_pembuatan.aplikasi_id',
+            'form_head.id as form_id',
+            'form_head.user_id as user_id',
             'aplikasi.id as aplikasi_id',
             'regions.id as region_id',
             'stores.id as store_id',
-            'dapartemen.id as dapartemen_id',
-            'form.created_at',
-            'form.username',
+            'departemen.id as store_id',
+            'form_head.created_at',
+            'form_head.username',
             'regions.name as nama_region',
-            'form_aplikasi.role_last_app',
-            'form_aplikasi.role_next_app',
+            'form_pembuatan.role_last_app',
+            'form_pembuatan.role_next_app',
             'stores.name as nama_store',
-            'dapartemen.dapartemen',
+            'departemen.departemen',
             'aplikasi.aplikasi',
-            'form_aplikasi.pass',
+            'form_pembuatan.pass',
             'users.name',
-            'form_aplikasi.id_vega as id_vega'
+            'form_pembuatan.id_vega as id_vega'
         );
 
         return $data;
@@ -75,8 +74,8 @@ class formAplikasiService
 
     public function getVega(){
         return $this->getDetail()
-        ->where('form_aplikasi.aplikasi_id', 1)
-        ->where('form_aplikasi.role_next_app', 0);
+        ->where('form_pembuatan.aplikasi_id', 1)
+        ->where('form_pembuatan.role_next_app', 0);
     }
 
     public function adminViewApproval(){
@@ -85,56 +84,56 @@ class formAplikasiService
 
     public function getApproveFilter($roleId)
     {
-        $formAplikasi = $this->getDetail()
+        $formPembuatan = $this->getDetail()
         ->where('role_next_app', $roleId)
         ->where('status', 1);
 
-        return $formAplikasi;
+        return $formPembuatan;
     }
 
     public function getApproveFilterByStore($roleId, $store)
     {
-        $formAplikasi = $this->getDetail()
+        $formPembuatan = $this->getDetail()
         ->where('role_next_app', $roleId)
         ->where('status', 0)
         ->whereIn('store', $store);
 
-        return $formAplikasi;
+        return $formPembuatan;
     }
 
-    public function getFormAplikasiById($formAplikasiId)
+    public function getformPembuatanById($formPembuatanId)
     {
         return $this->getDetail()
-        ->where('form_aplikasi.id', $formAplikasiId);
+        ->where('form_pembuatan.id', $formPembuatanId);
     }
 
     public function getById($id)
     {
         return $this->getdetail()
-        ->where('form_aplikasi.id', $id);
+        ->where('form_pembuatan.id', $id);
     }
 
     public function getFormByUserIdAllStore($userId){
         return $this->getDetail()
         ->where('form.user_id', $userId)
-        ->where('form_aplikasi.status', 1);
+        ->where('form_pembuatan.status', 1);
     }
 
     public function getFormByUserIdNonAllStore($userId){
         return $this->getDetail()
         ->where('form.user_id', $userId)
-        ->where('form_aplikasi.status', 0);
+        ->where('form_pembuatan.status', 0);
     }
 
     public function countApproval($roleId, $store){
         return $this->getDetail()
-        ->where('form_aplikasi.role_next_app', $roleId)
+        ->where('form_pembuatan.role_next_app', $roleId)
         ->where('status', 0)
         ->whereIn('store', $store);
     }
 
     public function countApprovalIt($roleId){
-        return $this->getDetail()->where('form_aplikasi.role_next_app', $roleId);
+        return $this->getDetail()->where('form_pembuatan.role_next_app', $roleId);
     }
 
     public function countAplikasiForAdmin(){

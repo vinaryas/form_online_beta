@@ -69,12 +69,12 @@
             @endif
         </div>
 
-          {{-- Dapartemen --}}
-          <div class="input-group mb-3">
-            <select class="form-control {{ $errors->has('dapartemen') ? 'is-invalid' : '' }}" name="dapartemen" id="dapartemen"
-            value="{{ old('dapartemen') }}" placeholder="dapartemen" autofocus>
-                @foreach ($namaDapartemen as $dapartemen)
-                    <option value="{{ $dapartemen->dapartemen }}">{{ $dapartemen->dapartemen }}</option>
+          {{-- departemen --}}
+          {{-- <div class="input-group mb-3">
+            <select class="form-control {{ $errors->has('departemen') ? 'is-invalid' : '' }}" name="departemen" id="departemen"
+            value="{{ old('departemen') }}" placeholder="departemen" autofocus>
+                @foreach ($namadepartemen as $departemen)
+                    <option value="{{ $departemen->departemen }}">{{ $departemen->departemen }}</option>
                 @endforeach
             </select>
             <div class="input-group-append">
@@ -82,12 +82,12 @@
                     <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
                 </div>
             </div>
-            @if($errors->has('dapartemen'))
+            @if($errors->has('departemen'))
                 <div class="invalid-feedback">
-                    <strong>{{ $errors->first('dapartemen') }}</strong>
+                    <strong>{{ $errors->first('departemen') }}</strong>
                 </div>
             @endif
-        </div>
+        </div> --}}
 
         {{-- Email field --}}
         <div class="input-group mb-3">

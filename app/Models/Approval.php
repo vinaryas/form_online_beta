@@ -8,9 +8,9 @@ use App\User;
 
 class Approval extends Model
 {
-    protected $table = 'history_approval';
+    protected $table = 'history_pembuatan';
     protected $guarded = [];
-    protected $fillable = ['form_aplikasi_id', 'user_id','username','name' ,'role_id', 'region_id', 'status'];
+    protected $fillable = ['form_pembuatan_id', 'user_id','username','name' ,'role_id', 'region_id', 'status'];
 
     public function user()
     {
@@ -27,9 +27,9 @@ class Approval extends Model
     	return $this->hasOne(Role::class, 'id', 'role_id');
     }
 
-    public function formAplikasi()
+    public function formPembuatan()
     {
-        return $this->hasOne(formAplikasi::class,'id', 'form_aplikasi_id');
+        return $this->hasOne(formPembuatan::class,'id', 'form_pembuatan_id');
     }
 
     public function getCreatedAtAttribute()

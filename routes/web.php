@@ -43,15 +43,17 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::group(['middleware' => 'permission:rj-server-status'], function (){
-        Route::get('rj_server', 'rj_server_statusController@index')->name('rj_server.index');
-        Route::get('/rj_server/{id}', 'rj_server_statusController@detail')->name('rj_server.detail');
-        Route::post('/rj_server/update', 'rj_server_statusController@status')->name('rj_server.status');
+        Route::group(['prefix' => 'rj_server'], function(){
+            Route::get('rj_server', 'rj_server_statusController@index')->name('rj_server.index');
+            Route::get('/rj_server/{id}', 'rj_server_statusController@detail')->name('rj_server.detail');
+            Route::post('/rj_server/update', 'rj_server_statusController@status')->name('rj_server.status');
+        });
     });
 
     Route::get('/history', 'approvalController@historyApproval')->name('history');
 
     Route::group(['middleware' => 'permission:auth'], function (){
-        Route::group(['prefix' => 'vega_void'], function(){
+        Route::group(['prefix' => 'vega'], function(){
             Route::get('/vega/index', 'vegaEditController@index')->name('vega.index');
             Route::get('/vega/{id}', 'vegaEditController@edit')->name('vega.edit');
             Route::post('/vega/update', 'vegaEditController@update')->name('vega.update');

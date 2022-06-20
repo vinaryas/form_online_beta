@@ -20,7 +20,7 @@
                 <label>NIK</label>
                 <input type="text" value="{{ $user->username }}" id="username"name="username" class="form-control ">
             </div>
-            <div class="col-lg-6 col-6">
+            <div class="col-lg-12 col-12">
                 <label>Region</label>
                 <select name="region_id" id="region_id" class="select2 form-control">
                     @foreach ($regions as $region)
@@ -28,14 +28,14 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col-lg-6 col-6">
-                <label>Dapartemen</label>
-                <select name="dapartemen_id" id="dapartemen_id" class="select2 form-control">
-                    @foreach ($dapartemens as $dapartemen)
-                    <option value="{{ $dapartemen->id }}"   {{$user->dapartemen_id == $dapartemen->id ? 'selected' : '' }} >{{ $dapartemen->dapartemen }}</option>
+            {{-- <div class="col-lg-6 col-6">
+                <label>departemen</label>
+                <select name="departemen_id" id="departemen_id" class="select2 form-control">
+                    @foreach ($departemens as $departemen)
+                    <option value="{{ $departemen->id }}"   {{$user->departemen_id == $departemen->id ? 'selected' : '' }} >{{ $departemen->departemen }}</option>
                     @endforeach
                 </select>
-            </div>
+            </div> --}}
         </div>
     </div>
     <div class="card-footer">

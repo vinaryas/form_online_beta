@@ -52,7 +52,7 @@ class userService
 
      public function find($id)
      {
-         return User::with('dapartemen', 'role', 'RoleUser.role', 'store')->find($id);
+         return User::with('departemen', 'role', 'RoleUser.role', 'store')->find($id);
      }
 
      public function authStoreArray()
@@ -82,15 +82,15 @@ class userService
     public function getDetail(){
 
         $data = DB::table('users')
-        ->join('dapartemen', 'users.dapartemen_id', '=', 'dapartemen.id')
+        ->leftjoin('stores', 'users.store_id', '=', 'stores.id')
         ->join('regions', 'users.region_id', '=', 'regions.id')
         ->leftjoin('roles', 'users.role_id', '=', 'roles.id')
         ->select(
             'users.id as user_id',
-            'dapartemen.id as dapartemen_id',
+            'stores.id as store_id',
             'regions.id as region_id',
             'roles.id as role_id',
-            'dapartemen.dapartemen',
+            'stores.name as store',
             'regions.name as region_name',
             'roles.display_name',
             'users.created_at',
