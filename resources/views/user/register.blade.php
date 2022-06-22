@@ -27,7 +27,7 @@
             @endif
         </div>
 
-          {{-- UserName --}}
+          {{-- NIK field --}}
           <label> NIK <i class="text-sm">(ex.123456789)</i></label>
           <div class="input-group mb-3">
             <input type="text" name="username" id="username" class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}"

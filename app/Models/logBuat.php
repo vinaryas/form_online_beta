@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use App\User;
 
-class Approval extends Model
+class logBuat extends Model
 {
-    protected $table = 'history_pembuatan';
+    protected $table = 'log_buat';
     protected $guarded = [];
-    protected $fillable = ['form_pembuatan_id', 'user_id','username','name' ,'role_id', 'region_id', 'status'];
+    protected $fillable = ['form_pembuatan_id', 'user_id','nik','name' ,'role_id', 'region_id', 'status'];
 
     public function user()
     {

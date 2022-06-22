@@ -39,27 +39,28 @@ class AppServiceProvider extends ServiceProvider
             $event->menu->add([
                 'text' => 'Form',
                 'icon' => 'fas fa-layer-group',
+                'permission' => 'form',
                 'submenu' => [
                     [
                         'text' => 'Form Pembuatan ID',
-                        'url' => route('form.index'),
+                        'url' => route('form-pembuatan.index'),
                         'icon' => 'fas fa-file-alt',
-                        'active' => [route('form.index').'/*',route('form.create')],
-                        'permission' => 'form',
+                        'active' => [route('form-pembuatan.index').'/*',route('form-pembuatan.create')],
+                        'permission' => 'form-pembuatan',
                     ],
                     [
                         'text' => 'Form Penghapusan ID',
-                        // 'url' => route('form.index'),
+                        'url' => route('form-penghapusan.index'),
                         'icon' => 'fas fa-file-alt',
-                        // 'active' => [route('form.index').'/*',route('form.create')],
-                        'permission' => 'form',
+                        'active' => ['form-penghapusan*'],
+                        'permission' => 'form-penghapusan',
                     ],
                     [
                         'text' => 'Form Pemindahan ID',
-                        // 'url' => route('form.index'),
+                        'url' => route('form-pemindahan.index'),
                         'icon' => 'fas fa-file-alt',
-                        // 'active' => [route('form.index').'/*',route('form.create')],
-                        'permission' => 'form',
+                        'active' => ['form-pemindahan*'],
+                        'permission' => 'form-pemindahan',
                     ],
 
                 ],
@@ -68,7 +69,7 @@ class AppServiceProvider extends ServiceProvider
             $event->menu->add([
                 'text' => 'Approval',
                 'url' => route('approval.index'),
-                'icon' => 'fas fa-file-invoice',
+                'icon' => '	fas fa-file-signature',
                 'active' => [route('approval.index').'/*'],
                 'permission' => 'approval',
             ]);

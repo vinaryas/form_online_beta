@@ -18,7 +18,7 @@
             </div>
             <div class="col-lg-6 col-6">
                 <label> NIK </label>
-                <input type="text" value="{{ $rj->cashnum }}" id="username"name="username" class="form-control" readonly>
+                <input type="text" value="{{ $rj->cashnum }}" id="nik"name="nik" class="form-control" readonly>
             </div>
             <div class="col-lg-6 col-6">
                 <label> Store </label>

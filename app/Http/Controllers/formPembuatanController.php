@@ -15,42 +15,41 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class formController extends Controller
+class formPembuatanController extends Controller
 {
     public function index()
     {
+        $user = userService::find(Auth::user()->id);
         $thisMonth = Carbon::now()->month;
-        $user = UserService::find(Auth::user()->id);
         if(Auth::user()->role_id == 3){
-            $formPembuatan = formPembuatanService::adminViewForm($thisMonth)->get();
+            $formPembuatan = formPembuatanService::getDetail($thisMonth)->get();
         }else{
             $formPembuatan = formPembuatanService::getFormByUserId(Auth::user()->id, $thisMonth)->get();
         }
 
-        return view('form.index', compact('formPembuatan', 'user'));
+        return view('form_pembuatan.index', compact('formPembuatan', 'user'));
     }
 
-    public function detail($id){
+    public function detail($id)
+    {
         $form = formPembuatanService::getById($id)->first();
 
-        return view('form.detail', compact('form'));
+        return view('form_pembuatan.detail', compact('form'));
     }
 
-    public function status($id){
-        $history = approvalService::getStatusApprovalById($id)
-        ->orderBy('history_pembuatan.created_at', 'ASC')
-        ->get();
+    public function status($id)
+    {
+        $log = approvalService::getStatusApprovalById($id)->get();
 
-        return view('form.status', compact('history'));
+        return view('form_pembuatan.status', compact('log'));
     }
 
     public function create()
     {
         $user = userService::find(Auth::user()->id);
         $app = aplikasiService::all()->get();
-        $stores = StoreService::all()->get();
 
-        return view('form.create', compact('user', 'app', 'stores'));
+        return view('form_pembuatan.create', compact('user', 'app'));
     }
 
     public function store(Request $request)
@@ -63,7 +62,7 @@ class formController extends Controller
                 $index = 0;
                 $dataForm = [
                     'user_id' => $request->user_id,
-                    'username' => $request->username,
+                    'nik' => $request->nik,
                     'store_id' => $request->store_id,
                     'region_id'=>$request->region_id,
                     'store_id' => $request->store_id,
@@ -71,7 +70,7 @@ class formController extends Controller
 
                 $storeForm = form_headService::store($dataForm);
 
-                foreach ($request->aplikasi_id as $aplikasi_id) {
+                foreach ($request->aplikasi_id as $aplikasi_id){
 
                     $id_vega = ($aplikasi_id == 1) ? $request->id_vega[$index] : null;
 
@@ -100,11 +99,11 @@ class formController extends Controller
                 DB::commit();
 
                 Alert::success('succes', 'form berhasil disimpan');
-                return redirect()->route('form.index');
+                return redirect()->route('form-pembuatan.index');
                 }catch (\Throwable $th){
                     dd($th);
                     Alert::error('Error!!',);
-                    return redirect()->route('form.index');
+                    return redirect()->route('form-pembuatan.index');
                 }
             }
             elseif(Auth::user()->role_id == 2){
@@ -112,7 +111,7 @@ class formController extends Controller
                     $index = 0;
                     $dataForm = [
                         'user_id' => $request->user_id,
-                        'username' => $request->username,
+                        'nik' => $request->nik,
                         'store_id' => $request->store_id,
                         'region_id'=>$request->region_id,
                         'store_id' => $request->store_id,
@@ -149,11 +148,11 @@ class formController extends Controller
                     DB::commit();
 
                     Alert::success('succes', 'form berhasil disimpan');
-                    return redirect()->route('form.index');
+                    return redirect()->route('form-pembuatan.index');
                     }catch (\Throwable $th){
                         dd($th);
                         Alert::error('Error!!',);
-                        return redirect()->route('form.index');
+                        return redirect()->route('form-pembuatan.index');
                     }
             }
             else{
@@ -161,7 +160,7 @@ class formController extends Controller
                 $index = 0;
                 $dataForm = [
                     'user_id' => $request->user_id,
-                    'username' => $request->username,
+                    'nik' => $request->nik,
                     'region_id'=>$request->region_id,
                     'store_id' => $request->store_id,
                 ];
@@ -194,14 +193,15 @@ class formController extends Controller
 
                     $index++;
                 }
+
                 DB::commit();
 
                 Alert::success('succes', 'form berhasil disimpan');
-                return redirect()->route('form.index');
+                return redirect()->route('form-pembuatan.index');
                 }catch (\Throwable $th){
                     dd($th);
                     Alert::error('Error!!',);
-                    return redirect()->route('form.index');
+                    return redirect()->route('form-pembuatan.index');
                 }
         }
     }

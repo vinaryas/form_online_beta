@@ -24,9 +24,9 @@
                 @foreach ($vega as $detail)
                     <tr>
                         <td>{{ $detail->created_at }}</td>
-                        <td>{{ $detail->username }}</td>
+                        <td>{{ $detail->nik }}</td>
                         <td>{{ $detail->name }}</td>
-                        {{-- <td>{{ $detail->departemen }}</td> --}}
+                        <td>{{ $detail->nama_store }}</td>
                         <td><a href="{{ route('vega.edit', $detail->form_pembuatan_id) }}"
                             class="btn btn-info btn-sm"> Edit <i class="fas fa-angle-right"></i>
                         </a></td>

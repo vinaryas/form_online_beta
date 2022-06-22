@@ -10,13 +10,13 @@
 <form class="card" action="" method="GET">
     {{ csrf_field() }}
     <div class="card-header">
-        <a href="{{ route('form.index') }}" class="btn btn-info"><i class="fas fa-angle-left"></i> Kembali </a>
+        <a href="{{ route('form-pembuatan.index') }}" class="btn btn-info"><i class="fas fa-angle-left"></i> Kembali </a>
     </div>
     <div class="card-body">
         <div class="row">
             <div class="col-md-6">
                 <label class="">NIK</label>
-                <input type="text" value="{{ $form->username }}" id="username" name="username" class="form-control" readonly>
+                <input type="text" value="{{ $form->nik }}" id="nik" name="nik" class="form-control" readonly>
             </div>
             <div class="col-md-6">
                 <label class="">Name</label>
@@ -30,16 +30,11 @@
                 <label>Store</label>
                 <input type="text"value="{{ $form->nama_store }}" name="store_id" id="store_id" class="form-control" readonly>
             </div>
-            {{-- <div class="col-md-6">
-                <label>departemen</label>
-                <input type="text"value="{{ $form->departemen }}" name="departemen_id" id="departemen_id" class="form-control" readonly>
-            </div> --}}
             <div class="col-md-6">
                 <label>Aplikasi</label>
                 <input type="text"value=" {{ $form->aplikasi }}" name="aplikasi_id[]" id="aplikasi_id" class="form-control" readonly>
             </div>
-        </div>
-            <div class="col-md-20">
+            <div class="col-md-6">
                 @if ($form->pass != null)
                     <label>Password</label>
                     <input type="text" name="pass" id="pass[]" value="{{ $form->pass}}" class="form-control" readonly>

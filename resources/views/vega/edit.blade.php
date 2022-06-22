@@ -18,16 +18,12 @@
             </div>
             <div class="col-lg-6 col-6">
                 <label>NIK</label>
-                <input type="text" value="{{ $vega->username }}" id="username"name="username" class="form-control" readonly>
+                <input type="text" value="{{ $vega->nik }}" id="nik"name="nik" class="form-control" readonly>
             </div>
             <div class="col-lg-6 col-6">
                 <label>Region</label>
                 <input type="text" value="{{ $vega->nama_region }}" name="region_id" id="region_id" class="select2 form-control" readonly>
             </div>
-            {{-- <div class="col-lg-6 col-6">
-                <label>departemen</label>
-                <input type="text" value="{{ $vega->departemen }}"  name="departemen_id" id="departemen_id" class="select2 form-control" readonly>
-            </div> --}}
             <div class="col-lg-6 col-6">
                 <label>ID Vega</label>
                 <input type="text" value="{{ $vega->id_vega }}" id="id_vega" name="id_vega" class="form-control" maxlength="10">

@@ -43,7 +43,7 @@ class HomeController extends Controller
             $countApproved = approvalService::countApproved(Auth::user()->id, $thisMonth)->get()->count();
             $countDisapproved = approvalService::countDisapproved(Auth::user()->id, $thisMonth)->get()->count();
         }elseif(Auth::user()->role_id == 3){
-            $countApproval = formPembuatanService::countAplikasiForAdmin($thisMonth)->get()->count();
+            $countApproval = formPembuatanService::getDetail($thisMonth)->get()->count();
             $countForm = form_headService::countAdmin($thisMonth)->get()->count();
             $countApproved = approvalService::countApprovedAdmin($thisMonth)->get()->count();
             $countDisapproved = approvalService::countDisapprovedAdmin($thisMonth)->get()->count();
@@ -53,7 +53,6 @@ class HomeController extends Controller
             $countDisapproved = approvalService::countDisapproved(Auth::user()->id, $thisMonth)->get()->count();
         }
 
-        $user = userService::find(Auth::user()->id);
-        return view('home', compact('user', 'countApproval', 'countForm', 'countApproved', 'countDisapproved'));
+        return view('home', compact('countApproval', 'countForm', 'countApproved', 'countDisapproved'));
     }
 }

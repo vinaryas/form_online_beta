@@ -28,12 +28,26 @@ Auth::routes();
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
-    Route::group(['middleware' => 'permission:form'], function (){
-        Route::get('/form', 'formController@index')->name('form.index');
-        Route::get('/form/create', 'formController@create')->name('form.create');
-        Route::get('/form/detail/{id}', 'formController@detail')->name('form.detail');
-        Route::post('/form/create', 'formController@store')->name('form.store');
-        Route::get('/form/status/{id}', 'formController@status')->name('form.status');
+    Route::group(['middleware' => 'permission:form-pembuatan'], function (){
+        Route::get('/form-pembuatan', 'formPembuatanController@index')->name('form-pembuatan.index');
+        Route::get('/form-pembuatan/create', 'formPembuatanController@create')->name('form-pembuatan.create');
+        Route::get('/form-pembuatan/detail/{id}', 'formPembuatanController@detail')->name('form-pembuatan.detail');
+        Route::post('/form-pembuatan/create', 'formPembuatanController@store')->name('form-pembuatan.store');
+        Route::get('/form-pembuatan/status/{id}', 'formPembuatanController@status')->name('form-pembuatan.status');
+    });
+
+    Route::group(['middleware' => 'permission:form-penghapusan'], function (){
+        Route::group(['prefix' => 'form-penghapusan'], function(){
+            Route::get('/form-penghapusan', 'formPenghapusanController@index')->name('form-penghapusan.index');
+            Route::get('/form-penghapusan/create/{id}', 'formPenghapusanController@create')->name('form-penghapusan.create');
+        });
+    });
+
+    Route::group(['middleware' => 'permission:form-pemindahan'], function (){
+        Route::group(['prefix' => 'form-pemindahan'], function(){
+            Route::get('/form-pemindahan', 'formPemindahanController@index')->name('form-pemindahan.index');
+            Route::get('/form-pemindahan/create/{id}', 'formPemindahanController@create')->name('form-pemindahan.create');
+        });
     });
 
     Route::group(['middleware' => 'permission:approval'], function (){
@@ -49,8 +63,6 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/rj_server/update', 'rj_server_statusController@status')->name('rj_server.status');
         });
     });
-
-    Route::get('/history', 'approvalController@historyApproval')->name('history');
 
     Route::group(['middleware' => 'permission:auth'], function (){
         Route::group(['prefix' => 'vega'], function(){

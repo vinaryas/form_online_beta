@@ -18,7 +18,6 @@
                     <th>NIK</th>
                     <th>Nama</th>
                     <th>Region</th>
-                    <th>Store</th>
                     <th>Role selected</th>
                     <th>Role select</th>
                 </tr>
@@ -30,7 +29,6 @@
                         <td>{{ $detail->username }}</td>
                         <td>{{ $detail->name}}</td>
                         <td>{{ $detail->region_name }}</td>
-                        <td>{{ $detail->store }}</td>
                         <td>{{ $detail->display_name }}</td>
                         <td> <a href="{{ route('role.create', $detail->user_id) }}" class="btn btn-info btn-sm"> Select Role <i class="fas fa-angle-right"></i>  </a> </td>
                     </tr>

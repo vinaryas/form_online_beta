@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFormHeadTable extends Migration
+class CreateFormLogTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateFormHeadTable extends Migration
      */
     public function up()
     {
-        Schema::create('form_head', function (Blueprint $table) {
+        Schema::create('form_log', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
             $table->integer('nik');
-            $table->integer('store_id')->nullable();
-            $table->integer('region_id');
+            $table->string('nama');
+            $table->string('proses');
+            $table->integer('id_toko');
+            $table->string('nama_toko');
+            $table->text('alasan');
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ class CreateFormHeadTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('form_head');
+        Schema::dropIfExists('form_log');
     }
 }

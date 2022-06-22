@@ -43,7 +43,7 @@ class User extends Authenticatable
 
     public function store()
     {
-        return $this->hasMany(Store::class,'id', 'store_id' );
+        return $this->hasOne(Store::class,'id', 'store_id' );
     }
 
     public function role()

@@ -2,12 +2,8 @@
 
 @section('title', 'Form')
 
-{{-- @section('content_header')
-<h1 class="m-0 text-dark"> <b> Form </b> </h1>
-@stop --}}
-
 @section('content')
-<form class="card" action="{{ route('form.store') }}" method="POST">
+<form class="card" action="{{ route('form-pembuatan.store') }}" method="POST">
     {{ csrf_field() }}
     <div class="card-header">
         <h3 class="m-0 text-dark">
@@ -18,37 +14,26 @@
     <div class="card-body">
         <div class="form-group row">
             <input type="hidden" value="{{ $user->id }}" name="user_id" id="user_id">
-            <input type="hidden" value="{{ $user->name }}" name="name" id="name">
+            <input type="hidden" value="{{ $user->username }}" name="name" id="name">
             <div class="col-md-4">
                 <label>NIK</label>
-                <input type="text" value="{{ $user->username }}" id="username"name="username" class="form-control form-control-sm" readonly>
+                <input type="text" value="{{ $user->username }}" id="nik"name="nik" class="form-control" readonly>
             </div>
             <div class="col-md-4">
                 <label>Region</label>
-                <select name="region_id" id="region_id" class="form-control form-control-sm" readonly>
+                <select name="region_id" id="region_id" class="form-control" readonly>
                     <option value="{{ $user->region_id }}">{{ $user->region->name }}</option>
                 </select>
             </div>
-            {{-- <div class="col-md-4">
-                <label>departemen</label>
-                <select name="departemen_id" id="departemen_id" class="form-control form-control-sm" readonly>
-                    <option value="{{ $user->departemen_id }}">{{ $user->departemen->departemen }}</option>
-                </select>
-            </div> --}}
-        </div>
-        @if ($user->all_store == 'n')
-        <div class="row">
-            <div class="col-md-12">
+            @if (Auth::user()->role_id == 0)
+            <div class="col-md-4">
                 <label>Store</label>
-                <select name="store_id" id="store_id" class="select2 form-control form-control-sm" placeholder="Select Store" required>
-                    <option value="">Select Store</option>
-                    @foreach ($stores as $store )
-                    <option value="{{ $store->id }}">{{ $store->name }}</option>
-                    @endforeach
+                <select name="store_id" id="store_id" class="form-control" readonly>
+                    <option value="{{ $user->store_id }}">{{ $user->store->name }}</option>
                 </select>
             </div>
+            @endif
         </div>
-        @endif
         <br>
         <label>Aplikasi</label>
         <div class="row">
@@ -75,7 +60,7 @@
         </div>
         <br>
         <div class="float-left">
-            <a href="{{ route('form.index') }}" class="btn btn-danger"><i class="fas fa-times"></i> Batal </a>
+            <a href="{{ route('form-pembuatan.index') }}" class="btn btn-danger"><i class="fas fa-times"></i> Batal </a>
         </div>
         <div class="float-right">
             <button type="submit" class="btn btn-success" onclick="this.form.submit(); this.disabled = true; this.value = 'Submitting the form';">

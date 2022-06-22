@@ -12,7 +12,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class storeApprovalController extends Controller
 {
     public function index(){
-        $user = userService::getUserAreaKordinator()->get();
+        $user = userService::getUser()->get();
 
         return view('store_user.index', compact('user'));
     }
@@ -31,6 +31,7 @@ class storeApprovalController extends Controller
                 'store_id' =>$request->store_id,
                 'user_id' =>$request->user_id,
             ];
+
             $saveData = UserStoreService::store($data, $request->user_id);
 
             DB::commit();
@@ -51,8 +52,7 @@ class storeApprovalController extends Controller
     }
 
     public function detailDeleteById($storeId){
-        $data = UserStoreService::getUserStoreById($storeId)
-        ->first();
+        $data = UserStoreService::getUserStoreById($storeId)->first();
 
         return view('store_user.deleteDetail', compact('data'));
     }

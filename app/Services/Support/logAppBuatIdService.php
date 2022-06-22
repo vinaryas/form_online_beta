@@ -2,10 +2,10 @@
 
 namespace App\Services\Support;
 
-use App\Services\historyService as SupportService;
+use App\Services\logAppBuatIdService as SupportService;
 use Illuminate\Support\Facades\Facade;
 
-class historyService extends Facade
+class logAppBuatIdService extends Facade
 {
 	/**
      * Get the registered name of the component.

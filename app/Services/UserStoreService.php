@@ -16,6 +16,7 @@ class UserStoreService
 
     public function store($data)
     {
+        // dd($data);
         return $this->userStore->create($data);
     }
 
@@ -54,13 +55,13 @@ class UserStoreService
     }
 
     public function getUserStoreById($storeId){
-        return $this->getDetail()->where('store_id', $storeId);
+        return $this->getDetail()->where('stores.id', $storeId);
     }
 
     public function deleteByStoreId($storeId, $userId){
         return $this->getDetail()
-        ->where('store_id', $storeId)
-        ->where('user_id', $userId)
+        ->where('stores.id', $storeId)
+        ->where('users.id', $userId)
         ->delete();
     }
 }

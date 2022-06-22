@@ -33,62 +33,6 @@
             @endif
         </div>
 
-          {{-- UserName --}}
-          <div class="input-group mb-3">
-            <input type="text" name="username" class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}"
-            value="{{ old('username') }}" placeholder="Username" autofocus>
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
-            </div>
-            @if($errors->has('username'))
-                <div class="invalid-feedback">
-                    <strong>{{ $errors->first('username') }}</strong>
-                </div>
-            @endif
-        </div>
-
-          {{-- Role --}}
-          <div class="input-group mb-3">
-            <select class="form-control {{ $errors->has('role_id') ? 'is-invalid' : '' }}" name="role_id" id="role_id"
-            value="{{ old('role_id') }}" placeholder="Role" autofocus>
-                @foreach ($roles as $role)
-                    <option value="{{ $role->roles }}">{{ $roles->display_name }}</option>
-                @endforeach
-            </select>
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
-            </div>
-            @if($errors->has('role_id'))
-                <div class="invalid-feedback">
-                    <strong>{{ $errors->first('role_id') }}</strong>
-                </div>
-            @endif
-        </div>
-
-          {{-- departemen --}}
-          {{-- <div class="input-group mb-3">
-            <select class="form-control {{ $errors->has('departemen') ? 'is-invalid' : '' }}" name="departemen" id="departemen"
-            value="{{ old('departemen') }}" placeholder="departemen" autofocus>
-                @foreach ($namadepartemen as $departemen)
-                    <option value="{{ $departemen->departemen }}">{{ $departemen->departemen }}</option>
-                @endforeach
-            </select>
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
-            </div>
-            @if($errors->has('departemen'))
-                <div class="invalid-feedback">
-                    <strong>{{ $errors->first('departemen') }}</strong>
-                </div>
-            @endif
-        </div> --}}
-
         {{-- Email field --}}
         <div class="input-group mb-3">
             <input type="email" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"

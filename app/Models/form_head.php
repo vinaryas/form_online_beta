@@ -8,7 +8,7 @@ class form_head extends Model
 {
     protected $table = 'form_head';
     protected $fillable = ([
-        'username',
+        'nik',
         'user_id',
         'region_id',
         'store_id',

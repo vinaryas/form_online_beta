@@ -20,8 +20,8 @@ class formPembuatan extends Model
         'id_vega'
     ];
 
-    public function form(){
-        return $this->hasMany(form::class, 'id', 'form_id');
+    public function form_head(){
+        return $this->hasOne(form_head::class, 'id', 'form_id');
     }
 
     public function aplikasi(){

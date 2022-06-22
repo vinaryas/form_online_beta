@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'Form Pembuatan ID Online',
+    'title' => 'ID Management Online',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>Form Pembuatan</b>ID',
+    'logo' => '<b> ID </b> Management',
     'logo_img' => 'images/MM.jpg',
     'logo_img_class' => 'brand-image elevation-3',
     'logo_img_xl' => null,

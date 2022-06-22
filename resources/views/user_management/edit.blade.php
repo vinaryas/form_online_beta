@@ -28,14 +28,6 @@
                     @endforeach
                 </select>
             </div>
-            {{-- <div class="col-lg-6 col-6">
-                <label>departemen</label>
-                <select name="departemen_id" id="departemen_id" class="select2 form-control">
-                    @foreach ($departemens as $departemen)
-                    <option value="{{ $departemen->id }}"   {{$user->departemen_id == $departemen->id ? 'selected' : '' }} >{{ $departemen->departemen }}</option>
-                    @endforeach
-                </select>
-            </div> --}}
         </div>
     </div>
     <div class="card-footer">

@@ -102,6 +102,9 @@ class userService
         return $data;
     }
 
+    public function getById($userId){
+        return $this->getDetail()->where('users.id', $userId);
+    }
 
     public function findRoleUser($RoleId){
         return $this->all()->where('role_id', $RoleId);
@@ -111,8 +114,7 @@ class userService
         return $this->getDetail()->where('users.all_store', 'n')->where('role_id', '!=', null);
     }
 
-    public function getUserAreaKordinator(){
-        return $this->getDetail()->where('role_id', '!=', null)->where('role_id', 2);
+    public function getUser(){
+        return $this->getDetail()->where('role_id', '!=', null);
     }
-
 }

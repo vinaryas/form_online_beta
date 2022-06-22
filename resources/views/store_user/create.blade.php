@@ -15,7 +15,16 @@
             <input type="hidden" value="{{ $user->name }}" name="name" id="name">
             <div class="col-md-4">
                 <label>NIK</label>
-                <input type="text" value="{{ $user->username }}" id="username"name="username" class="form-control" readonly>
+                <input type="text" value="{{ $user->username }}" id="nik"name="nik" class="form-control" readonly>
+            </div>
+            <div class="col-md-8">
+                <label>Store</label>
+                <select name="store_id" id="store_id" class="select2 form-control" placeholder="Select Store" required>
+                    <option value="">Select Store</option>
+                    @foreach ($stores as $store )
+                    <option value="{{ $store->id }}">{{ $store->name }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="col-md-4">
                 <label>Region</label>
@@ -23,22 +32,8 @@
                     <option value="{{ $user->region_id }}">{{ $user->region->name }}</option>
                 </select>
             </div>
-            {{-- <div class="col-md-4">
-                <label>departemen</label>
-                <select name="departemen_id" id="departemen_id" class="form-control" readonly>
-                    <option value="{{ $user->departemen_id }}">{{ $user->departemen->departemen }}</option>
-                </select>
-            </div> --}}
         </div>
-        <div class="col-md-12">
-            <label>Store</label>
-            <select name="store_id" id="store_id" class="select2 form-control" placeholder="Select Store" required>
-                <option value="">Select Store</option>
-                @foreach ($stores as $store )
-                <option value="{{ $store->id }}">{{ $store->name }}</option>
-                @endforeach
-            </select>
-        </div>
+
         <br>
             <div class="float-left">
                 <a href="{{ route('store.index') }}" class="btn btn-danger"><i class="fas fa-times"></i> Batal </a>

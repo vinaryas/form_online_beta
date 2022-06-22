@@ -19,7 +19,6 @@ use RealRashid\SweetAlert\Facades\Alert;
 class approvalController extends Controller
 {
     public function index(){
-        $user = UserService::find(Auth::user()->id);
         $thisMonth = Carbon::now()->month;
         if(Auth::user()->role_id == 3){
             $formPembuatan = formPembuatanService::adminViewApproval($thisMonth)->get();
@@ -31,7 +30,7 @@ class approvalController extends Controller
             }
         }
 
-        return view('approval.index', compact('formPembuatan', 'user'));
+        return view('approval.index', compact('formPembuatan'));
     }
 
     public function create($id){
@@ -56,7 +55,7 @@ class approvalController extends Controller
                     'form_pembuatan_id' => $request->form_pembuatan_id,
                     'region_id'=> $request->region_id,
                     'user_id' => Auth::user()->id,
-                    'username'=>Auth::user()->username,
+                    'nik'=>Auth::user()->username,
                     'name'=>Auth::user()->name,
                     'role_id' => $authRole,
                     'status' => 'Approved'
@@ -70,7 +69,7 @@ class approvalController extends Controller
                         $getPos =  cashierService::getPosStore()->first();
 
                         $dataPos = [
-                            'cashnum' => substr($getPos->username, 3),
+                            'cashnum' => substr($getPos->nik, 3),
                             'nama' => $getPos->name,
                             'password' => $getPos->pass,
                             'roles' => $getPos->role_id,
@@ -93,7 +92,7 @@ class approvalController extends Controller
                         $getPos =  cashierService::getPosBO()->first();
 
                             $dataPos = [
-                                'cashnum' => substr($getPos->username, 3),
+                                'cashnum' => substr($getPos->nik, 3),
                                 'nama' => $getPos->name,
                                 'password' => $getPos->pass,
                                 'roles' => $getPos->role_id,
@@ -118,7 +117,7 @@ class approvalController extends Controller
                         foreach ($stores as $store) {
 
                             $dataPos = [
-                                'cashnum' => substr($getPos->username, 3),
+                                'cashnum' => substr($getPos->nik, 3),
                                 'nama' => $getPos->name,
                                 'password' => $getPos->pass,
                                 'roles' => $getPos->role_id,
@@ -169,7 +168,7 @@ class approvalController extends Controller
                     'form_pembuatan_id' => $request->form_pembuatan_id,
                     'region_id'=> $request->region_id,
                     'user_id' => Auth::user()->id,
-                    'username'=>Auth::user()->username,
+                    'nik'=>Auth::user()->nik,
                     'name'=>Auth::user()->name,
                     'role_id' => $authRole,
                     'status' => 'Disapproved'

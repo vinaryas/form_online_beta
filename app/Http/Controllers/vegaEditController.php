@@ -12,13 +12,13 @@ class vegaEditController extends Controller
     public function index(){
         $vega = formPembuatanService::getVega()->get();
 
-        return view('vega_void.index', compact('vega'));
+        return view('vega.index', compact('vega'));
     }
 
     public function edit($id){
         $vega = formPembuatanService::getById($id)->first();
 
-        return view('vega_void.edit', compact('vega'));
+        return view('vega.edit', compact('vega'));
     }
 
     public function update(Request $request){

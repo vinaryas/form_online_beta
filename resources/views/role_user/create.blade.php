@@ -32,12 +32,6 @@
                     @endforeach
                 </select>
             </div>
-            {{-- <div class="col-lg-6 col-6">
-                <label>departemen</label>
-                <select name="departemen_id" id="departemen_id" class="form-control" readonly>
-                    <option value="{{ $user->departemen_id }}">{{ $user->departemen->departemen }}</option>
-                </select>
-            </div> --}}
         </div>
     </div>
     <div class="card-footer">

@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-<form class="card" action="{{ route('form.index') }}" method="GET">
+<div class="card" method="GET">
     {{ csrf_field() }}
      <div class="card-body">
         <table class="table table-bordered table-striped" id="table" style="width: 100%;">
@@ -17,7 +17,6 @@
                     <th>Name</th>
                     <th>NIK</th>
                     <th>Region</th>
-                    <th>Store</th>
                     <th>Detail</th>
                 </tr>
             </thead>
@@ -28,7 +27,6 @@
                         <td>{{ $detail->name }}</td>
                         <td>{{ $detail->username }}</td>
                         <td>{{ $detail->region_name }}</td>
-                        <td>{{ $detail->store }}</td>
                         <td> <a href="{{ route('management.edit', $detail->user_id) }}"
                             class="btn btn-info btn-sm"> Edit <i class="fas fa-angle-right"> </i></a>
                         </td>
@@ -37,7 +35,7 @@
             </tbody>
         </table>
     </div>
-</form>
+</div>
 
 @stop
 

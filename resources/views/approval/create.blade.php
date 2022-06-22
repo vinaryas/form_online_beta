@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-md-6">
                 <label class="">NIK</label>
-                <input type="text" value="{{ $form->username }}" id="username" name="username" class="form-control" readonly>
+                <input type="text" value="{{ $form->nik }}" id="nik" name="nik" class="form-control" readonly>
             </div>
             <div class="col-md-6">
                 <label class="">Name</label>
@@ -45,8 +45,7 @@
                     <option value="{{ $form->aplikasi_id}}"> {{ $form->aplikasi }}</option>
                 </select>
             </div>
-        </div>
-            <div class="col-md-20">
+            <div class="col-md-6">
                 @if ($form->pass != null)
                     @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 3)
                     <label>Password</label>
@@ -68,7 +67,7 @@
                 </button>
             </div>
             <div class="float-right">
-                <button type="submit" class="btn btn-success" name="approve" id="approve" value="approve">
+                <button type="submit" class="btn btn-success" name="approve" id="approve" value="approve"  onclick="this.form.submit(); this.disabled = true; this.value = 'approve';">
                     <i class="fas fa-save"></i> Approve
                 </button>
             </div>

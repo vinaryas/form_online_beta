@@ -24,50 +24,39 @@
 </div>
 
 @elseif (Auth::user()->role_id == 3)
-<form class="card" action="{{ route('form.index') }}" method="GET">
+<div class="card" method="GET">
     {{ csrf_field() }}
      <div class="card-body">
         <table class="table table-bordered table-striped" id="table" style="width: 100%;">
             <thead>
                 <tr>
-                    <th>Waktu Pembuatan</th>
+                    <th>Nama</th>
                     <th>NIK</th>
                     <th>Region</th>
-                    <th>departemen</th>
-                    <th>Aplikasi</th>
-                    <th>Status</th>
-                    <th>Detail</th>
+                    <th>Store</th>
+                    <th>Ajukan Penghapusan</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($formPembuatan as $detail)
+                @foreach ($form as $detail)
                     <tr>
-                        <td>{{ $detail->created_at }}</td>
+                        <td>{{ $detail->name }}</td>
                         <td>{{ $detail->username }}</td>
-                        <td>{{ $detail->nama_region }}</td>
-                        <td>{{ $detail->departemen }}</td>
-                        <td>{{ $detail->aplikasi }}</td>
-                        <td> <a href="{{ route('form.status', $detail->form_pembuatan_id) }}"
-                            class="btn btn-info btn-sm"> status <i class="fas fa-angle-right"> </i></a>
-                        </td>
-                        <td><a href="{{ route('form.detail', $detail->form_pembuatan_id) }}"
-                            class="btn btn-info btn-sm"> detail <i class="fas fa-angle-right"> </i></a>
+                        <td>{{ $detail->region_name }}</td>
+                        <td>{{ $detail->store }}</td>
+                        <td> <a href="{{ route('form-pemindahan.create', $detail->user_id) }}"
+                            class="btn btn-info btn-sm"> Ajukan Pemindahan <i class="fas fa-angle-right"> </i></a>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
-</form>
+</div>
 
 @else
-<form class="card" action="{{ route('form.index') }}" method="GET">
+<div class="card"  method="GET">
     {{ csrf_field() }}
-     <div class="card-header">
-         <a href="{{ route('form.create') }}" class="btn btn-primary">
-            <i class="fas fa-file"></i> Buat Form
-        </a>
-     </div>
      <div class="card-body">
         <table class="table table-bordered table-striped" id="table" style="width: 100%;">
             <thead>
@@ -75,32 +64,28 @@
                     <th>Waktu Pembuatan</th>
                     <th>NIK</th>
                     <th>Region</th>
-                    <th>departemen</th>
-                    <th>Aplikasi</th>
+                    <th>Store</th>
                     <th>Status</th>
                     <th>Detail</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($formPembuatan as $detail)
+                @foreach ($form as $detail)
                     <tr>
                         <td>{{ $detail->created_at }}</td>
                         <td>{{ $detail->username }}</td>
-                        <td>{{ $detail->nama_region }}</td>
-                        <td>{{ $detail->departemen }}</td>
-                        <td>{{ $detail->aplikasi }}</td>
-                        <td> <a href="{{ route('form.status', $detail->form_pembuatan_id) }}"
-                            class="btn btn-info btn-sm"> status <i class="fas fa-angle-right"> </i></a>
-                         </td>
-                        <td><a href="{{ route('form.detail', $detail->form_pembuatan_id) }}"
-                            class="btn btn-info btn-sm"> detail <i class="fas fa-angle-right"> </i></a>
+                        <td>{{ $detail->region_name }}</td>
+                        <td>{{ $detail->store }}</td>
+                        <td> active </td>
+                        <td><a href="{{ route('form-pemindahan.create', $detail->user_id) }}"
+                            class="btn btn-info btn-sm"> Ajukan Pemindahan <i class="fas fa-angle-right"> </i></a>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
-</form>
+</div>
 @endif
 
 @stop
