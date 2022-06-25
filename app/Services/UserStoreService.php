@@ -14,24 +14,19 @@ class UserStoreService
         $this->userStore = $userStore;
     }
 
-    public function store($data)
-    {
-        // dd($data);
+    public function store($data){
         return $this->userStore->create($data);
     }
 
-    public function all()
-	{
+    public function all(){
 		return $this->userStore->query()->with('stores');
 	}
 
-	public function update($data, $id)
-	{
+	public function update($data, $id){
 		return $this->userStore->where('id', $id)->update($data);
 	}
 
-    public function delete($data)
-    {
+    public function delete($data){
     	return $this->userStore->where('id', $data['id'])->delete();
     }
 
@@ -40,10 +35,11 @@ class UserStoreService
         ->join('users', 'user_store.user_id', '=', 'users.id')
         ->join('stores', 'user_store.store_id', '=', 'stores.id')
         ->select(
-            'user_store.id as id',
             'users.id as user_id',
-            'stores.id as store_id',
             'users.name as user_name',
+            'users.role_id as role_id',
+            'user_store.id as id',
+            'stores.id as store_id',
             'stores.name as store_name'
         );
 

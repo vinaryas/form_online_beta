@@ -6,6 +6,7 @@ use App\Services\Support\regionService;
 use App\Services\Support\roleUserService;
 use App\Services\Support\StoreService;
 use App\Services\Support\userService;
+use App\Services\Support\UserStoreService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -34,13 +35,20 @@ class registerController extends Controller
         $save = userService::store($request->except('_token'));
 
         try{
-            $data = [
+            $userRoleData = [
                 'user_id' => $save->id,
-                'role_id' => '0',
+                'role_id' => config('setting_app.role_id.kasir'),
                 'user_type' => 'App\User',
             ];
 
-            $storeData = roleUserService::store($data);
+            $storeUserRoleData = roleUserService::store($userRoleData);
+
+            $userStoreData = [
+                'store_id'=> $save->store_id,
+                'user_id' => $save->id,
+            ];
+
+            $storeUserStoreData = UserStoreService::store($userStoreData);
 
             DB::commit();
 

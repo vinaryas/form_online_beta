@@ -23,7 +23,7 @@
     </div>
 </div>
 
-@elseif (Auth::user()->role_id == 3)
+@elseif (Auth::user()->role_id == config('setting_app.role_id.admin'))
 <form class="card" action="{{ route('form-pembuatan.index') }}" method="GET">
     {{ csrf_field() }}
      <div class="card-body">
@@ -63,7 +63,7 @@
 @else
 <form class="card" action="{{ route('form-pembuatan.index') }}" method="GET">
     {{ csrf_field() }}
-     <div class="card-header">
+     <div class="card-body">
          <a href="{{ route('form-pembuatan.create') }}" class="btn btn-primary">
             <i class="fas fa-file"></i> Buat Form
         </a>
@@ -75,7 +75,6 @@
                     <th>Waktu Pembuatan</th>
                     <th>NIK</th>
                     <th>Region</th>
-                    <th>Store</th>
                     <th>Aplikasi</th>
                     <th>Status</th>
                     <th>Detail</th>
@@ -87,7 +86,6 @@
                         <td>{{ $detail->created_at }}</td>
                         <td>{{ $detail->nik }}</td>
                         <td>{{ $detail->nama_region }}</td>
-                        <td>{{ $detail->nama_store }}</td>
                         <td>{{ $detail->aplikasi }}</td>
                         <td> <a href="{{ route('form-pembuatan.status', $detail->form_pembuatan_id) }}"
                             class="btn btn-info btn-sm"> status <i class="fas fa-angle-right"> </i></a>

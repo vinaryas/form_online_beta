@@ -90,7 +90,7 @@
 	</div>
 </div>
 
-@elseif (Auth::user()->role_id == 3)
+@elseif (Auth::user()->role_id == config('setting_app.role_id.admin'))
 <div class="row">
     <div class="col-lg-12 col-6">
 		<div class="small-box bg-info">

@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Services\Support\aplikasiService;
-use App\Services\Support\approvalService;
+use App\Services\Support\approvalPembuatanService;
 use App\Services\Support\form_headService;
 use App\Services\Support\formPembuatanService;
-use App\Services\Support\formHeadService;
-use App\Services\Support\StoreService;
 use App\Services\Support\userService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -17,11 +15,10 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class formPembuatanController extends Controller
 {
-    public function index()
-    {
+    public function index(){
         $user = userService::find(Auth::user()->id);
         $thisMonth = Carbon::now()->month;
-        if(Auth::user()->role_id == 3){
+        if(Auth::user()->role_id == config('setting_app.role_id.admin')){
             $formPembuatan = formPembuatanService::getDetail($thisMonth)->get();
         }else{
             $formPembuatan = formPembuatanService::getFormByUserId(Auth::user()->id, $thisMonth)->get();
@@ -30,8 +27,7 @@ class formPembuatanController extends Controller
         return view('form_pembuatan.index', compact('formPembuatan', 'user'));
     }
 
-    public function detail($id)
-    {
+    public function detail($id){
         $form = formPembuatanService::getById($id)->first();
 
         return view('form_pembuatan.detail', compact('form'));
@@ -39,42 +35,39 @@ class formPembuatanController extends Controller
 
     public function status($id)
     {
-        $log = approvalService::getStatusApprovalById($id)->get();
+        $log = approvalPembuatanService::getStatusApprovalById($id)->get();
 
         return view('form_pembuatan.status', compact('log'));
     }
 
-    public function create()
-    {
+    public function create(){
         $user = userService::find(Auth::user()->id);
         $app = aplikasiService::all()->get();
 
         return view('form_pembuatan.create', compact('user', 'app'));
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         DB::beginTransaction();
         $user = userService::findRoleUser(auth::user()->role_id)->first();
 
-        if(Auth::user()->role_id == 0){
+        if(Auth::user()->role_id == config('setting_app.role_id.kasir')){
             try {
                 $index = 0;
                 $dataForm = [
-                    'user_id' => $request->user_id,
-                    'nik' => $request->nik,
+                    'created_by' => Auth::user()->id,
+                    'nik' => Auth::user()->username,
                     'store_id' => $request->store_id,
                     'region_id'=>$request->region_id,
-                    'store_id' => $request->store_id,
                 ];
 
                 $storeForm = form_headService::store($dataForm);
 
                 foreach ($request->aplikasi_id as $aplikasi_id){
 
-                    $id_vega = ($aplikasi_id == 1) ? $request->id_vega[$index] : null;
+                    $id_vega = ($aplikasi_id == config('setting_app.aplikasi_id.vega')) ? $request->id_vega[$index] : null;
 
-                    $pass = ($aplikasi_id >= 1 && $aplikasi_id <= 2) ? $request->pass[$index] : null;
+                    $pass = ($aplikasi_id >= config('setting_app.aplikasi_id.vega') && $aplikasi_id <= config('setting_app.aplikasi_id.rjserver')) ? $request->pass[$index] : null;
 
                     $dataApp = [
                         'aplikasi_id' => $aplikasi_id,
@@ -84,8 +77,8 @@ class formPembuatanController extends Controller
                         'store' => $storeForm->store_id,
                         'type' => 's',
                         'role_last_app' =>  Auth::user()->role_id,
-                        'role_next_app' => form_headService::getNextApp($request->aplikasi_id[0], $user->role_id, $storeForm->region_id),
-                        'status' => 0,
+                        'role_next_app' => approvalPembuatanService::getNextApp($request->aplikasi_id[0], $user->role_id, $storeForm->region_id),
+                        'status' => config('setting_app.status_approval.panding'),
                         'created_by' => Auth::user()->id,
                         'created_at' => now(),
                         'updated_at' => now(),
@@ -106,24 +99,23 @@ class formPembuatanController extends Controller
                     return redirect()->route('form-pembuatan.index');
                 }
             }
-            elseif(Auth::user()->role_id == 2){
+            elseif(Auth::user()->role_id == config('setting_app.role_id.aux')){
                 try {
                     $index = 0;
                     $dataForm = [
-                        'user_id' => $request->user_id,
+                        'created_by' =>  Auth::user()->id,
                         'nik' => $request->nik,
                         'store_id' => $request->store_id,
                         'region_id'=>$request->region_id,
-                        'store_id' => $request->store_id,
                     ];
 
                     $storeForm = form_headService::store($dataForm);
 
                     foreach ($request->aplikasi_id as $aplikasi_id) {
 
-                        $id_vega = ($aplikasi_id == 1) ? $request->id_vega[$index] : null;
+                        $id_vega = ($aplikasi_id == config('setting_app.aplikasi_id.vega')) ? $request->id_vega[$index] : null;
 
-                        $pass = ($aplikasi_id >= 1 && $aplikasi_id <= 2) ? $request->pass[$index] : null;
+                        $pass = ($aplikasi_id >= config('setting_app.aplikasi_id.vega') && $aplikasi_id <= config('setting_app.aplikasi_id.rjserver')) ? $request->pass[$index] : null;
 
                         $dataApp = [
                             'aplikasi_id' => $aplikasi_id,
@@ -133,8 +125,8 @@ class formPembuatanController extends Controller
                             'store' => $storeForm->store_id,
                             'type' => 's',
                             'role_last_app' =>  Auth::user()->role_id,
-                            'role_next_app' => form_headService::getNextApp($request->aplikasi_id[0], $user->role_id, $storeForm->region_id),
-                            'status' => 1,
+                            'role_next_app' => approvalPembuatanService::getNextApp($request->aplikasi_id[0], $user->role_id, $storeForm->region_id),
+                            'status' =>  config('setting_app.status_approval.approve'),
                             'created_by' => Auth::user()->id,
                             'created_at' => now(),
                             'updated_at' => now(),
@@ -159,19 +151,19 @@ class formPembuatanController extends Controller
             try {
                 $index = 0;
                 $dataForm = [
-                    'user_id' => $request->user_id,
+                    'created_by' =>  Auth::user()->id,
                     'nik' => $request->nik,
-                    'region_id'=>$request->region_id,
                     'store_id' => $request->store_id,
+                    'region_id'=>$request->region_id,
                 ];
 
                 $storeForm = form_headService::store($dataForm);
 
                 foreach ($request->aplikasi_id as $aplikasi_id) {
 
-                    $id_vega = ($aplikasi_id == 1) ? $request->id_vega[$index] : null;
+                    $id_vega = ($aplikasi_id == config('setting_app.aplikasi_id.vega')) ? $request->id_vega[$index] : null;
 
-                    $pass = ($aplikasi_id >= 1 && $aplikasi_id <= 2) ? $request->pass[$index] : null;
+                    $pass = ($aplikasi_id >= config('setting_app.aplikasi_id.vega') && $aplikasi_id <= config('setting_app.aplikasi_id.rjserver')) ? $request->pass[$index] : null;
 
                     $dataApp = [
                         'aplikasi_id' => $aplikasi_id,
@@ -181,9 +173,8 @@ class formPembuatanController extends Controller
                         'store' => $storeForm->store_id,
                         'type' => 'b',
                         'role_last_app' =>  Auth::user()->role_id,
-                        'role_next_app' => 1,
-                        // 'role_next_app' => form_headService::getNextApp($request->aplikasi_id[0], $user->role_id, $storeForm->region_id),
-                        'status' => 1,
+                        'role_next_app' => config('setting_app.role_id.it'),
+                        'status' => config('setting_app.status_approval.approve'),
                         'created_by' => Auth::user()->id,
                         'created_at' => now(),
                         'updated_at' => now(),

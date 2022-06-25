@@ -15,9 +15,8 @@ class CreateFormHeadTable extends Migration
     {
         Schema::create('form_head', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
+            $table->integer('created_by');
             $table->integer('nik');
-            $table->integer('store_id')->nullable();
             $table->integer('region_id');
             $table->timestamps();
         });

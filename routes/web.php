@@ -40,20 +40,32 @@ Route::middleware(['auth'])->group(function () {
         Route::group(['prefix' => 'form-penghapusan'], function(){
             Route::get('/form-penghapusan', 'formPenghapusanController@index')->name('form-penghapusan.index');
             Route::get('/form-penghapusan/create/{id}', 'formPenghapusanController@create')->name('form-penghapusan.create');
+            Route::post('/form-penghapusan/store', 'formPenghapusanController@store')->name('form-penghapusan.store');
         });
     });
 
     Route::group(['middleware' => 'permission:form-pemindahan'], function (){
         Route::group(['prefix' => 'form-pemindahan'], function(){
             Route::get('/form-pemindahan', 'formPemindahanController@index')->name('form-pemindahan.index');
-            Route::get('/form-pemindahan/create/{id}', 'formPemindahanController@create')->name('form-pemindahan.create');
+            Route::get('/form-pemindahan/create', 'formPemindahanController@create')->name('form-pemindahan.create');
+            Route::post('/form-pemindahan/store', 'formPemindahanController@store')->name('form-pemindahan.store');
         });
     });
 
-    Route::group(['middleware' => 'permission:approval'], function (){
-        Route::get('/approval', 'approvalController@index')->name('approval.index');
-        Route::get('/approval/{id}', 'approvalController@create')->name('approval.create');
-        Route::post('/approval/store', 'approvalController@approve')->name('approval.store');
+    Route::group(['middleware' => 'permission:approval-penghapusan'], function (){
+        Route::group(['prefix' => 'approval-penghapusan'], function(){
+            Route::get('/approval-penghapusan', 'approvalPenghapusanController@index')->name('approval-penghapusan.index');
+            Route::get('/approval-penghapusan/{id}', 'approvalPenghapusanController@detail')->name('approval-penghapusan.create');
+            // Route::post('/approval-penghapusan/store', 'approvalPenghapusanController@approve')->name('approval-penghapusan.store');
+        });
+    });
+
+    Route::group(['middleware' => 'permission:approval-pembuatan'], function (){
+        Route::group(['prefix' => 'approval-pembuatan'], function(){
+            Route::get('/approval-pembuatan', 'approvalPembuatanController@index')->name('approval-pembuatan.index');
+            Route::get('/approval-pembuatan/{id}', 'approvalPembuatanController@create')->name('approval-pembuatan.create');
+            Route::post('/approval-pembuatan/store', 'approvalPembuatanController@approve')->name('approval-pembuatan.store');
+        });
     });
 
     Route::group(['middleware' => 'permission:rj-server-status'], function (){
@@ -65,6 +77,11 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::group(['middleware' => 'permission:auth'], function (){
+        Route::group(['prefix' => 'register'], function(){
+            Route::get('/vega/index', 'backGroundRegisterController@index')->name('back_register.index');
+            Route::post('/vega/store', 'backGroundRegisterController@store')->name('back_register.store');
+        });
+
         Route::group(['prefix' => 'vega'], function(){
             Route::get('/vega/index', 'vegaEditController@index')->name('vega.index');
             Route::get('/vega/{id}', 'vegaEditController@edit')->name('vega.edit');

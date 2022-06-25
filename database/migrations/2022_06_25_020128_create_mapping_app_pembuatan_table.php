@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMappingAppTable extends Migration
+class CreateMappingAppPembuatanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateMappingAppTable extends Migration
      */
     public function up()
     {
-        Schema::create('mapping_app', function (Blueprint $table) {
+        Schema::create('mapping_app_pembuatan', function (Blueprint $table) {
             $table->id();
+            $table->smallInteger('region_id');
             $table->unsignedBigInteger('role_id');
             $table->unsignedBigInteger('aplikasi_id');
             $table->integer('position');
@@ -32,6 +33,6 @@ class CreateMappingAppTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mapping_app');
+        Schema::dropIfExists('mapping_app_pembuatan');
     }
 }

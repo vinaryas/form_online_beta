@@ -42,21 +42,21 @@ class AppServiceProvider extends ServiceProvider
                 'permission' => 'form',
                 'submenu' => [
                     [
-                        'text' => 'Form Pembuatan ID',
+                        'text' => 'Pembuatan ID',
                         'url' => route('form-pembuatan.index'),
                         'icon' => 'fas fa-file-alt',
                         'active' => [route('form-pembuatan.index').'/*',route('form-pembuatan.create')],
                         'permission' => 'form-pembuatan',
                     ],
                     [
-                        'text' => 'Form Penghapusan ID',
+                        'text' => 'Penghapusan ID',
                         'url' => route('form-penghapusan.index'),
                         'icon' => 'fas fa-file-alt',
                         'active' => ['form-penghapusan*'],
                         'permission' => 'form-penghapusan',
                     ],
                     [
-                        'text' => 'Form Pemindahan ID',
+                        'text' => 'Pemindahan ID',
                         'url' => route('form-pemindahan.index'),
                         'icon' => 'fas fa-file-alt',
                         'active' => ['form-pemindahan*'],
@@ -68,10 +68,32 @@ class AppServiceProvider extends ServiceProvider
 
             $event->menu->add([
                 'text' => 'Approval',
-                'url' => route('approval.index'),
                 'icon' => '	fas fa-file-signature',
-                'active' => [route('approval.index').'/*'],
                 'permission' => 'approval',
+                'submenu' => [
+                    [
+                        'text' => 'Pembuatan ID',
+                        'url' => route('approval-pembuatan.index'),
+                        'icon' => 'fas fa-file-signature',
+                        'active' => ['approval-pembuatan*'],
+                        'permission' => 'approval-pembuatan',
+                    ],
+                    [
+                        'text' => 'Penghapusan ID',
+                        'url' => route('approval-penghapusan.index'),
+                        'icon' => 'fas fa-file-signature',
+                        'active' => ['approval-penghapusan*'],
+                        'permission' => 'approval-penghapusan',
+                    ],
+                    [
+                        'text' => 'Pemindahan ID',
+                        // 'url' => route('approval-pemindahan.index'),
+                        'icon' => 'fas fa-file-signature',
+                        'active' => ['approval-pemindahan*'],
+                        'permission' => 'approval-pemindahan',
+                    ],
+
+                ],
             ]);
 
             $event->menu->add([
@@ -110,22 +132,6 @@ class AppServiceProvider extends ServiceProvider
                 ],
             ]);
 
-            // $event->menu->add([
-            //     'text' => 'Rj Server',
-            //     'url' => route('rj_server.index'),
-            //     'icon' => 'fas fa-edit',
-            //     'active' => [route('rj_server.index').'/*'],
-            //     'permission' => 'rj-server-status',
-            // ]);
-
-            // $event->menu->add([
-            //     'text' => 'Vega',
-            //     'url' => route('vega.index'),
-            //     'icon' => 'fas fa-edit',
-            //     'active' => ['vega_void*'],
-            //     'permission' => 'auth',
-            // ]);
-
             $event->menu->add([
                 'text' => 'User',
                 'icon' => 'fas fa-users',
@@ -150,6 +156,13 @@ class AppServiceProvider extends ServiceProvider
                         'url' => route('store.index'),
                         'icon' => 'fas fa-house-user',
                         'active' => ['store*'],
+                        'permission' => 'auth'
+                    ],
+                    [
+                        'text' => 'Register AK & BO',
+                        'url' => route('back_register.index'),
+                        'icon' => 'fas fa-user',
+                        'active' => ['register*'],
                         'permission' => 'auth'
                     ],
                 ],

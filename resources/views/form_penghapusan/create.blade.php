@@ -3,26 +3,16 @@
 @section('title', 'Form')
 
 @section('content')
-<form class="card" action="" method="POST">
+<form class="card" action="{{ route('form-penghapusan.store') }}" method="POST">
     {{ csrf_field() }}
-    <div class="card-header">
+    <div class="card-body">
         <h3 class="m-0 text-dark">
             <i class="fas fa-file"> </i>
             <b> Form Penghapusan </b>
         </h3>
     </div>
-    <div  class="card-body">
-        <div class="float-left">
-            <a href="{{ route('form-penghapusan.index') }}" class="btn btn-info"><i class="fas fa-arrow-left"></i> Batal </a>
-        </div>
-        <div class="float-right">
-            <button type="submit" class="btn btn-success" onclick="this.form.submit(); this.disabled = true; this.value = 'Submitting the form';">
-                <i class="fas fa-save"></i> Ajukan Penghapusan
-            </button>
-        </div>
-    </div>
     <input type="hidden" value="{{ $user->user_id }}" name="user_id" id="user_id">
-    <div class="card-footer">
+    <div class="card-body">
         <div class="form-group row">
             <div class="col-md-6">
                 <label>Nama</label>
@@ -30,7 +20,7 @@
             </div>
             <div class="col-md-6">
                 <label>NIK</label>
-                <input type="text" value="{{ $user->username }}" id="nik"name="nik" class="form-control" readonly>
+                <input type="text" value="{{ $user->username }}" id="nik" name="nik" class="form-control" readonly>
             </div>
             <div class="col-md-6">
                 <label>Region</label>
@@ -45,24 +35,30 @@
                 </select>
             </div>
         </div>
-        {{-- <table class="table table-bordered table-striped" id="table" style="width: 100%;">
-            <thead>
-                <tr>
-                    <th>Aplikasi</th>
-                    <th>ID</th>
-                    <th>Password</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($user as $detail)
-                    <tr>
-                        <td>{{ $detail-> }}</td>
-                        <td>{{ $detail-> }}</td>
-                        <td><input type="password" value="{{ $detail->username }}" class='form-control'></td>
-                    </tr>
+        <div class="col-md-20">
+            <label>Alasan Penghapusan</label>
+            <select name="alasan_id" id="alasan_id" class="select2 form-control" required>
+                <option > ... </option>
+                @foreach ($alasan as $detail)
+                <option value="{{ $detail->id }}">{{ $detail->alasan }}</option>
                 @endforeach
-            </tbody>
-        </table> --}}
+            </select>
+        </div>
+        <div class="row">
+            @foreach ( $app as $aplikasi)
+            <input type="hidden" value="{{ $aplikasi->id }}" name="aplikasi_id[]" id="aplikasi_id">
+            @endforeach
+        </div>
+    </div>
+    <div  class="card-body">
+        <div class="float-left">
+            <a href="{{ route('form-penghapusan.index') }}" class="btn btn-info"><i class="fas fa-arrow-left"></i> Batal </a>
+        </div>
+        <div class="float-right">
+            <button type="submit" class="btn btn-success" onclick="this.form.submit(); this.disabled = true; this.value = 'Submitting the form';">
+                <i class="fas fa-save"></i> Ajukan Penghapusan
+            </button>
+        </div>
     </div>
 </form>
 

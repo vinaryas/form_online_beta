@@ -2,20 +2,20 @@
 
 namespace App\Services;
 
-use App\Models\MappingApproval;
+use App\Models\mappingApprovalPembuatan;
 
-class MappingApprovalService
+class MappingApprovalPembuatanService
 {
-    private $mappingApproval;
+    private $mappingApprovalPembuatan;
 
-    public function __construct(mappingApproval $mappingApproval)
+    public function __construct(mappingApprovalPembuatan $mappingApprovalPembuatan)
     {
-        $this->mappingApproval = $mappingApproval;
+        $this->mappingApprovalPembuatan = $mappingApprovalPembuatan;
     }
 
     public function getByTypeRoleId($aplikasi, $roleId, $regionId)
     {
-        return $this->mappingApproval
+        return $this->mappingApprovalPembuatan
                     ->where('aplikasi_id', $aplikasi)
                     ->where('role_id', $roleId)
                     ->where('region_id', $regionId);
@@ -24,7 +24,7 @@ class MappingApprovalService
     public function getByPosition($position, $regionId, $aplikasi)
     {
 
-        return $this->mappingApproval
+        return $this->mappingApprovalPembuatan
                     ->where('position', $position)
                     ->where('region_id', $regionId)
                     ->where('aplikasi_id', $aplikasi);

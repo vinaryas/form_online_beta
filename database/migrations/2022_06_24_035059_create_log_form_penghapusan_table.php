@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatedepartemenTable extends Migration
+class CreateLogFormPenghapusanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,13 @@ class CreatedepartemenTable extends Migration
      */
     public function up()
     {
-        Schema::create('departemen', function (Blueprint $table) {
+        Schema::create('log_form_penghapusan', function (Blueprint $table) {
             $table->id();
-            $table->string('departemen');
+            $table->integer('created_by');
+            $table->integer('nik');
+            $table->integer('store_id')->nullable();
+            $table->integer('region_id');
+            $table->timestamps();
         });
     }
 
@@ -26,6 +30,6 @@ class CreatedepartemenTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('departemen');
+        Schema::dropIfExists('log_form_penghapusan');
     }
 }

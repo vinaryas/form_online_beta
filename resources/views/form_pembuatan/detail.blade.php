@@ -7,9 +7,9 @@
 @stop
 
 @section('content')
-<form class="card" action="" method="GET">
+<form class="card" method="GET">
     {{ csrf_field() }}
-    <div class="card-header">
+    <div class="card-body">
         <a href="{{ route('form-pembuatan.index') }}" class="btn btn-info"><i class="fas fa-angle-left"></i> Kembali </a>
     </div>
     <div class="card-body">

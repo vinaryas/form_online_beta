@@ -9,7 +9,7 @@
 @section('content')
 <form class="card" action="{{route('rj_server.status')}}" method="POST">
     {{ csrf_field() }}
-    <div class="card-header">
+    <div class="card-body">
         <div class="row">
             <input type="hidden" value="{{ $rj->id }}" id="id"name="id">
             <div class="col-lg-6 col-6">
@@ -31,7 +31,7 @@
             </div>
         </div>
     </div>
-    <div class="card-footer">
+    <div class="card-body">
     <a href="{{ route('rj_server.index') }}" class="btn btn-info"><i class="fas fa-angle-left"></i> Kembali </a>
         <div class="float-right">
             <button type="submit" class="btn btn-danger" name="inactive" id="inactive">

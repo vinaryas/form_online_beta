@@ -23,7 +23,7 @@
     </div>
 </div>
 
-@elseif (Auth::user()->role_id == 3)
+@elseif (Auth::user()->role_id == config('setting_app.role_id.admin'))
 <div class="card" method="GET">
     {{ csrf_field() }}
      <div class="card-body">
@@ -57,6 +57,11 @@
 @else
 <div class="card"  method="GET">
     {{ csrf_field() }}
+    <div class="card-body">
+        <a href="{{ route('form-pemindahan.create') }}" class="btn btn-primary">
+           <i class="fas fa-file"></i> Buat Form
+       </a>
+    </div>
      <div class="card-body">
         <table class="table table-bordered table-striped" id="table" style="width: 100%;">
             <thead>
@@ -71,7 +76,7 @@
             </thead>
             <tbody>
                 @foreach ($form as $detail)
-                    <tr>
+                    {{-- <tr>
                         <td>{{ $detail->created_at }}</td>
                         <td>{{ $detail->username }}</td>
                         <td>{{ $detail->region_name }}</td>
@@ -80,7 +85,7 @@
                         <td><a href="{{ route('form-pemindahan.create', $detail->user_id) }}"
                             class="btn btn-info btn-sm"> Ajukan Pemindahan <i class="fas fa-angle-right"> </i></a>
                         </td>
-                    </tr>
+                    </tr> --}}
                 @endforeach
             </tbody>
         </table>

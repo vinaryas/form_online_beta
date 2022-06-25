@@ -2,10 +2,10 @@
 
 namespace App\Services\Support;
 
-use App\Services\MappingApprovalService as SupportService;
+use App\Services\logFormPenghapusanService as SupportService;
 use Illuminate\Support\Facades\Facade;
 
-class MappingApprovalService extends Facade
+class logFormPenghapusanService extends Facade
 {
 	/**
      * Get the registered name of the component.

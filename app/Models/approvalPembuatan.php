@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use App\User;
 
-class logBuat extends Model
+class approvalPembuatan extends Model
 {
-    protected $table = 'log_buat';
+    protected $table = 'approval_pembuatan';
     protected $guarded = [];
-    protected $fillable = ['form_pembuatan_id', 'user_id','nik','name' ,'role_id', 'region_id', 'status'];
+    protected $fillable = ['form_pembuatan_id', 'approved_by','approver_nik','approver_name' ,'approver_role_id', 'approver_region_id', 'status'];
 
     public function user()
     {
-    	return $this->hasOne(user::class, 'id', 'user_id');
+    	return $this->hasOne(user::class, 'id', 'approved_by');
     }
 
     public function form()
@@ -24,7 +24,7 @@ class logBuat extends Model
 
     public function role()
     {
-    	return $this->hasOne(Role::class, 'id', 'role_id');
+    	return $this->hasOne(Role::class, 'id', 'approver_role_id');
     }
 
     public function formPembuatan()

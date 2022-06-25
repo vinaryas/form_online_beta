@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Models\departemen;
 use App\Models\region;
 use App\Models\Store;
 use App\Role;
@@ -21,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name','username', 'region_id','store_id', 'email', 'password','remember_token'
+        'name','username', 'region_id', 'role_id', 'store_id', 'email', 'password','remember_token'
     ];
 
     /**
@@ -49,11 +48,6 @@ class User extends Authenticatable
     public function role()
     {
         return $this->hasOne(Role::class,'id', 'role_id' );
-    }
-
-    public function departemen()
-    {
-        return $this->hasOne(departemen::class, 'id', 'departemen_id');
     }
 
     public function region()

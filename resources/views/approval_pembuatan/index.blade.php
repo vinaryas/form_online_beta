@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-<form class="card" action="{{ route('approval.index') }}" method="GET">{{ csrf_field() }}
+<form class="card" action="{{ route('approval-pembuatan.index') }}" method="GET">{{ csrf_field() }}
     <div class="card-body">
         <br>
         <table class="table table-bordered table-striped" id="table" style="width: 100%;">
@@ -29,7 +29,7 @@
                         <td>{{ $detail->name }}</td>
                         <td>{{ $detail->nama_store }}</td>
                         <td>{{ $detail->aplikasi }}</td>
-                        <td><a href="{{ route('approval.create', $detail->form_pembuatan_id) }}"
+                        <td><a href="{{ route('approval-pembuatan.create', $detail->form_pembuatan_id) }}"
                             class="btn btn-info btn-sm"> Detail <i class="fas fa-angle-right"></i>
                         </a></td>
                     </tr>

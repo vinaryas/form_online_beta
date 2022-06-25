@@ -25,7 +25,7 @@
                     <option value="{{ $user->region_id }}">{{ $user->region->name }}</option>
                 </select>
             </div>
-            @if (Auth::user()->role_id == 0)
+            @if (Auth::user()->role_id == config('setting_app.role_id.kasir'))
             <div class="col-md-4">
                 <label>Store</label>
                 <select name="store_id" id="store_id" class="form-control" readonly>
@@ -44,12 +44,12 @@
                         <label class="form-check-inline">{{ $aplikasi->aplikasi }}</label>
                     </div>
                 </div>
-                @if ($aplikasi->id == 1)
+                @if ($aplikasi->id == config('setting_app.aplikasi_id.vega'))
                     <div class="col-md-10">
                         <input type="text" class="form-control form-group" aria-label="Text input with checkbox" placeholder="ID" style="display: inline-flex" name="id_vega[]" id="id_vega" minlength="10" maxlength="10">
                         <input type="text" class="form-control form-group" aria-label="Text input with checkbox" placeholder="password" style="display: inline-flex" name="pass[]" id="pass" minlength="8" maxlength="8">
                     </div>
-                @elseif ($aplikasi->id == 2)
+                @elseif ($aplikasi->id == config('setting_app.aplikasi_id.rjserver'))
                 <div class="col-md-10">
                     <input type="text" class="form-control form-group" aria-label="Text input with checkbox" placeholder="password" style="display: inline-flex" name="pass[]" id="pass" minlength="6" maxlength="6">
                 </div>

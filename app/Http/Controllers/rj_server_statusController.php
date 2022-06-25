@@ -15,18 +15,17 @@ class rj_server_statusController extends Controller
     public function index(){
         if(Auth::user()->role_id == 2){
             $rj = rj_serverService::getAllStore( UserService::authStoreArray())->get();
-        }elseif(Auth::user()->role_id == 3){
+        }elseif(Auth::user()->role_id == config('setting_app.role_id.admin')){
             $rj = rj_serverService::getAllBo( UserService::authStoreArray())->get();
         }
 
-
-        return view('rj_server_void.index', compact('rj'));
+        return view('rj_server.index', compact('rj'));
     }
 
     public function detail($id){
         $rj =  rj_serverService::getById($id)->first();
 
-        return view('rj_server_void.detail', compact('rj'));
+        return view('rj_server.detail', compact('rj'));
     }
 
     public function status(Request $request){

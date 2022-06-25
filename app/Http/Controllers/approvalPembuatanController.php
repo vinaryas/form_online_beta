@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\Support\approvalService;
+use App\Services\Support\approvalPembuatanService;
 use App\Services\Support\cashierService;
 use App\Services\Support\first_time_syncService;
 use App\Services\Support\formPembuatanService;
@@ -16,64 +16,66 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class approvalController extends Controller
+class approvalPembuatanController extends Controller
 {
     public function index(){
         $thisMonth = Carbon::now()->month;
-        if(Auth::user()->role_id == 3){
+        if(Auth::user()->role_id == config('setting_app.role_id.admin')){
             $formPembuatan = formPembuatanService::adminViewApproval($thisMonth)->get();
         }else{
             if(Auth::user()->all_store == 'y'){
-                $formPembuatan = formPembuatanService::getApproveFilter(Auth::user()->roles->first()->id, $thisMonth)->orderBy('form_pembuatan.created_at', 'ASC')->get();
+                $formPembuatan = formPembuatanService::getApproveFilter(
+                    Auth::user()->roles->first()->id, $thisMonth)
+                ->orderBy('form_pembuatan.created_at', 'ASC')->get();
             }else{
-                $formPembuatan = formPembuatanService::getApproveFilterByStore(Auth::user()->roles->first()->id, UserService::authStoreArray(), $thisMonth)->orderBy('form_pembuatan.created_at', 'ASC')->get();
+                $formPembuatan = formPembuatanService::getApproveFilterByStore(
+                    Auth::user()->roles->first()->id, UserService::authStoreArray(), $thisMonth)
+                ->orderBy('form_pembuatan.created_at', 'ASC')->get();
             }
         }
 
-        return view('approval.index', compact('formPembuatan'));
+        return view('approval_pembuatan.index', compact('formPembuatan'));
     }
 
     public function create($id){
         $form = formPembuatanService::getById($id)->first();
-        $authApp = approvalService::isApprovalExitst($id, Auth::user()->role_id, $form->region_id);
+        $authApp = approvalPembuatanService::isApprovalExitst($id, Auth::user()->role_id, $form->region_id);
 
-        return view('approval.create', compact('form', 'authApp'));
+        return view('approval_pembuatan.create', compact('form', 'authApp'));
     }
 
-    public function approve(Request $request)
-    {
+    public function approve(Request $request){
     	DB::beginTransaction();
         $authRole = Auth::user()->role_id;
         $stores = StoreService::all()->get();
-        $nextApp = form_headService::getNextApp($request->aplikasi_id[0], $authRole, $request->region_id);
-        $formPembuatan = formPembuatanService::getformPembuatanById($request->form_pembuatan_id)->first();
+        $nextApp = approvalPembuatanService::getNextApp($request->aplikasi_id[0], $authRole, $request->region_id);
+        $formPembuatan = formPembuatanService::getById($request->form_pembuatan_id)->first();
 
         if (isset($_POST["approve"]))
         {
             try{
                 $data = [
                     'form_pembuatan_id' => $request->form_pembuatan_id,
-                    'region_id'=> $request->region_id,
-                    'user_id' => Auth::user()->id,
-                    'nik'=>Auth::user()->username,
-                    'name'=>Auth::user()->name,
-                    'role_id' => $authRole,
+                    'approved_by' => Auth::user()->id,
+                    'approver_nik'=>Auth::user()->username,
+                    'approver_name'=>Auth::user()->name,
+                    'approver_role_id' => $authRole,
+                    'approver_region_id'=> $request->region_id,
                     'status' => 'Approved'
                 ];
 
-                $storeApprove = approvalService::store($data);
+                $storeApprove = approvalPembuatanService::store($data);
 
-                if($formPembuatan->aplikasi_id == config('setting_app.aplikasi_id.rjserver'))
-                {
-                    if($formPembuatan->role_last_app === 0){
-                        $getPos =  cashierService::getPosStore()->first();
+                if($formPembuatan->aplikasi_id == config('setting_app.aplikasi_id.rjserver')){
+                    if($formPembuatan->role_last_app ==  config('setting_app.role_id.kasir')){
+                        $rjServer =  formPembuatanService::getRjServerStore()->first();
 
                         $dataPos = [
-                            'cashnum' => substr($getPos->nik, 3),
-                            'nama' => $getPos->name,
-                            'password' => $getPos->pass,
-                            'roles' => $getPos->role_id,
-                            'store' => $getPos->store_id,
+                            'cashnum' => substr($rjServer->nik, 3),
+                            'nama' => $rjServer->name,
+                            'password' => $rjServer->pass,
+                            'roles' => $rjServer->role_id,
+                            'store' => $rjServer->store_id,
                             'status' => 'A',
                             'acc' => 2,
                         ];
@@ -83,20 +85,20 @@ class approvalController extends Controller
                         $storeOnMMSoft = cashierService::store($dataPos);
 
                         $first_sync = [
-                            'status' => 1
+                            'status' => config('setting_app.status_sync.need_sync')
                         ];
 
                         $storeOnFormOnline = first_time_syncService::update($first_sync, $request->store_id);
 
-                    }elseif($formPembuatan->role_last_app == 2){
-                        $getPos =  cashierService::getPosBO()->first();
+                    }elseif($formPembuatan->role_last_app == config('setting_app.role_id.aux')){
+                        $rjServer =  formPembuatanService::getRjServerBo()->first();
 
                             $dataPos = [
-                                'cashnum' => substr($getPos->nik, 3),
-                                'nama' => $getPos->name,
-                                'password' => $getPos->pass,
-                                'roles' => $getPos->role_id,
-                                'store' => $getPos->store_id,
+                                'cashnum' => substr($rjServer->nik, 3),
+                                'nama' => $rjServer->name,
+                                'password' => $rjServer->pass,
+                                'roles' => $rjServer->role_id,
+                                'store' => $rjServer->store_id,
                                 'status' => 'A',
                                 'acc' => 2,
                             ];
@@ -106,21 +108,21 @@ class approvalController extends Controller
                             $storeInMMSoft = cashierService::store($dataPos);
 
                             $first_sync = [
-                                'status' => 1
+                                'status' => config('setting_app.status_sync.need_sync')
                             ];
 
                             $storeOnFormOnline = first_time_syncService::update($first_sync, $request->store_id);
 
-                    }elseif($formPembuatan->role_last_app == 4 ){
-                        $getPos =  cashierService::getPosBO()->first();
+                    }elseif($formPembuatan->role_last_app == config('setting_app.role_id.bo') ){
+                        $rjServer =  formPembuatanService::getRjServerBo()->first();
 
                         foreach ($stores as $store) {
 
                             $dataPos = [
-                                'cashnum' => substr($getPos->nik, 3),
-                                'nama' => $getPos->name,
-                                'password' => $getPos->pass,
-                                'roles' => $getPos->role_id,
+                                'cashnum' => substr($rjServer->nik, 3),
+                                'nama' => $rjServer->name,
+                                'password' => $rjServer->pass,
+                                'roles' => $rjServer->role_id,
                                 'store' => $store->id,
                                 'status' => 'A',
                                 'acc' => 2,
@@ -131,20 +133,18 @@ class approvalController extends Controller
                             $storeInMMSoft = cashierService::store($dataPos);
 
                             $first_sync = [
-                                'status' => 1
+                                'status' => config('setting_app.status_sync.need_sync')
                             ];
 
                             $storeOnFormOnline = first_time_syncService::update($first_sync, $store->id);
                         }
-
                     }
-
                 }
 
                 $dataUpdate = [
                     'role_last_app' => $authRole,
                     'role_next_app' => $nextApp,
-                    'status'=>1
+                    'status'=> config('setting_app.status_approval.approve'),
                 ];
 
                 $updateStatus = formPembuatanService::update($dataUpdate, $storeApprove->form_pembuatan_id);
@@ -152,34 +152,32 @@ class approvalController extends Controller
                 DB::commit();
 
                 Alert::success('Approved', 'form has been approved');
-                return redirect()->route('approval.index');
+                return redirect()->route('approval-pembuatan.index');
             } catch (\Throwable $th) {
                 DB::rollback();
 
                 dd($th->getMessage());
                 Alert::error('Error!!',);
-                return redirect()->route('approval.index');
+                return redirect()->route('approval-pembuatan.index');
             }
-        }
-        elseif (isset($_POST["disapprove"])){
-            try
-            {
+        }elseif (isset($_POST["disapprove"])){
+            try{
                 $data = [
                     'form_pembuatan_id' => $request->form_pembuatan_id,
                     'region_id'=> $request->region_id,
                     'user_id' => Auth::user()->id,
-                    'nik'=>Auth::user()->nik,
+                    'nik'=>Auth::user()->username,
                     'name'=>Auth::user()->name,
                     'role_id' => $authRole,
                     'status' => 'Disapproved'
                 ];
 
-                $storeApprove = approvalService::store($data);
+                $storeApprove = approvalPembuatanService::store($data);
 
                 $dataUpdate = [
                     'role_last_app' => $authRole,
                     'role_next_app' => 0,
-                    'status'=>2
+                    'status'=> config('setting_app.status_approval.disapprove'),
                 ];
 
                 $updateStatus = formPembuatanService::update($dataUpdate, $storeApprove->form_pembuatan_id);
@@ -187,13 +185,13 @@ class approvalController extends Controller
                 DB::commit();
 
                 Alert::warning('Disapproved', 'form has been disapproved');
-                return redirect()->route('approval.index');
+                return redirect()->route('approval-pembuatan.index');
             }catch (\Throwable $th) {
                 DB::rollback();
 
                 dd($th->getMessage());
                 Alert::error('Error!!',);
-                return redirect()->route('approval.index');
+                return redirect()->route('approval-pembuatan.index');
             }
         }
     }

@@ -17,8 +17,6 @@ class CreateFormPenghapusanTable extends Migration
             $table->id();
             $table->integer('aplikasi_id');
             $table->bigInteger('form_id');
-            $table->string('id_vega')->nullable();
-            $table->string('pass')->nullable();
             $table->integer('store')->nullable();
             $table->string('type')->nullable();
             $table->integer('role_last_app');

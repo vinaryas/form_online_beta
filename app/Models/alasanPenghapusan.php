@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class mappingApproval extends Model
+class alasanPenghapusan extends Model
 {
-    protected $table = 'mapping_app';
+    protected $table = 'alasan_penghapusan';
     protected $guarded = [];
 }

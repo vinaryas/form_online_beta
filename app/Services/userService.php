@@ -52,7 +52,7 @@ class userService
 
      public function find($id)
      {
-         return User::with('departemen', 'role', 'RoleUser.role', 'store')->find($id);
+         return User::with('role', 'RoleUser.role', 'store')->find($id);
      }
 
      public function authStoreArray()
@@ -87,19 +87,27 @@ class userService
         ->leftjoin('roles', 'users.role_id', '=', 'roles.id')
         ->select(
             'users.id as user_id',
-            'stores.id as store_id',
-            'regions.id as region_id',
-            'roles.id as role_id',
-            'stores.name as store',
-            'regions.name as region_name',
-            'roles.display_name',
             'users.created_at',
             'users.username',
             'users.name',
-            'users.all_store'
+            'users.all_store',
+            'users.role_id',
+            'users.store_id',
+            'stores.id as store_id',
+            'stores.name as store',
+            'regions.id as region_id',
+            'regions.name as region_name',
+            'roles.id as role_id',
+            'roles.display_name',
         );
 
         return $data;
+    }
+
+    public function getUserStore($userStore){
+        return $this->getDetail()
+        ->where('users.role_id', config('setting_app.role_id.kasir'))
+        ->where('users.store_id', $userStore);
     }
 
     public function getById($userId){
@@ -115,6 +123,9 @@ class userService
     }
 
     public function getUser(){
-        return $this->getDetail()->where('role_id', '!=', null);
+        return $this->getDetail()
+        ->where('role_id', '!=', config('setting_app.role_id.it'))
+        ->where('role_id', '!=', config('setting_app.role_id.bo'))
+        ->where('role_id', '!=', config('setting_app.role_id.admin'));
     }
 }

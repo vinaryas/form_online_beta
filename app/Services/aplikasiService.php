@@ -15,7 +15,7 @@ class aplikasiService
 
    public function all()
 	{
-		return $this->aplikasi->query()->with('form_head');
+		return $this->aplikasi->query();
 	}
 
 }

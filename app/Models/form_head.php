@@ -9,19 +9,13 @@ class form_head extends Model
     protected $table = 'form_head';
     protected $fillable = ([
         'nik',
-        'user_id',
+        'created_by',
         'region_id',
         'store_id',
         'role_id',
-        'store_id',
         'pass',
         'aplikasi_id',
     ]);
-
-    public function store()
-    {
-        return $this->hasOne(store::class, 'id', 'store_id');
-    }
 
     public function region()
     {
