@@ -9,7 +9,9 @@ use App\Services\Support\approvalPembuatanService;
 use App\Services\Support\form_headService;
 use App\Services\Support\formPembuatanService;
 use App\Services\Support\formPenghapusanService;
+use App\Services\Support\StoreService;
 use App\Services\Support\userService;
+use App\Services\Support\UserStoreService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -28,12 +30,13 @@ class formPenghapusanController extends Controller
         return view('form_penghapusan.index', compact('form', 'user'));
     }
 
-    public function create($userId){
-        $user = userService::getById($userId)->first();
+    public function create(){
+        $users = UserService::all()->get();
+        $stores = StoreService::all()->get();
         $alasan = alasanPenghapusanService::all()->get();
         $app = aplikasiService::all()->get();
 
-        return view('form_penghapusan.create', compact('user', 'alasan', 'app'));
+        return view('form_penghapusan.create', compact('users', 'stores', 'alasan', 'app'));
     }
 
     public function store(Request $request){

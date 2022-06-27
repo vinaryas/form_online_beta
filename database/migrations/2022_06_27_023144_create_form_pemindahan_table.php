@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLogFormPenghapusanTable extends Migration
+class CreateFormPemindahanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateLogFormPenghapusanTable extends Migration
      */
     public function up()
     {
-        Schema::create('log_form_penghapusan', function (Blueprint $table) {
+        Schema::create('form_pemindahan', function (Blueprint $table) {
             $table->id();
             $table->integer('created_by');
             $table->integer('nik');
-            $table->integer('store_id')->nullable();
             $table->integer('region_id');
+            $table->integer('from_store');
+            $table->integer('to_store');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateLogFormPenghapusanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('log_form_penghapusan');
+        Schema::dropIfExists('form_pemindahan');
     }
 }

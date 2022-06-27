@@ -28,12 +28,12 @@
                 </select>
             </div>
             @if ($form->store_id != null)
-            <div class="col-md-6">
-                <label>Store</label>
-                <select  name="store_id" id="store_id" class="form-control" readonly>
-                    <option value="{{ $form->store_id }}">{{ $form->nama_store }}</option>
-                </select>
-            </div>
+                <div class="col-md-6">
+                    <label>Store</label>
+                    <select  name="store_id" id="store_id" class="form-control" readonly>
+                        <option value="{{ $form->store_id }}">{{ $form->nama_store }}</option>
+                    </select>
+                </div>
             @endif
             <div class="col-md-6">
                 <label>Aplikasi</label>
@@ -44,14 +44,14 @@
             <div class="col-md-6">
                 @if ($form->pass != null)
                     @if (Auth::user()->role_id == config('setting_app.role_id.it') || Auth::user()->role_id == config('setting_app.role_id.admin'))
-                    <label>Password</label>
-                    <input type="text" name="pass" id="pass[]" value="{{ $form->pass}}" class="form-control" readonly>
+                        <label>Password</label>
+                        <input type="text" name="pass" id="pass[]" value="{{ $form->pass}}" class="form-control" readonly>
                     @elseif (Auth::user()->role_id == config('setting_app.role_id.aux'))
-                    <label>Password</label>
-                    <input type="password" name="pass" id="pass[]" value="{{ $form->pass}}" class="form-control" readonly>
+                        <label>Password</label>
+                        <input type="password" name="pass" id="pass[]" value="{{ $form->pass}}" class="form-control" readonly>
                     @endif
                 @else
-                <input type="hidden" name="pass" id="pass[]" value="{{ $form->pass}}" class="form-control" readonly>
+                    <input type="hidden" name="pass" id="pass[]" value="{{ $form->pass}}" class="form-control" readonly>
                 @endif
             </div>
         </div>

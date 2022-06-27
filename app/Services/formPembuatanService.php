@@ -32,6 +32,7 @@ class formPembuatanService
         ->join('users', 'form_head.created_by', '=', 'users.id')
         ->join('regions', 'form_head.region_id', '=', 'regions.id')
         ->join('aplikasi', 'form_pembuatan.aplikasi_id', '=', 'aplikasi.id')
+        ->leftJoin('stores', 'form_pembuatan.store', '=', 'stores.id')
         ->select(
             'form_pembuatan.id as form_pembuatan_id',
             'form_pembuatan.aplikasi_id',
@@ -49,6 +50,9 @@ class formPembuatanService
             'regions.id as region_id',
             'regions.name as nama_region',
             'users.name',
+            'users.username',
+            'stores.id as store_id',
+            'stores.name as nama_store',
         );
 
         return $data;
@@ -110,6 +114,7 @@ class formPembuatanService
             'roles.id as role_id',
             'roles.display_name',
             'users.name',
+            'users.username',
             'approval_pembuatan.status',
         );
 

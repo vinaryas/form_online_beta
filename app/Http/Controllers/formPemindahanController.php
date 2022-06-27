@@ -6,6 +6,7 @@ use App\Services\Support\aplikasiService;
 use App\Services\Support\approvalPembuatanService;
 use App\Services\Support\form_headService;
 use App\Services\Support\formPembuatanService;
+use App\Services\Support\formPemindahanService;
 use App\Services\Support\formPenghapusanService;
 use App\Services\Support\StoreService;
 use App\Services\Support\userService;
@@ -17,7 +18,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class formPemindahanController extends Controller
 {
     public function index(){
-        $form = formPembuatanService::getFormByUserId(Auth::user()->id)->get();
+        $form = formPemindahanService::getByUserId(Auth::user()->id)->get();
 
         return view('form_pemindahan.index', compact('form'));
     }
@@ -45,6 +46,16 @@ class formPemindahanController extends Controller
 
                 $storeForm = form_headService::store($dataForm);
 
+                $dataPemindahan = [
+                    'created_by' => Auth::user()->id,
+                    'nik' => Auth::user()->username,
+                    'region_id'=> Auth::user()->region_id,
+                    'from_store'=> $request->store_id_asal,
+                    'to_store'=>  $request->store_id_tujuan,
+                ];
+
+                $storeDataPemindahan = formPemindahanService::store($dataPemindahan);
+
                 foreach ($request->aplikasi_id as $aplikasi_id){
                     $id_vega = ($aplikasi_id == config('setting_app.aplikasi_id.vega')) ? $request->id_vega[$index] : null;
                     $pass = ($aplikasi_id >= config('setting_app.aplikasi_id.vega') && $aplikasi_id <= config('setting_app.aplikasi_id.rjserver')) ? $request->pass[$index] : null;
@@ -53,7 +64,7 @@ class formPemindahanController extends Controller
                         'form_id' => $storeForm->id,
                         'id_vega'=> $id_vega,
                         'pass'=> $pass,
-                        'store' => $request->store_id_asal,
+                        'store' => $request->store_id_tujuan,
                         'type' => 's',
                         'role_last_app' =>  Auth::user()->role_id,
                         'role_next_app' => approvalPembuatanService::getNextApp($request->aplikasi_id[0], $user->role_id, $storeForm->region_id),
@@ -70,7 +81,7 @@ class formPemindahanController extends Controller
                     $data = [
                         'aplikasi_id' => $aplikasi_id,
                         'form_id' => $storeForm->id,
-                        'store' => $request->store_id_tujuan,
+                        'store' => $request->store_id_asal,
                         'type' => 's',
                         'role_last_app' =>  Auth::user()->role_id,
                         'role_next_app' => approvalPembuatanService::getNextApp($request->aplikasi_id[0], $user->role_id, $storeForm->region_id),

@@ -16,9 +16,10 @@ class CreateUserStoreTable extends Migration
         Schema::create('user_store', function (Blueprint $table) {
             $table->id();
             $table->integer('store_id');
-            $table->unsignedBigInteger('user_id')->unique();
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
+            $table->foreign('store_id')->references('id')->on('stores');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

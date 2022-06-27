@@ -23,37 +23,6 @@
     </div>
 </div>
 
-@elseif (Auth::user()->role_id == config('setting_app.role_id.admin'))
-<div class="card" method="GET">
-    {{ csrf_field() }}
-     <div class="card-body">
-        <table class="table table-bordered table-striped" id="table" style="width: 100%;">
-            <thead>
-                <tr>
-                    <th>Nama</th>
-                    <th>NIK</th>
-                    <th>Region</th>
-                    <th>Store</th>
-                    <th>Ajukan Penghapusan</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($form as $detail)
-                    <tr>
-                        <td>{{ $detail->name }}</td>
-                        <td>{{ $detail->username }}</td>
-                        <td>{{ $detail->region_name }}</td>
-                        <td>{{ $detail->store }}</td>
-                        <td> <a href="{{ route('form-pemindahan.create', $detail->user_id) }}"
-                            class="btn btn-info btn-sm"> Ajukan Pemindahan <i class="fas fa-angle-right"> </i></a>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
-
 @else
 <div class="card"  method="GET">
     {{ csrf_field() }}
@@ -67,25 +36,23 @@
             <thead>
                 <tr>
                     <th>Waktu Pembuatan</th>
+                    <th>Name</th>
                     <th>NIK</th>
                     <th>Region</th>
-                    <th>Store</th>
-                    <th>Status</th>
-                    <th>Detail</th>
+                    <th>Store Asal</th>
+                    <th>Store Tujuan</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($form as $detail)
-                    {{-- <tr>
+                    <tr>
                         <td>{{ $detail->created_at }}</td>
-                        <td>{{ $detail->username }}</td>
-                        <td>{{ $detail->region_name }}</td>
-                        <td>{{ $detail->store }}</td>
-                        <td> active </td>
-                        <td><a href="{{ route('form-pemindahan.create', $detail->user_id) }}"
-                            class="btn btn-info btn-sm"> Ajukan Pemindahan <i class="fas fa-angle-right"> </i></a>
-                        </td>
-                    </tr> --}}
+                        <td>{{ $detail->name }}</td>
+                        <td>{{ $detail->nik }}</td>
+                        <td>{{ $detail->nama_region }}</td>
+                        <td>{{ $detail->from_store }}</td>
+                        <td>{{ $detail->to_store }}</td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>

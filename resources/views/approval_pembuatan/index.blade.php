@@ -15,14 +15,14 @@
                 <tr>
                     <th>Waktu Pembuatan</th>
                     <th>NIK</th>
-                    <th>Name</th>
-                    <th>Store</th>
+                    <th>Created By</th>
+                    <th>Store Tujuan</th>
                     <th>Aplikasi</th>
                     <th>Approve</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($formPembuatan as $detail)
+                @foreach ($form as $detail)
                     <tr>
                         <td>{{ $detail->created_at }}</td>
                         <td>{{ $detail->nik }}</td>

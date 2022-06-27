@@ -39,7 +39,7 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['middleware' => 'permission:form-penghapusan'], function (){
         Route::group(['prefix' => 'form-penghapusan'], function(){
             Route::get('/form-penghapusan', 'formPenghapusanController@index')->name('form-penghapusan.index');
-            Route::get('/form-penghapusan/create/{id}', 'formPenghapusanController@create')->name('form-penghapusan.create');
+            Route::get('/form-penghapusan/create', 'formPenghapusanController@create')->name('form-penghapusan.create');
             Route::post('/form-penghapusan/store', 'formPenghapusanController@store')->name('form-penghapusan.store');
         });
     });
@@ -56,7 +56,7 @@ Route::middleware(['auth'])->group(function () {
         Route::group(['prefix' => 'approval-penghapusan'], function(){
             Route::get('/approval-penghapusan', 'approvalPenghapusanController@index')->name('approval-penghapusan.index');
             Route::get('/approval-penghapusan/{id}', 'approvalPenghapusanController@detail')->name('approval-penghapusan.create');
-            // Route::post('/approval-penghapusan/store', 'approvalPenghapusanController@approve')->name('approval-penghapusan.store');
+            Route::post('/approval-penghapusan/store', 'approvalPenghapusanController@approve')->name('approval-penghapusan.store');
         });
     });
 

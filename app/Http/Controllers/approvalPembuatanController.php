@@ -21,20 +21,20 @@ class approvalPembuatanController extends Controller
     public function index(){
         $thisMonth = Carbon::now()->month;
         if(Auth::user()->role_id == config('setting_app.role_id.admin')){
-            $formPembuatan = formPembuatanService::adminViewApproval($thisMonth)->get();
+            $form = formPembuatanService::adminViewApproval($thisMonth)->get();
         }else{
             if(Auth::user()->all_store == 'y'){
-                $formPembuatan = formPembuatanService::getApproveFilter(
+                $form = formPembuatanService::getApproveFilter(
                     Auth::user()->roles->first()->id, $thisMonth)
                 ->orderBy('form_pembuatan.created_at', 'ASC')->get();
             }else{
-                $formPembuatan = formPembuatanService::getApproveFilterByStore(
+                $form = formPembuatanService::getApproveFilterByStore(
                     Auth::user()->roles->first()->id, UserService::authStoreArray(), $thisMonth)
                 ->orderBy('form_pembuatan.created_at', 'ASC')->get();
             }
         }
 
-        return view('approval_pembuatan.index', compact('formPembuatan'));
+        return view('approval_pembuatan.index', compact('form'));
     }
 
     public function create($id){
@@ -60,7 +60,7 @@ class approvalPembuatanController extends Controller
                     'approver_nik'=>Auth::user()->username,
                     'approver_name'=>Auth::user()->name,
                     'approver_role_id' => $authRole,
-                    'approver_region_id'=> $request->region_id,
+                    'approver_region_id'=> Auth::user()->region_id,
                     'status' => 'Approved'
                 ];
 
@@ -165,10 +165,11 @@ class approvalPembuatanController extends Controller
                 $data = [
                     'form_pembuatan_id' => $request->form_pembuatan_id,
                     'region_id'=> $request->region_id,
-                    'user_id' => Auth::user()->id,
-                    'nik'=>Auth::user()->username,
-                    'name'=>Auth::user()->name,
-                    'role_id' => $authRole,
+                    'approved_by' => Auth::user()->id,
+                    'approver_nik'=>Auth::user()->username,
+                    'approver_name'=>Auth::user()->name,
+                    'approver_role_id' => $authRole,
+                    'approver_region_id'=> Auth::user()->region_id,
                     'status' => 'Disapproved'
                 ];
 

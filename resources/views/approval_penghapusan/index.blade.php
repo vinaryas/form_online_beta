@@ -16,7 +16,8 @@
                     <th>Waktu Pembuatan</th>
                     <th>Created By</th>
                     <th>NIK</th>
-                    <th>Region</th>
+                    <th>Store Yang Dihapus</th>
+                    <th>Aplikasi</th>
                     <th>Approve</th>
                 </tr>
             </thead>
@@ -24,9 +25,10 @@
                 @foreach ($form as $detail)
                     <tr>
                         <td>{{ $detail->created_at }}</td>
-                        <td>{{ $detail->user_name }}</td>
+                        <td>{{ $detail->name }}</td>
                         <td>{{ $detail->nik }}</td>
-                        <td>{{ $detail->nama_region }}</td>
+                        <td>{{ $detail->nama_store }}</td>
+                        <td>{{ $detail->aplikasi }}</td>
                         <td><a
                             href="{{ route('approval-penghapusan.create', $detail->form_penghapusan_id) }}"
                             class="btn btn-info btn-sm"> Detail <i class="fas fa-angle-right"></i>

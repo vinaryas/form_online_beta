@@ -23,40 +23,14 @@
     </div>
 </div>
 
-@elseif (Auth::user()->role_id == config('setting_app.role_id.admin'))
+@else
 <div class="card" method="GET">
     {{ csrf_field() }}
-     <div class="card-body">
-        <table class="table table-bordered table-striped" id="table" style="width: 100%;">
-            <thead>
-                <tr>
-                    <th>Nama</th>
-                    <th>NIK</th>
-                    <th>Region</th>
-                    <th>Store</th>
-                    <th>Ajukan Penghapusan</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($form as $detail)
-                    <tr>
-                        <td>{{ $detail->name }}</td>
-                        <td>{{ $detail->username }}</td>
-                        <td>{{ $detail->region_name }}</td>
-                        <td>{{ $detail->store }}</td>
-                        <td> <a href="{{ route('form-penghapusan.create', $detail->user_id) }}"
-                            class="btn btn-info btn-sm"> Ajukan Penghapusan <i class="fas fa-angle-right"> </i></a>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+    <div class="card-body">
+        <a href="{{ route('form-penghapusan.create') }}" class="btn btn-primary">
+           <i class="fas fa-file"></i> Buat Form
+       </a>
     </div>
-</div>
-
-@else
-<div class="card"  method="GET">
-    {{ csrf_field() }}
      <div class="card-body">
         <table class="table table-bordered table-striped" id="table" style="width: 100%;">
             <thead>
@@ -75,9 +49,6 @@
                         <td>{{ $detail->username }}</td>
                         <td>{{ $detail->region_name }}</td>
                         <td>{{ $detail->store }}</td>
-                        <td> <a href="{{ route('form-penghapusan.create', $detail->user_id) }}"
-                            class="btn btn-info btn-sm"> Ajukan Penghapusan <i class="fas fa-angle-right"> </i></a>
-                        </td>
                     </tr>
                 @endforeach
             </tbody>

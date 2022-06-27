@@ -25,7 +25,6 @@
                     <option value="{{ $user->region_id }}">{{ $user->region->name }}</option>
                 </select>
             </div>
-            @if (Auth::user()->role_id == config('setting_app.role_id.kasir'))
             <div class="col-md-6">
                 <label>Store Asal</label>
                 <select name="store_id_asal" id="store_id_asal" class="form-control" readonly>
@@ -41,7 +40,6 @@
                     @endforeach
                 </select>
             </div>
-            @endif
         </div>
         <br>
         <label>Aplikasi</label>

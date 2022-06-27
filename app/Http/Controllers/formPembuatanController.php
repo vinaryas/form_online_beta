@@ -19,12 +19,12 @@ class formPembuatanController extends Controller
         $user = userService::find(Auth::user()->id);
         $thisMonth = Carbon::now()->month;
         if(Auth::user()->role_id == config('setting_app.role_id.admin')){
-            $formPembuatan = formPembuatanService::getDetail($thisMonth)->get();
+            $form = formPembuatanService::getDetail($thisMonth)->get();
         }else{
-            $formPembuatan = formPembuatanService::getFormByUserId(Auth::user()->id, $thisMonth)->get();
+            $form = formPembuatanService::getFormByUserId(Auth::user()->id, $thisMonth)->get();
         }
 
-        return view('form_pembuatan.index', compact('formPembuatan', 'user'));
+        return view('form_pembuatan.index', compact('form', 'user'));
     }
 
     public function detail($id){
@@ -57,7 +57,6 @@ class formPembuatanController extends Controller
                 $dataForm = [
                     'created_by' => Auth::user()->id,
                     'nik' => Auth::user()->username,
-                    'store_id' => $request->store_id,
                     'region_id'=>$request->region_id,
                 ];
 
@@ -74,7 +73,7 @@ class formPembuatanController extends Controller
                         'form_id' => $storeForm->id,
                         'id_vega'=> $id_vega,
                         'pass'=> $pass,
-                        'store' => $storeForm->store_id,
+                        'store' => $request->store_id,
                         'type' => 's',
                         'role_last_app' =>  Auth::user()->role_id,
                         'role_next_app' => approvalPembuatanService::getNextApp($request->aplikasi_id[0], $user->role_id, $storeForm->region_id),
@@ -105,7 +104,6 @@ class formPembuatanController extends Controller
                     $dataForm = [
                         'created_by' =>  Auth::user()->id,
                         'nik' => $request->nik,
-                        'store_id' => $request->store_id,
                         'region_id'=>$request->region_id,
                     ];
 
@@ -122,7 +120,7 @@ class formPembuatanController extends Controller
                             'form_id' => $storeForm->id,
                             'id_vega'=> $id_vega,
                             'pass'=> $pass,
-                            'store' => $storeForm->store_id,
+                            'store' => $request->store_id,
                             'type' => 's',
                             'role_last_app' =>  Auth::user()->role_id,
                             'role_next_app' => approvalPembuatanService::getNextApp($request->aplikasi_id[0], $user->role_id, $storeForm->region_id),
@@ -153,7 +151,6 @@ class formPembuatanController extends Controller
                 $dataForm = [
                     'created_by' =>  Auth::user()->id,
                     'nik' => $request->nik,
-                    'store_id' => $request->store_id,
                     'region_id'=>$request->region_id,
                 ];
 
@@ -170,7 +167,7 @@ class formPembuatanController extends Controller
                         'form_id' => $storeForm->id,
                         'id_vega'=> $id_vega,
                         'pass'=> $pass,
-                        'store' => $storeForm->store_id,
+                        'store' => $request->store_id,
                         'type' => 'b',
                         'role_last_app' =>  Auth::user()->role_id,
                         'role_next_app' => config('setting_app.role_id.it'),

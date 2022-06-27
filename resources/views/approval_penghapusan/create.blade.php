@@ -7,44 +7,38 @@
 @stop
 
 @section('content')
-<form class="card" action="{{ route('approval-pembuatan.store') }}" method="POST">
+<form class="card" action="{{ route('approval-penghapusan.store') }}" method="POST">
     {{ csrf_field() }}
     <div class="card-body">
-        <input type="hidden" value="{{ $form->created_by }}" name="user_id" id="user_id">
-        <input type="hidden" value="{{ $form->form_penghapusan_id }}" id="form_penghapusan_id"name="form_penghapusan_id">
+        <input type="hidden" value="{{ $forms->created_by }}" name="user_id" id="user_id">
+        <input type="hidden" value="{{ $forms->form_penghapusan_id }}" id="form_penghapusan_id"name="form_penghapusan_id">
         <div class="row">
             <div class="col-md-6">
                 <label class="">NIK</label>
-                <input type="text" value="{{ $form->nik }}" id="nik" name="nik" class="form-control" readonly>
+                <input type="text" value="{{ $forms->nik }}" id="nik" name="nik" class="form-control" readonly>
+            </div>
+            <div class="col-md-6">
+                <label class="">Name</label>
+                <input type="text" value="{{ $forms->name }}" id="name" name="name" class="form-control" readonly>
             </div>
             <div class="col-md-6">
                 <label>Region</label>
                 <select name="region_id" id="region_id" class="form-control" readonly>
-                    <option value="{{ $form->region_id }}">{{ $form->nama_region }}</option>
+                    <option value="{{ $forms->region_id }}">{{ $forms->nama_region }}</option>
                 </select>
             </div>
-            <div class="col-md-12">
-                <label class="">Name</label>
-                <input type="text" value="{{ $form->name }}" id="name" name="name" class="form-control" readonly>
+            <div class="col-md-6">
+                <label>Store</label>
+                <select  name="store_id" id="store_id" class="form-control" readonly>
+                    <option value="{{ $forms->store_id }}">{{ $forms->nama_store }}</option>
+                </select>
             </div>
-        </div>
-        <div class="card-body">
-            <table class="table table-bordered table-striped" id="table" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th>Nama Yang DiHapus</th>
-                        <th>Nik Yang DIhapus</th>
-                        <th>Store Asal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{ $detailPenghapusan->name}}</td>
-                        <td>{{ $detailPenghapusan->deleted_nik }}</td>
-                        <td>{{ $detailPenghapusan->nama_store }}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="col-md-6">
+                <label>Aplikasi</label>
+                <select name="aplikasi_id[]" id="aplikasi_id"  class="form-control" readonly>
+                    <option value="{{ $forms->aplikasi_id}}"> {{ $forms->aplikasi }}</option>
+                </select>
+            </div>
         </div>
         <br>
         @if(Auth::user()->role_id != config('setting_app.role_id.admin'))

@@ -32,7 +32,6 @@
                 <label>Role</label>
                 <select name="role_id" id="role_id" class="select2 form-control" required>
                     <option>  </option>
-                    {{-- {{ dd($roles) }} --}}
                     @foreach ($roles as $role)
                     <option value="{{ $role->id }}">{{ $role->display_name }}</option>
                     @endforeach

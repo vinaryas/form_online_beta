@@ -11,38 +11,39 @@
             <b> Form Penghapusan </b>
         </h3>
     </div>
-    <input type="hidden" value="{{ $user->user_id }}" name="user_id" id="user_id">
     <div class="card-body">
         <div class="form-group row">
             <div class="col-md-6">
                 <label>Nama</label>
-                <input type="text" value="{{ $user->name }}" name="name" id="name" class="form-control" readonly>
+                <select name="user_id" id="user_id" class="select2 form-control" required>
+                    <option > </option>
+                    @foreach ($users as $user)
+                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="col-md-6">
                 <label>NIK</label>
-                <input type="text" value="{{ $user->username }}" id="nik" name="nik" class="form-control" readonly>
-            </div>
-            <div class="col-md-6">
-                <label>Region</label>
-                <select name="region_id" id="region_id" class="form-control" readonly>
-                    <option value="{{ $user->region_id }}">{{ $user->region_name }}</option>
-                </select>
+                <input type="text" id="nik" name="nik" class="form-control">
             </div>
             <div class="col-md-6">
                 <label>Store</label>
-                <select name="store_id" id="store_id" class="form-control" readonly>
-                    <option value="{{ $user->store_id }}">{{ $user->store }}</option>
+                <select name="store_id" id="store_id" class="select2 form-control" required>
+                    <option > </option>
+                    @foreach ($stores as $store)
+                    <option value="{{ $store->id }}">{{ $store->name }}</option>
+                    @endforeach
                 </select>
             </div>
-        </div>
-        <div class="col-md-20">
-            <label>Alasan Penghapusan</label>
-            <select name="alasan_id" id="alasan_id" class="select2 form-control" required>
-                <option > ... </option>
-                @foreach ($alasan as $detail)
-                <option value="{{ $detail->id }}">{{ $detail->alasan }}</option>
-                @endforeach
-            </select>
+            <div class="col-md-6">
+                <label>Alasan Penghapusan</label>
+                <select name="alasan_id" id="alasan_id" class="select2 form-control" required>
+                    <option > </option>
+                    @foreach ($alasan as $detail)
+                    <option value="{{ $detail->id }}">{{ $detail->alasan }}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
         <div class="row">
             @foreach ( $app as $aplikasi)

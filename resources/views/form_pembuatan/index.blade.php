@@ -81,7 +81,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($formPembuatan as $detail)
+                @foreach ($form as $detail)
                     <tr>
                         <td>{{ $detail->created_at }}</td>
                         <td>{{ $detail->nik }}</td>
