@@ -40,7 +40,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($formPembuatan as $detail)
+                @foreach ($form as $detail)
                     <tr>
                         <td>{{ $detail->created_at }}</td>
                         <td>{{ $detail->nik }}</td>
@@ -63,11 +63,17 @@
 @else
 <form class="card" action="{{ route('form-pembuatan.index') }}" method="GET">
     {{ csrf_field() }}
-     <div class="card-body">
-         <a href="{{ route('form-pembuatan.create') }}" class="btn btn-primary">
-            <i class="fas fa-file"></i> Buat Form
-        </a>
-     </div>
+    @if ( Auth::user()->role_id == 1 && Auth::user()->store_id === null)
+
+    @elseif (Auth::user()->role_id == config('setting_app.role_id.admin'))
+
+    @else
+    <div class="card-body">
+        <a href="{{ route('form-pembuatan.create') }}" class="btn btn-info">
+           <i class="fas fa-file"></i> Buat Form
+       </a>
+    </div>
+    @endif
      <div class="card-body">
         <table class="table table-bordered table-striped" id="table" style="width: 100%;">
             <thead>

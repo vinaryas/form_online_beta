@@ -26,11 +26,15 @@
 @else
 <div class="card"  method="GET">
     {{ csrf_field() }}
+    @if ( Auth::user()->role_id == 1 && Auth::user()->store_id === null)
+
+    @else
     <div class="card-body">
-        <a href="{{ route('form-pemindahan.create') }}" class="btn btn-primary">
+        <a href="{{ route('form-pemindahan.create') }}" class="btn btn-info">
            <i class="fas fa-file"></i> Buat Form
        </a>
     </div>
+    @endif
      <div class="card-body">
         <table class="table table-bordered table-striped" id="table" style="width: 100%;">
             <thead>

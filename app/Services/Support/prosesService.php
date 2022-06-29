@@ -2,10 +2,10 @@
 
 namespace App\Services\Support;
 
-use App\Services\logFormPenghapusanService as SupportService;
+use App\Services\prosesService as SupportService;
 use Illuminate\Support\Facades\Facade;
 
-class logFormPenghapusanService extends Facade
+class prosesService extends Facade
 {
 	/**
      * Get the registered name of the component.

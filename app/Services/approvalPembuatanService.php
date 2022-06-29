@@ -25,15 +25,13 @@ class approvalPembuatanService
         return $this->approvalPembuatan->create($data);
     }
 
-    public function getNextApp($aplikasi, $roleId, $regionId)
-    {
+    public function getNextApp($aplikasi, $roleId, $regionId){
         $thisPosition = MappingApprovalPembuatanService::getByTypeRoleId($aplikasi, $roleId, $regionId)->first()->position;
 
         $nextPosition = MappingApprovalPembuatanService::getByPosition($thisPosition + 1, $regionId, $aplikasi)->first();
 
         return ($nextPosition != null) ? $nextPosition->role_id : 0;
     }
-
 
     public function getDetail()
     {

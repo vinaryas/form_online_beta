@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\vega;
-use PhpParser\Node\Stmt\Return_;
 
 class vegaService{
 

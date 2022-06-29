@@ -27,8 +27,8 @@
                     <tr>
                         <td>{{ $detail ->created_at }}</td>
                         <td>{{ $detail ->aplikasi }}</td>
-                        <td>{{ $detail ->nik}}</td>
-                        <td>{{ $detail ->approved_name}}</td>
+                        <td>{{ $detail ->username}}</td>
+                        <td>{{ $detail ->approver_name}}</td>
                         <th>{{ $detail ->status }}</th>
                     </tr>
                 @endforeach

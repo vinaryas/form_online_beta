@@ -8,6 +8,7 @@ return [
         'bap' => 4,
     ],
     'role_id' => [
+        'finish' => 0,
         'kasir' => 1,
         'it' => 2,
         'aux' => 3,
@@ -15,11 +16,23 @@ return [
         'bo' => 5,
     ],
     'status_approval' => [
-        'approve' => 1,
         'panding' => 0,
+        'approve' => 1,
         'disapprove' => 2,
+        'finish'=>3,
     ],
     'status_sync' => [
         'need_sync' => 1,
+    ],
+    'proses_form_proses' => [
+        'pembuatan' => 'Pembuatan',
+        'penghapusan' => 'Penghapusan',
+    ],
+    'proses_form_id' => [
+        'pembuatan' => 1,
+        'penghapusan' => 2,
+    ],
+    'alasan' => [
+
     ]
 ];

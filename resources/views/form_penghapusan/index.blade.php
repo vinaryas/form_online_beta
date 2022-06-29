@@ -26,20 +26,15 @@
 @else
 <div class="card" method="GET">
     {{ csrf_field() }}
-    <div class="card-body">
-        <a href="{{ route('form-penghapusan.create') }}" class="btn btn-primary">
-           <i class="fas fa-file"></i> Buat Form
-       </a>
-    </div>
      <div class="card-body">
         <table class="table table-bordered table-striped" id="table" style="width: 100%;">
             <thead>
                 <tr>
-                    <th>Nama</th>
-                    <th>NIK</th>
-                    <th>Region</th>
-                    <th>Store</th>
-                    <th>Ajukan Penghapusan</th>
+                    <th> Nama </th>
+                    <th >NI K</th>
+                    <th> Region </th>
+                    <th> Store </th>
+                    <th> Ajukan Penghapusan </th>
                 </tr>
             </thead>
             <tbody>
@@ -49,6 +44,9 @@
                         <td>{{ $detail->username }}</td>
                         <td>{{ $detail->region_name }}</td>
                         <td>{{ $detail->store }}</td>
+                        <td> <a href="{{ route('form-penghapusan.create', $detail->user_id) }}" class="btn btn-info">
+                            <i class="fas fa-file"></i> Buat Form </a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

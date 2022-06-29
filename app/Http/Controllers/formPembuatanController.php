@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Services\Support\aplikasiService;
 use App\Services\Support\approvalPembuatanService;
 use App\Services\Support\form_headService;
+use App\Services\Support\formLogService;
 use App\Services\Support\formPembuatanService;
+use App\Services\Support\prosesService;
+use App\Services\Support\StoreService;
 use App\Services\Support\userService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -43,8 +46,9 @@ class formPembuatanController extends Controller
     public function create(){
         $user = userService::find(Auth::user()->id);
         $app = aplikasiService::all()->get();
+        $stores = StoreService::all()->get();
 
-        return view('form_pembuatan.create', compact('user', 'app'));
+        return view('form_pembuatan.create', compact('user', 'app', 'stores'));
     }
 
     public function store(Request $request){
@@ -54,13 +58,13 @@ class formPembuatanController extends Controller
         if(Auth::user()->role_id == config('setting_app.role_id.kasir')){
             try {
                 $index = 0;
-                $dataForm = [
+                $form = [
                     'created_by' => Auth::user()->id,
                     'nik' => Auth::user()->username,
                     'region_id'=>$request->region_id,
                 ];
 
-                $storeForm = form_headService::store($dataForm);
+                $storeForm = form_headService::store($form);
 
                 foreach ($request->aplikasi_id as $aplikasi_id){
 
@@ -85,6 +89,19 @@ class formPembuatanController extends Controller
 
                     $storeFormApp = formPembuatanService::store($dataApp);
 
+                    $logForm = [
+                        'nik' => Auth::user()->username,
+                        'nama' => Auth::user()->name,
+                        'aplikasi_id' => $aplikasi_id,
+                        'proses' => config('setting_app.proses_form_id.pembuatan'),
+                        'id_toko' =>  $request->store_id,
+                        'alasan' => null,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
+
+                    $storelog = formLogService::store($logForm);
+
                     $index++;
                 }
 
@@ -101,13 +118,13 @@ class formPembuatanController extends Controller
             elseif(Auth::user()->role_id == config('setting_app.role_id.aux')){
                 try {
                     $index = 0;
-                    $dataForm = [
+                    $form = [
                         'created_by' =>  Auth::user()->id,
-                        'nik' => $request->nik,
+                        'nik' => Auth::user()->username,
                         'region_id'=>$request->region_id,
                     ];
 
-                    $storeForm = form_headService::store($dataForm);
+                    $storeForm = form_headService::store($form);
 
                     foreach ($request->aplikasi_id as $aplikasi_id) {
 
@@ -132,6 +149,19 @@ class formPembuatanController extends Controller
 
                         $storeFormApp = formPembuatanService::store($dataApp);
 
+                        $logForm = [
+                            'nik' => Auth::user()->username,
+                            'nama' => Auth::user()->name,
+                            'aplikasi_id' => $aplikasi_id,
+                            'proses' => config('setting_app.proses_form_id.pembuatan'),
+                            'id_toko' =>  $request->store_id,
+                            'alasan' => null,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ];
+
+                        $storelog = formLogService::store($logForm);
+
                         $index++;
                     }
 
@@ -148,13 +178,13 @@ class formPembuatanController extends Controller
             else{
             try {
                 $index = 0;
-                $dataForm = [
+                $form = [
                     'created_by' =>  Auth::user()->id,
-                    'nik' => $request->nik,
+                    'nik' =>Auth::user()->username,
                     'region_id'=>$request->region_id,
                 ];
 
-                $storeForm = form_headService::store($dataForm);
+                $storeForm = form_headService::store($form);
 
                 foreach ($request->aplikasi_id as $aplikasi_id) {
 
@@ -178,6 +208,19 @@ class formPembuatanController extends Controller
                     ];
 
                     $storeFormApp = formPembuatanService::store($dataApp);
+
+                    $logForm = [
+                        'nik' => Auth::user()->username,
+                        'nama' => Auth::user()->name,
+                        'aplikasi_id' => $aplikasi_id,
+                        'proses' => config('setting_app.proses_form_id.pembuatan'),
+                        'id_toko' =>  $request->store_id,
+                        'alasan' => null,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
+
+                    $storelog = formLogService::store($logForm);
 
                     $index++;
                 }

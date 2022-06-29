@@ -37,6 +37,7 @@ class formPembuatanService
             'form_pembuatan.id as form_pembuatan_id',
             'form_pembuatan.aplikasi_id',
             'form_pembuatan.status',
+            'form_pembuatan.created_by',
             'form_pembuatan.role_last_app',
             'form_pembuatan.role_next_app',
             'form_pembuatan.pass',
@@ -51,6 +52,7 @@ class formPembuatanService
             'regions.name as nama_region',
             'users.name',
             'users.username',
+            'users.role_id',
             'stores.id as store_id',
             'stores.name as nama_store',
         );
@@ -66,6 +68,13 @@ class formPembuatanService
         return $this->getDetail()
         ->where('form_pembuatan.aplikasi_id', config('setting_app.aplikasi_id.vega'))
         ->where('form_pembuatan.role_next_app', 0);
+    }
+
+    public function getFormForPemindahanByUserId($userId){
+        return $this->getDetail()
+        ->where('form_head.created_by', $userId)
+        ->where( 'form_pembuatan.status', config('setting_app.status_approval.approve'))
+        ->where('form_pembuatan.role_next_app', config('setting_app.role_id.finish'));
     }
 
     public function adminViewApproval(){
@@ -93,19 +102,21 @@ class formPembuatanService
         return $this->getDetail()->where('form_pembuatan.role_next_app', $roleId);
     }
 
-    public function getDetailRjServer()
+    public function getDetailApp()
     {
         $data = DB::table('form_pembuatan')
         ->join('approval_pembuatan', 'form_pembuatan.id', '=', 'approval_pembuatan.form_pembuatan_id')
         ->join('form_head', 'form_pembuatan.form_id', '=', 'form_head.id')
         ->join('users', 'form_head.created_by', '=', 'users.id')
         ->join('regions', 'users.region_id', '=', 'regions.id')
+        ->leftjoin('stores', 'form_pembuatan.store', '=', 'stores.id')
         ->leftjoin('roles', 'users.role_id', '=', 'roles.id')
         ->join('aplikasi', 'form_pembuatan.aplikasi_id', '=', 'aplikasi.id')
         ->select(
             'form_pembuatan.id as form_pembuatan_id',
             'form_pembuatan.pass',
             'form_pembuatan.role_next_app',
+            'form_pembuatan.id_vega',
             'form_head.id as form_id',
             'form_head.created_by as user_id',
             'form_head.nik',
@@ -115,24 +126,42 @@ class formPembuatanService
             'roles.display_name',
             'users.name',
             'users.username',
+            'stores.id as store_id',
             'approval_pembuatan.status',
         );
 
         return $data;
     }
 
-    public function getRjServerStore()
-    {
-        return $this->getDetailRjServer()
+    public function getVegaStore(){
+        return $this->getDetailApp()
+        ->where('aplikasi_id', config('setting_app.aplikasi_id.vega'))
+        ->where('approval_pembuatan.status', 'Approved');
+    }
+
+    public function getRjServerStore(){
+        return $this->getDetailApp()
         ->where('role_next_app', config('setting_app.role_id.aux'))
         ->where('aplikasi_id', config('setting_app.aplikasi_id.rjserver'))
         ->where('approval_pembuatan.status', 'Approved');
     }
 
-    public function getRjServerBo()
-    {
-        return $this->getDetailRjServer()
+    public function getRjServerBo(){
+        return $this->getDetailApp()
         ->where('role_next_app', config('setting_app.role_id.it') )
         ->where('aplikasi_id', config('setting_app.aplikasi_id.rjserver'));
     }
+
+    public function getRrakStore(){
+        return $this->getDetailApp()
+        ->where('aplikasi_id', config('setting_app.aplikasi_id.rrak'))
+        ->where('approval_pembuatan.status', 'Approved');
+    }
+
+    public function getBapStore(){
+        return $this->getDetailApp()
+        ->where('aplikasi_id', config('setting_app.aplikasi_id.bap'))
+        ->where('approval_pembuatan.status', 'Approved');
+    }
+
 }

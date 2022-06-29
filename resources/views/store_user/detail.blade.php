@@ -11,7 +11,7 @@
     {{ csrf_field() }}
     <div class="card-header">
         <div class="float-left">
-            <a href="{{ route('store.index') }}" class="btn btn-primary"><i class="fas fa-angle-left"></i> kembali </a>
+            <a href="{{ route('store.index') }}" class="btn btn-info"><i class="fas fa-angle-left"></i> kembali </a>
         </div>
     </div>
     <div class="card-body">

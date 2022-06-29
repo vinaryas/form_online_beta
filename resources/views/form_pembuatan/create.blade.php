@@ -32,6 +32,23 @@
                     <option value="{{ $user->store_id }}">{{ $user->store->name }}</option>
                 </select>
             </div>
+            @elseif (Auth::user()->role_id == config('setting_app.role_id.aux'))
+            <div class="col-md-4">
+                <label>Store</label>
+                <select name="store_id" id="store_id" class="select2 form-control" required>
+                    <option> </option>
+                    @foreach ($stores as $store)
+                    <option value="{{ $store->id }}">{{ $store->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            @elseif (Auth::user()->role_id == config('setting_app.role_id.bo'))
+            <div class="col-md-4">
+                <label>Store</label>
+                <select name="store_id" id="store_id" class="form-control" readonly>
+                    <option value="{{ 0 }}"> All Store </option>
+                </select>
+            </div>
             @endif
         </div>
         <br>

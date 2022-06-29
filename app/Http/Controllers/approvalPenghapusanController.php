@@ -62,18 +62,17 @@ class approvalPenghapusanController extends Controller
 
                 $storeApprove = approvalpenghapusanService::store($data);
 
-                if($formPenghapusan->aplikasi_id == config('setting_app.aplikasi_id.rjserver'))
-                {
+                if($formPenghapusan->aplikasi_id == config('setting_app.aplikasi_id.rjserver')){
                     if($formPenghapusan->role_last_app ==  config('setting_app.role_id.kasir')){
                         $rjServer =  formPenghapusanService::getRjServerStore()->first();
-                        dd($rjServer);
+
+                        $cashnum = substr($rjServer->username, 3);
 
                         $dataPos = [
                             'status' => 'I',
                         ];
 
-                        $storeOnFormOnline = rj_serverService::update($dataPos);
-
+                        $storeOnFormOnline = rj_serverService::update($dataPos, $cashnum, $request->store_id);
 
                         $first_sync = [
                             'status' => config('setting_app.status_sync.need_sync')

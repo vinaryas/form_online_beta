@@ -41,29 +41,40 @@
                 </select>
             </div>
         </div>
-        <br>
-        <label>Aplikasi</label>
-        <div class="row">
-            @foreach ( $app as $aplikasi)
-                <div class="col-md-2">
-                    <div class="">
-                        <input class="form-check-inline" type="checkbox" name="aplikasi_id[]" id="aplikasi_id" value="{{ $aplikasi->id }}">
-                        <label class="form-check-inline">{{ $aplikasi->aplikasi }}</label>
+        <div class="card-body">
+            <table class="table table-bordered table-striped" id="table" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Aplikasi</th>
+                        <th>ID Vega</th>
+                        <th>Password</th>
+                        <th>Store Asal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ( $formPembuatan as $detail)
+                    <div class="col-md-2">
+                            <input class="form-check-inline" type="hidden" name="aplikasi_id[]" id="aplikasi_id" value="{{ $detail->aplikasi_id }}">
                     </div>
-                </div>
-                @if ($aplikasi->id == config('setting_app.aplikasi_id.vega'))
+                    @if ($detail->aplikasi_id == config('setting_app.aplikasi_id.vega'))
+                        <div class="col-md-10">
+                            <input type="hidden" class="form-control form-group" name="id_vega[]" id="id_vega"  value="{{ $detail->id_vega }}">
+                            <input type="hidden" class="form-control form-group" name="pass[]" id="pass" value="{{ $detail->pass }}">
+                        </div>
+                    @elseif ($detail->aplikasi_id == config('setting_app.aplikasi_id.rjserver'))
                     <div class="col-md-10">
-                        <input type="text" class="form-control form-group" aria-label="Text input with checkbox" placeholder="ID" style="display: inline-flex" name="id_vega[]" id="id_vega" minlength="10" maxlength="10">
-                        <input type="text" class="form-control form-group" aria-label="Text input with checkbox" placeholder="password" style="display: inline-flex" name="pass[]" id="pass" minlength="8" maxlength="8">
+                        <input type="hidden" class="form-control form-group" name="pass[]" id="pass"value="{{ $detail->pass }}">
                     </div>
-                @elseif ($aplikasi->id == config('setting_app.aplikasi_id.rjserver'))
-                <div class="col-md-10">
-                    <input type="text" class="form-control form-group" aria-label="Text input with checkbox" placeholder="password" style="display: inline-flex" name="pass[]" id="pass" minlength="6" maxlength="6">
-                </div>
-                @else
-                <div class="col-md-10"><input type="hidden" dissable></div>
-                @endif
-            @endforeach
+                    @endif
+                        <tr>
+                            <td>{{ $detail->aplikasi}}</td>
+                            <td>{{ $detail->id_vega }}</td>
+                            <td>{{ $detail->pass }}</td>
+                            <td>{{ $detail->nama_store }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
         <br>
         <div class="float-left">

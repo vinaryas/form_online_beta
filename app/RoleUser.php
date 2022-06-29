@@ -9,7 +9,6 @@ class RoleUser extends Model
 {
     protected $table = 'role_user';
     protected $guarded = [];
-    // protected $primaryKey = ['role_id', 'user_id', 'user_type'];
 
     protected function setKeysForSaveQuery(Builder $query)
     {

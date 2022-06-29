@@ -15,7 +15,7 @@ class CreateVegaTable extends Migration
     {
         Schema::create('vega', function (Blueprint $table) {
             $table->id();
-            $table->integer('form_id');
+            $table->integer('nik');
             $table->string('id_vega');
             $table->string('pass');
             $table->integer('store');

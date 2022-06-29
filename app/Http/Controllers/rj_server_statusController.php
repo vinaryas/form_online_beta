@@ -13,7 +13,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class rj_server_statusController extends Controller
 {
     public function index(){
-        if(Auth::user()->role_id == 2){
+        if(Auth::user()->role_id == config('setting_app.role_id.aux')){
             $rj = rj_serverService::getAllStore( UserService::authStoreArray())->get();
         }elseif(Auth::user()->role_id == config('setting_app.role_id.admin')){
             $rj = rj_serverService::getAllBo( UserService::authStoreArray())->get();
@@ -40,7 +40,7 @@ class rj_server_statusController extends Controller
 
 
             $first_sync = [
-                'status' => 1
+                'status' => config('setting_app.status_sync.need_sync')
             ];
 
             $storeOnFormOnline = first_time_syncService::update($first_sync, $request->store_id);

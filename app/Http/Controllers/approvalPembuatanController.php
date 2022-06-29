@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Services\Support\approvalPembuatanService;
+use App\Services\Support\bapService;
 use App\Services\Support\cashierService;
 use App\Services\Support\first_time_syncService;
 use App\Services\Support\formPembuatanService;
 use App\Services\Support\form_headService;
 use App\Services\Support\rj_serverService;
+use App\Services\Support\rrakService;
 use App\Services\Support\StoreService;
 use App\Services\Support\userService;
+use App\Services\Support\vegaService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -51,8 +54,7 @@ class approvalPembuatanController extends Controller
         $nextApp = approvalPembuatanService::getNextApp($request->aplikasi_id[0], $authRole, $request->region_id);
         $formPembuatan = formPembuatanService::getById($request->form_pembuatan_id)->first();
 
-        if (isset($_POST["approve"]))
-        {
+        if (isset($_POST["approve"])){
             try{
                 $data = [
                     'form_pembuatan_id' => $request->form_pembuatan_id,
@@ -65,7 +67,6 @@ class approvalPembuatanController extends Controller
                 ];
 
                 $storeApprove = approvalPembuatanService::store($data);
-
                 if($formPembuatan->aplikasi_id == config('setting_app.aplikasi_id.rjserver')){
                     if($formPembuatan->role_last_app ==  config('setting_app.role_id.kasir')){
                         $rjServer =  formPembuatanService::getRjServerStore()->first();
@@ -89,7 +90,6 @@ class approvalPembuatanController extends Controller
                         ];
 
                         $storeOnFormOnline = first_time_syncService::update($first_sync, $request->store_id);
-
                     }elseif($formPembuatan->role_last_app == config('setting_app.role_id.aux')){
                         $rjServer =  formPembuatanService::getRjServerBo()->first();
 
@@ -112,12 +112,10 @@ class approvalPembuatanController extends Controller
                             ];
 
                             $storeOnFormOnline = first_time_syncService::update($first_sync, $request->store_id);
-
                     }elseif($formPembuatan->role_last_app == config('setting_app.role_id.bo') ){
                         $rjServer =  formPembuatanService::getRjServerBo()->first();
 
                         foreach ($stores as $store) {
-
                             $dataPos = [
                                 'cashnum' => substr($rjServer->nik, 3),
                                 'nama' => $rjServer->name,
@@ -139,6 +137,95 @@ class approvalPembuatanController extends Controller
                             $storeOnFormOnline = first_time_syncService::update($first_sync, $store->id);
                         }
                     }
+                }elseif ($formPembuatan->aplikasi_id == config('setting_app.aplikasi_id.vega')) {
+                    if ($formPembuatan->role_last_app == config('setting_app.role_id.bo')){
+                        $vega =  formPembuatanService::getVegaStore()->first();
+
+                        foreach ($stores as $store) {
+                        $data = [
+                            'nik' => $vega->nik,
+                            'id_vega' => $vega->id_vega,
+                            'pass'=> $vega->pass,
+                            'store'=> $vega->store_id,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ];
+
+                        $storeData = vegaService::store($data);
+                        }
+                    }else{
+                        $vega =  formPembuatanService::getVegaStore()->first();
+                        $data = [
+                            'nik' => $vega->nik,
+                            'id_vega' => $vega->id_vega,
+                            'pass'=> $vega->pass,
+                            'store'=> $vega->store_id,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ];
+
+                        $storeData = vegaService::store($data);
+                    }
+                }elseif ($formPembuatan->aplikasi_id == config('setting_app.aplikasi_id.rrak')) {
+                    if ($formPembuatan->role_last_app == config('setting_app.role_id.bo')){
+                        $rrak =  formPembuatanService::getRrakStore()->first();
+
+                        foreach ($stores as $store) {
+                        $data = [
+                            'nik' => $rrak->nik,
+                            'name' => $rrak->name,
+                            'store_id'=> $rrak->store_id,
+                            'role_id'=> $rrak->role_id,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ];
+
+                        $storeData = rrakService::store($data);
+                        }
+                    }else{
+                        $rrak =  formPembuatanService::getRrakStore()->first();
+
+                        $data = [
+                            'nik' => $rrak->nik,
+                            'name' => $rrak->name,
+                            'store_id'=> $rrak->store_id,
+                            'role_id'=> $rrak->role_id,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ];
+
+                        $storeData = rrakService::store($data);
+                    }
+                }elseif ($formPembuatan->aplikasi_id == config('setting_app.aplikasi_id.bap')) {
+                    if ($formPembuatan->role_last_app == config('setting_app.role_id.bo')){
+                        $bap =  formPembuatanService::getBapStore()->first();
+
+                        foreach ($stores as $store) {
+                        $data = [
+                            'nik' => $bap->nik,
+                            'name' => $bap->name,
+                            'store_id'=> $bap->store_id,
+                            'role_id'=> $bap->role_id,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ];
+
+                        $storeData = bapService::store($data);
+                        }
+                    }else{
+                        $bap =  formPembuatanService::getBapStore()->first();
+
+                        $data = [
+                            'nik' => $bap->nik,
+                            'name' => $bap->name,
+                            'store_id'=> $bap->store_id,
+                            'role_id'=> $bap->role_id,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ];
+
+                        $storeData = bapService::store($data);
+                    }
                 }
 
                 $dataUpdate = [
@@ -148,6 +235,14 @@ class approvalPembuatanController extends Controller
                 ];
 
                 $updateStatus = formPembuatanService::update($dataUpdate, $storeApprove->form_pembuatan_id);
+
+                if($formPembuatan->role_id ==  config('setting_app.role_id.kasir')){
+                    $change = [
+                        'store_id' => $formPembuatan->store_id,
+                    ];
+
+                    $changeStoreOnUsersTable = userService::update($change, $formPembuatan->user_id);
+                }
 
                 DB::commit();
 

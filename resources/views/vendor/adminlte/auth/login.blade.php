@@ -56,10 +56,6 @@
             @endif
         </div>
 
-        {{-- <div class="input-group mb-3">
-            <label class="text-danger font-weight-bold">Password Dapat Dilihat Di Register</label>
-        </div> --}}
-
         {{-- Login field --}}
         <div class="row">
             <div class="col-7">
@@ -69,7 +65,7 @@
                 </div> --}}
             </div>
             <div class="col-5">
-                <button type=submit class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
+                <button type=submit class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-info') }}">
                     <span class="fas fa-sign-in-alt"></span>
                     {{ __('adminlte::adminlte.sign_in') }}
                 </button>

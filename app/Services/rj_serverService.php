@@ -25,6 +25,10 @@ class rj_serverService{
         return $this->rj_server->where('id', $id)->update($data);
     }
 
+    public function updateFromPenghapusan($data, $storId, $cashnum){
+        return $this->rj_server->where('store', $storId)->where('cashnum', $cashnum)->update($data);
+    }
+
     public function getDetail(){
         $data = DB::table('rj_server')
         ->join('stores', 'stores.id', '=', 'rj_server.store')

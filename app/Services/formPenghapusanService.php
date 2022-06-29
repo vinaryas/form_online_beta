@@ -54,6 +54,16 @@ class formPenghapusanService
         return $data;
     }
 
+      public function getFormByUserId($userId){
+        return $this->getDetail()->where('form_head.created_by', $userId);
+    }
+
+    public function getVega(){
+        return $this->getDetail()
+        ->where('form_pembuatan.aplikasi_id', config('setting_app.aplikasi_id.vega'))
+        ->where('form_pembuatan.role_next_app', 0);
+    }
+
     public function adminViewApproval(){
         return $this->getDetail()->where('role_next_app', '!=', 0);
     }
@@ -75,7 +85,7 @@ class formPenghapusanService
         return $this->getdetail()->where('form_penghapusan.id', $id);
     }
 
-    public function getDetailRjServer()
+    public function getDetailApp()
     {
         $data = DB::table('form_penghapusan')
         ->join('approval_penghapusan', 'form_penghapusan.id', '=', 'approval_penghapusan.form_penghapusan_id')
@@ -104,7 +114,7 @@ class formPenghapusanService
 
     public function getRjServerStore()
     {
-        return $this->getDetailRjServer()
+        return $this->getDetailApp()
         ->where('role_next_app', config('setting_app.role_id.aux'))
         ->where('aplikasi_id', config('setting_app.aplikasi_id.rjserver'))
         ->where('approval_penghapusan.status', 'Approved');

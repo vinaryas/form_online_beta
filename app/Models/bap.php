@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class logFormPenghapusan extends Model
+class bap extends Model
 {
-    protected $table = 'log_form_penghapusan';
+    protected $table = 'bap';
     protected $guarded = [];
 }

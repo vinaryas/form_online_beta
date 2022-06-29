@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFormLogTable extends Migration
+class CreateProsesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class CreateFormLogTable extends Migration
      */
     public function up()
     {
-        Schema::create('form_log', function (Blueprint $table) {
+        Schema::create('proses', function (Blueprint $table) {
             $table->id();
-            $table->integer('nik');
-            $table->string('nama');
-            $table->integer('aplikasi_id');
-            $table->integer('proses');
-            $table->integer('id_toko');
-            $table->text('alasan');
+            $table->string('proses');
             $table->timestamps();
         });
     }
@@ -32,6 +27,6 @@ class CreateFormLogTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('form_log');
+        Schema::dropIfExists('proses');
     }
 }
