@@ -63,7 +63,7 @@
                 </div>
                 @if ($aplikasi->id == config('setting_app.aplikasi_id.vega'))
                     <div class="col-md-10">
-                        <input type="text" class="form-control form-group" aria-label="Text input with checkbox" placeholder="ID" style="display: inline-flex" name="id_vega[]" id="id_vega" minlength="10" maxlength="10">
+                        <input type="text" class="form-control form-group" aria-label="Text input with checkbox" placeholder="ID" style="display: inline-flex" name="id_app[]" id="id_app" minlength="10" maxlength="10">
                         <input type="text" class="form-control form-group" aria-label="Text input with checkbox" placeholder="password" style="display: inline-flex" name="pass[]" id="pass" minlength="8" maxlength="8">
                     </div>
                 @elseif ($aplikasi->id == config('setting_app.aplikasi_id.rjserver'))

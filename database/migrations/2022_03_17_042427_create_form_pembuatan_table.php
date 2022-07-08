@@ -17,10 +17,10 @@ class CreateFormPembuatanTable extends Migration
             $table->id();
             $table->integer('aplikasi_id');
             $table->bigInteger('form_id');
-            $table->string('id_vega')->nullable();
+            $table->string('user_id')->nullable();
             $table->string('pass')->nullable();
             $table->integer('store')->nullable();
-            $table->string('type')->nullable();
+            $table->string('type');
             $table->integer('role_last_app');
             $table->integer('role_next_app');
             $table->integer('status');

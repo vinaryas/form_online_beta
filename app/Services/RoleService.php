@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\jabatan;
 use App\Models\Role;
 
 class RoleService
@@ -18,5 +17,9 @@ class RoleService
 	{
 		return $this->role->query();
 	}
+
+    public function store($data){
+        return $this->role->create($data);
+    }
 
 }

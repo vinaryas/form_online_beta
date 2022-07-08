@@ -31,7 +31,7 @@
             <thead>
                 <tr>
                     <th> Nama </th>
-                    <th >NI K</th>
+                    <th >NIK</th>
                     <th> Region </th>
                     <th> Store </th>
                     <th> Ajukan Penghapusan </th>

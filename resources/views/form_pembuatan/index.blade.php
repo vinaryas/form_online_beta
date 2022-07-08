@@ -23,47 +23,10 @@
     </div>
 </div>
 
-@elseif (Auth::user()->role_id == config('setting_app.role_id.admin'))
-<form class="card" action="{{ route('form-pembuatan.index') }}" method="GET">
-    {{ csrf_field() }}
-     <div class="card-body">
-        <table class="table table-bordered table-striped" id="table" style="width: 100%;">
-            <thead>
-                <tr>
-                    <th>Waktu Pembuatan</th>
-                    <th>NIK</th>
-                    <th>Region</th>
-                    <th>Store</th>
-                    <th>Aplikasi</th>
-                    <th>Status</th>
-                    <th>Detail</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($form as $detail)
-                    <tr>
-                        <td>{{ $detail->created_at }}</td>
-                        <td>{{ $detail->nik }}</td>
-                        <td>{{ $detail->nama_region }}</td>
-                        <td>{{ $detail->nama_store }}</td>
-                        <td>{{ $detail->aplikasi }}</td>
-                        <td> <a href="{{ route('form-pembuatan.status', $detail->form_pembuatan_id) }}"
-                            class="btn btn-info btn-sm"> status <i class="fas fa-angle-right"> </i></a>
-                        </td>
-                        <td><a href="{{ route('form-pembuatan.detail', $detail->form_pembuatan_id) }}"
-                            class="btn btn-info btn-sm"> detail <i class="fas fa-angle-right"> </i></a>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-</form>
-
 @else
 <form class="card" action="{{ route('form-pembuatan.index') }}" method="GET">
     {{ csrf_field() }}
-    @if ( Auth::user()->role_id == 1 && Auth::user()->store_id === null)
+    @if ( Auth::user()->status_pembuatan == 1 ||  Auth::user()->status_penghapusan == 1)
 
     @elseif (Auth::user()->role_id == config('setting_app.role_id.admin'))
 

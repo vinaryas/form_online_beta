@@ -26,7 +26,9 @@
 @else
 <div class="card"  method="GET">
     {{ csrf_field() }}
-    @if ( Auth::user()->role_id == 1 && Auth::user()->store_id === null)
+    @if ( Auth::user()->status_pembuatan == 1 ||  Auth::user()->status_penghapusan == 1)
+
+    @elseif (Auth::user()->role_id == config('setting_app.role_id.admin'))
 
     @else
     <div class="card-body">
@@ -54,8 +56,8 @@
                         <td>{{ $detail->name }}</td>
                         <td>{{ $detail->nik }}</td>
                         <td>{{ $detail->nama_region }}</td>
-                        <td>{{ $detail->from_store }}</td>
-                        <td>{{ $detail->to_store }}</td>
+                        <td>{{ $detail->from_store_name }}</td>
+                        <td>{{ $detail->to_store_name }}</td>
                     </tr>
                 @endforeach
             </tbody>

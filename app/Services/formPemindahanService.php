@@ -26,6 +26,8 @@ class formPemindahanService
     public function getDetail(){
         $data = DB::table('form_pemindahan')
         ->join('users', 'form_pemindahan.created_by', '=', 'users.id')
+        ->join('stores as st1', 'form_pemindahan.from_store', '=', 'st1.id')
+        ->join('stores as st2', 'form_pemindahan.to_store', '=', 'st2.id')
         ->join('regions', 'form_pemindahan.region_id', '=', 'regions.id')
         ->select(
             'form_pemindahan.id as form_pemindahan_id',
@@ -33,6 +35,8 @@ class formPemindahanService
             'form_pemindahan.created_at',
             'form_pemindahan.from_store as from_store',
             'form_pemindahan.to_store as to_store',
+            'st1.name as from_store_name',
+            'st2.name as to_store_name',
             'users.id as user_id',
             'users.username as nik',
             'users.name as name',

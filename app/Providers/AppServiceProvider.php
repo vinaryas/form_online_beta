@@ -45,7 +45,7 @@ class AppServiceProvider extends ServiceProvider
                         'text' => 'Pembuatan ID',
                         'url' => route('form-pembuatan.index'),
                         'icon' => 'fas fa-file-alt',
-                        'active' => [route('form-pembuatan.index').'/*',route('form-pembuatan.create')],
+                        'active' => ['form-pembuatan.index*'],
                         'permission' => 'form-pembuatan',
                     ],
                     [
@@ -84,50 +84,6 @@ class AppServiceProvider extends ServiceProvider
                         'icon' => 'fas fa-file-signature',
                         'active' => ['approval-penghapusan*'],
                         'permission' => 'approval-penghapusan',
-                    ],
-                    [
-                        'text' => 'Pemindahan ID',
-                        // 'url' => route('approval-pemindahan.index'),
-                        'icon' => 'fas fa-file-signature',
-                        'active' => ['approval-pemindahan*'],
-                        'permission' => 'approval-pemindahan',
-                    ],
-
-                ],
-            ]);
-
-            $event->menu->add([
-                'text' => 'Aplikasi',
-                'icon' => '	fas fa-server',
-                'permission' => 'rj-server-status',
-                'submenu' => [
-                    [
-                        'text' => 'Rj Server',
-                        'url' => route('rj_server.index'),
-                        'icon' => '	far fa-square',
-                        'active' => ['rj_server*'],
-                        'permission' => 'rj-server-status',
-                    ],
-                    [
-                        'text' => 'Vega',
-                        'url' => route('vega.index'),
-                        'icon' => '	far fa-square',
-                        'active' => ['vega*'],
-                        'permission' => 'auth',
-                    ],
-                    [
-                        'text' => 'RRAK',
-                        // 'url' => route('vega.index'),
-                        'icon' => '	far fa-square',
-                        // 'active' => ['vega*'],
-                        'permission' => 'auth',
-                    ],
-                    [
-                        'text' => 'BAP',
-                        // 'url' => route('vega.index'),
-                        'icon' => '	far fa-square',
-                        // 'active' => ['vega*'],
-                        'permission' => 'auth',
                     ],
                 ],
             ]);

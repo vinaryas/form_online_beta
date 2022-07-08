@@ -41,7 +41,8 @@ class formPembuatanService
             'form_pembuatan.role_last_app',
             'form_pembuatan.role_next_app',
             'form_pembuatan.pass',
-            'form_pembuatan.id_vega as id_vega',
+            'form_pembuatan.store',
+            'form_pembuatan.user_id as id_app',
             'form_head.id as form_id',
             'form_head.created_by as user_id',
             'form_head.created_at',
@@ -70,11 +71,11 @@ class formPembuatanService
         ->where('form_pembuatan.role_next_app', 0);
     }
 
-    public function getFormForPemindahanByUserId($userId){
+    public function getFormForPemindahanById($userId, $storeId){
         return $this->getDetail()
         ->where('form_head.created_by', $userId)
-        ->where( 'form_pembuatan.status', config('setting_app.status_approval.approve'))
-        ->where('form_pembuatan.role_next_app', config('setting_app.role_id.finish'));
+        ->where('form_pembuatan.store', $storeId)
+        ->where('form_pembuatan.status', config('setting_app.status_approval.approve'));
     }
 
     public function adminViewApproval(){
@@ -83,14 +84,13 @@ class formPembuatanService
 
     public function getApproveFilter($roleId){
         return $this->getDetail()
-        ->where('role_next_app', $roleId)
-        ->where('status', config('setting_app.status_approval.approve'));
+        ->where('role_next_app', $roleId);
     }
 
     public function getApproveFilterByStore($roleId, $store){
         return $this->getDetail()
         ->where('role_next_app', $roleId)
-        ->where('status', config('setting_app.status_approval.panding'))
+        ->where('form_pembuatan.status', config('setting_app.status_approval.panding'))
         ->whereIn('store', $store);
     }
 
@@ -116,7 +116,7 @@ class formPembuatanService
             'form_pembuatan.id as form_pembuatan_id',
             'form_pembuatan.pass',
             'form_pembuatan.role_next_app',
-            'form_pembuatan.id_vega',
+            'form_pembuatan.user_id',
             'form_head.id as form_id',
             'form_head.created_by as user_id',
             'form_head.nik',

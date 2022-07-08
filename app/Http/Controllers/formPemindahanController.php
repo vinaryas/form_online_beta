@@ -26,7 +26,7 @@ class formPemindahanController extends Controller
 
     public function create(){
         $user = userService::find(Auth::user()->id);
-        $formPembuatan = formPembuatanService::getFormForPemindahanByUserId(Auth::user()->id)->get();
+        $formPembuatan = formPembuatanService::getFormForPemindahanById(Auth::user()->id, Auth::user()->store_id)->get();
         $stores = StoreService::all()->get();
 
         return view('form_pemindahan.create', compact('user', 'stores', 'formPembuatan'));
@@ -35,7 +35,6 @@ class formPemindahanController extends Controller
     public function store(Request $request){
         DB::beginTransaction();
         $user = userService::findRoleUser(auth::user()->role_id)->first();
-        // $formPembuatan = formPembuatanService::getFormForPemindahanByUserId(Auth::user()->id)->get();
 
         try {
             $index = 0;
@@ -44,103 +43,94 @@ class formPemindahanController extends Controller
                 'nik' => Auth::user()->username,
                 'region_id'=> Auth::user()->region_id,
             ];
-
             $storeForm = form_headService::store($form);
 
-                $dataPemindahan = [
+            $dataPemindahan = [
+                'created_by' => Auth::user()->id,
+                'nik' => Auth::user()->username,
+                'region_id'=> Auth::user()->region_id,
+                'from_store'=> $request->store_id_asal,
+                'to_store'=>  $request->store_id_tujuan,
+            ];
+            $storeDataPemindahan = formPemindahanService::store($dataPemindahan);
+
+            foreach ($request->aplikasi_id as $aplikasi_id){
+                $user_id = ($aplikasi_id == config('setting_app.aplikasi_id.vega')) ? $request->id_app[$index] : null;
+                $pass = ($aplikasi_id >= config('setting_app.aplikasi_id.vega') && $aplikasi_id <= config('setting_app.aplikasi_id.rjserver')) ? $request->pass[$index] : null;
+                $type = (Auth::user()->role_id == config('setting_app.role_id.kasir') ||Auth::user()->role_id == config('setting_app.role_id.aux')) ? 's' : 'b';
+
+                $data = [
+                    'aplikasi_id' => $aplikasi_id,
+                    'form_id' => $storeForm->id,
+                    'user_id'=> $user_id,
+                    'pass'=> $pass,
+                    'store' => $request->store_id_tujuan,
+                    'type' => $type,
+                    'role_last_app' =>  Auth::user()->role_id,
+                    'role_next_app' => approvalPembuatanService::getNextApp($request->aplikasi_id[0], $user->role_id, $storeForm->region_id),
+                    'status' => config('setting_app.status_approval.panding'),
                     'created_by' => Auth::user()->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+
+                $storeOnFormPembuatan = formPembuatanService::store($data);
+
+                $logForm = [
                     'nik' => Auth::user()->username,
-                    'region_id'=> Auth::user()->region_id,
-                    'from_store'=> $request->store_id_asal,
-                    'to_store'=>  $request->store_id_tujuan,
+                    'nama' => Auth::user()->name,
+                    'aplikasi_id' => $aplikasi_id,
+                    'proses' =>'pembuatan',
+                    'id_toko' =>  $request->store_id_tujuan,
+                    'alasan' => 'Pemindahan',
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ];
+                $storelog = formLogService::store($logForm);
 
-                $storeDataPemindahan = formPemindahanService::store($dataPemindahan);
-
-                foreach ($request->aplikasi_id as $aplikasi_id){
-                    $id_vega = ($aplikasi_id == config('setting_app.aplikasi_id.vega')) ? $request->id_vega[$index] : null;
-
-                    $pass = ($aplikasi_id >= config('setting_app.aplikasi_id.vega') && $aplikasi_id <= config('setting_app.aplikasi_id.rjserver')) ? $request->pass[$index] : null;
-
-                    $data = [
-                        'aplikasi_id' => $aplikasi_id,
-                        'form_id' => $storeForm->id,
-                        'id_vega'=> $id_vega,
-                        'pass'=> $pass,
-                        'store' => $request->store_id_tujuan,
-                        'type' => 's',
-                        'role_last_app' =>  Auth::user()->role_id,
-                        'role_next_app' => approvalPembuatanService::getNextApp($request->aplikasi_id[0], $user->role_id, $storeForm->region_id),
-                        'status' => config('setting_app.status_approval.panding'),
-                        'created_by' => Auth::user()->id,
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ];
-
-                    $storeOnFormPembuatan = formPembuatanService::store($data);
-
-                    $logForm = [
-                        'nik' => Auth::user()->username,
-                        'nama' => Auth::user()->name,
-                        'aplikasi_id' => $aplikasi_id,
-                        'proses' => config('setting_app.proses_form_id.pembuatan'),
-                        'id_toko' =>  $request->store_id_tujuan,
-                        'alasan' => 'Pemindahan',
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ];
-
-                    $storelog = formLogService::store($logForm);
-
-                    $index++;
-                }
-
-                foreach ($request->aplikasi_id as $aplikasi_id){
-                    $data = [
-                        'aplikasi_id' => $aplikasi_id,
-                        'form_id' => $storeForm->id,
-                        'store' => $request->store_id_asal,
-                        'type' => 's',
-                        'role_last_app' =>  Auth::user()->role_id,
-                        'role_next_app' => approvalPembuatanService::getNextApp($request->aplikasi_id[0], $user->role_id, $storeForm->region_id),
-                        'status' => config('setting_app.status_approval.panding'),
-                        'created_by' => Auth::user()->id,
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ];
-
-                    $storeOnFormPenghapusan = formPenghapusanService::store($data);
-
-                    $logForm = [
-                        'nik' => Auth::user()->username,
-                        'nama' => Auth::user()->name,
-                        'aplikasi_id' => $aplikasi_id,
-                        'proses' =>config('setting_app.proses_form_id.penghapusan'),
-                        'id_toko' =>  $request->store_id_asal,
-                        'alasan' => 'Pemindahan',
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ];
-
-                    $storelog = formLogService::store($logForm);
-
-                    $index++;
-                }
-
-                $change = [
-                    'store_id' => null,
+                $index++;
+            }
+            foreach ($request->aplikasi_id as $aplikasi_id){
+                $data = [
+                    'aplikasi_id' => $aplikasi_id,
+                    'form_id' => $storeForm->id,
+                    'store' => $request->store_id_asal,
+                    'type' => $type,
+                    'role_last_app' =>  Auth::user()->role_id,
+                    'role_next_app' => approvalPembuatanService::getNextApp($request->aplikasi_id[0], $user->role_id, $storeForm->region_id),
+                    'status' => config('setting_app.status_approval.panding'),
+                    'created_by' => Auth::user()->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ];
+                $storeOnFormPenghapusan = formPenghapusanService::store($data);
 
-                $changeStoreOnUsersTable = userService::update($change, $request->user_id);
+                $logForm = [
+                    'nik' => Auth::user()->username,
+                    'nama' => Auth::user()->name,
+                    'aplikasi_id' => $aplikasi_id,
+                    'proses' =>'penghapusan',
+                    'id_toko' =>  $request->store_id_asal,
+                    'alasan' => 'Pemindahan',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+                $storelog = formLogService::store($logForm);
 
-                DB::commit();
+                $index++;
+            }
 
-                Alert::success('succes', 'form berhasil disimpan');
-                return redirect()->route('form-pemindahan.index');
-                }catch (\Throwable $th){
-                    dd($th);
-                    Alert::error('Error!!',);
-                    return redirect()->route('form-pemindahan.index');
-                }
+            $change = ['status_pembuatan' => '1', 'status_penghapusan' => '1'];
+            $update = userService::update($change, Auth::user()->id);
+
+            DB::commit();
+
+            Alert::success('succes', 'form berhasil disimpan');
+            return redirect()->route('form-pemindahan.index');
+        }catch (\Throwable $th){
+            dd($th);
+            Alert::error('Error!!',);
+            return redirect()->route('form-pemindahan.index');
+        }
     }
 }

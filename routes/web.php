@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 // user Register
-Route::get('/user', 'registerController@create')->name('user.create');
-Route::post('/user', 'registerController@store')->name('user.store');
+// Route::get('/user', 'firstSyncController@create')->name('user.create');
+// Route::post('/user/sync', 'firstSyncController@sync')->name('user.sync');
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -29,11 +29,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
     Route::group(['middleware' => 'permission:form-pembuatan'], function (){
-        Route::get('/form-pembuatan', 'formPembuatanController@index')->name('form-pembuatan.index');
-        Route::get('/form-pembuatan/create', 'formPembuatanController@create')->name('form-pembuatan.create');
-        Route::get('/form-pembuatan/detail/{id}', 'formPembuatanController@detail')->name('form-pembuatan.detail');
-        Route::post('/form-pembuatan/create', 'formPembuatanController@store')->name('form-pembuatan.store');
-        Route::get('/form-pembuatan/status/{id}', 'formPembuatanController@status')->name('form-pembuatan.status');
+        Route::group(['prefix' => 'form-pembuatan'], function(){
+            Route::get('/form-pembuatan', 'formPembuatanController@index')->name('form-pembuatan.index');
+            Route::get('/form-pembuatan/create', 'formPembuatanController@create')->name('form-pembuatan.create');
+            Route::get('/form-pembuatan/detail/{id}', 'formPembuatanController@detail')->name('form-pembuatan.detail');
+            Route::post('/form-pembuatan/create', 'formPembuatanController@store')->name('form-pembuatan.store');
+            Route::get('/form-pembuatan/status/{id}', 'formPembuatanController@status')->name('form-pembuatan.status');
+        });
     });
 
     Route::group(['middleware' => 'permission:form-penghapusan'], function (){

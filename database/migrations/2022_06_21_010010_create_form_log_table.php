@@ -18,9 +18,9 @@ class CreateFormLogTable extends Migration
             $table->integer('nik');
             $table->string('nama');
             $table->integer('aplikasi_id');
-            $table->integer('proses');
+            $table->string('proses');
             $table->integer('id_toko');
-            $table->text('alasan');
+            $table->string('alasan')->nullable();
             $table->timestamps();
         });
     }

@@ -41,6 +41,7 @@ class formPenghapusanService
             'form_penghapusan.role_last_app',
             'form_penghapusan.created_by',
             'form_penghapusan.created_at',
+            'form_penghapusan.status',
             'stores.id as store_id',
             'stores.name as nama_store',
             'users.name as name',
@@ -71,13 +72,13 @@ class formPenghapusanService
     public function getApproveFilter($roleId){
         return $this->getDetail()
         ->where('role_next_app', $roleId)
-        ->where('status', config('setting_app.status_approval.approve'));
+        ->where('form_penghapusan.status', config('setting_app.status_approval.approve'));
     }
 
     public function getApproveFilterByStore($roleId, $store){
         return $this->getDetail()
         ->where('role_next_app', $roleId)
-        ->where('status', config('setting_app.status_approval.panding'))
+        ->where('form_penghapusan.status', config('setting_app.status_approval.panding'))
         ->whereIn('store', $store);
     }
 

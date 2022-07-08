@@ -58,14 +58,13 @@
 
         {{-- Login field --}}
         <div class="row">
-            <div class="col-7">
-                {{-- <div class="icheck-primary">
-                    <input type="checkbox" name="remember" id="remember">
-                    <label for="remember">{{ __('adminlte::adminlte.remember_me') }}</label>
-                </div> --}}
+            <div class="col-6">
+                <button type=submit class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-info') }}" name="sync">
+                    <span class="fas fa-sign-in-alt"></span> Sync
+                </button>
             </div>
-            <div class="col-5">
-                <button type=submit class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-info') }}">
+            <div class="col-6">
+                <button type=submit class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-info') }}" name="sign_in">
                     <span class="fas fa-sign-in-alt"></span>
                     {{ __('adminlte::adminlte.sign_in') }}
                 </button>
@@ -76,20 +75,5 @@
 @stop
 
 @section('auth_footer')
-    {{-- Password reset link --}}
-    {{-- @if($password_reset_url)
-        <p class="my-0">
-            <a href="{{ $password_reset_url }}">
-                {{ __('adminlte::adminlte.i_forgot_my_password') }}
-            </a>
-        </p>
-    @endif --}}
-
-    {{-- Register link --}}
-        <p class="my-0">
-            <a href="{{ route ('user.create')}}">
-                {{ __('Register') }}
-            </a>
-        </p>
 
 @stop

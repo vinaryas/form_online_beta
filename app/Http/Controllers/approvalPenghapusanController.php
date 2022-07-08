@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Services\Support\approvalPenghapusanService;
 use App\Services\Support\first_time_syncService;
 use App\Services\Support\formPenghapusanService;
-use App\Services\Support\logFormPenghapusanService;
 use App\Services\Support\rj_serverService;
 use App\Services\Support\userService;
 use Carbon\Carbon;
@@ -68,27 +67,18 @@ class approvalPenghapusanController extends Controller
 
                         $cashnum = substr($rjServer->username, 3);
 
-                        $dataPos = [
-                            'status' => 'I',
-                        ];
-
+                        $dataPos = ['status' => 'I',];
                         $storeOnFormOnline = rj_serverService::update($dataPos, $cashnum, $request->store_id);
 
-                        $first_sync = [
-                            'status' => config('setting_app.status_sync.need_sync')
-                        ];
-
+                        $first_sync = ['status' => config('setting_app.status_sync.need_sync')];
                         $storeOnFormOnline = first_time_syncService::update($first_sync, $request->store_id);
-
                     }
                 }
-
                 $dataUpdate = [
                     'role_last_app' => Auth::user()->role_id,
                     'role_next_app' => $nextApp,
                     'status'=> config('setting_app.status_approval.approve'),
                 ];
-
                 $updateStatus = formPenghapusanService::update($dataUpdate, $storeApprove->form_penghapusan_id);
 
                 DB::commit();
@@ -113,7 +103,6 @@ class approvalPenghapusanController extends Controller
                     'approver_region_id'=> Auth::user()->region_id,
                     'status' => 'Disapproved'
                 ];
-
                 $storeApprove = approvalpenghapusanService::store($data);
 
                 $dataUpdate = [
@@ -121,7 +110,6 @@ class approvalPenghapusanController extends Controller
                     'role_next_app' => 0,
                     'status'=> config('setting_app.status_approval.disapprove'),
                 ];
-
                 $updateStatus = formPenghapusanService::update($dataUpdate, $storeApprove->form_penghapusan_id);
 
                 DB::commit();

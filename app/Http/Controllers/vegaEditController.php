@@ -28,7 +28,7 @@ class vegaEditController extends Controller
         {
             try{
                 $data = [
-                    'id_vega' => $request->id_vega,
+                    'user_id' => $request->user_id,
                     'pass' => $request->pass,
                 ];
 

@@ -10,15 +10,14 @@
 <form class="card" action="{{route('management.update')}}" method="POST">
     {{ csrf_field() }}
     <div class="card-header">
-        <input type="hidden" value="{{ $user->id }}" name="user_id" id="user_id">
         <div class="row">
             <div class="col-lg-6 col-6">
                 <label> Name </label>
-                <input type="text" value="{{ $user->name }}" id="name"name="name" class="form-control">
+                <input type="text" value="{{ $users->name }}" id="name"name="name" class="form-control">
             </div>
             <div class="col-lg-6 col-6">
                 <label>NIK</label>
-                <input type="text" value="{{ $user->username }}" id="username"name="username" class="form-control ">
+                <input type="text" value="{{ $users->id }}" id="username"name="username" class="form-control ">
             </div>
             <div class="col-lg-12 col-12">
                 <label>Region</label>

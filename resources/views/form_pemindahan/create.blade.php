@@ -58,7 +58,7 @@
                     </div>
                     @if ($detail->aplikasi_id == config('setting_app.aplikasi_id.vega'))
                         <div class="col-md-10">
-                            <input type="hidden" class="form-control form-group" name="id_vega[]" id="id_vega"  value="{{ $detail->id_vega }}">
+                            <input type="hidden" class="form-control form-group" name="id_app[]" id="id_app"  value="{{ $detail->id_app }}">
                             <input type="hidden" class="form-control form-group" name="pass[]" id="pass" value="{{ $detail->pass }}">
                         </div>
                     @elseif ($detail->aplikasi_id == config('setting_app.aplikasi_id.rjserver'))
@@ -68,7 +68,7 @@
                     @endif
                         <tr>
                             <td>{{ $detail->aplikasi}}</td>
-                            <td>{{ $detail->id_vega }}</td>
+                            <td>{{ $detail->id_app }}</td>
                             <td>{{ $detail->pass }}</td>
                             <td>{{ $detail->nama_store }}</td>
                         </tr>

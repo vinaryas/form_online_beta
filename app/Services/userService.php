@@ -104,12 +104,6 @@ class userService
         return $data;
     }
 
-    public function getUserStore($userStore){
-        return $this->getDetail()
-        ->where('users.role_id', config('setting_app.role_id.kasir'))
-        ->where('users.store_id', $userStore);
-    }
-
     public function getById($userId){
         return $this->getDetail()->where('users.id', $userId);
     }

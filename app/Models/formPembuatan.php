@@ -17,7 +17,7 @@ class formPembuatan extends Model
         'status',
         'created_by',
         'type',
-        'id_vega'
+        'user_id'
     ];
 
     public function form_head(){
