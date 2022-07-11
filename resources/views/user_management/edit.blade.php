@@ -23,7 +23,7 @@
                 <label>Region</label>
                 <select name="region_id" id="region_id" class="select2 form-control">
                     @foreach ($regions as $region)
-                    <option value="{{ $region->id }}"  {{$user->region_id == $region->id ? 'selected' : '' }}  >{{ $region->name }}</option>
+                    <option value="{{ $region->id }}"  {{$users->region_id == $region->id ? 'selected' : '' }}  >{{ $region->name }}</option>
                     @endforeach
                 </select>
             </div>

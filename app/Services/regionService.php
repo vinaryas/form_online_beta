@@ -18,4 +18,8 @@ class regionService
 		return $this->region->query();
 	}
 
+    public function store($data){
+        return $this->region->create($data);
+    }
+
 }

@@ -1,25 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\FirstSync;
 
+use App\Http\Controllers\Controller;
 use App\Services\Support\userService;
 use GuzzleHttp\Client;
+use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class firstSyncController extends Controller
+class adminSyncController extends Controller
 {
-    public function create(){
-        $client = new Client();
-        $url = 'http://127.0.0.1:8000/api/user/';
-        $response = $client->request('GET', $url,  [
-            'headers' => [
-                'Accept' => 'application/json',
-                'Content-Type' => 'application/json',
-            ],
-        ]);
-        $arrays= json_decode($response->getBody(), true);
-
-        return view('register.register', compact('arrays'));
+    public function index(){
+        return view('firstTimeSync.adminSync');
     }
 
     public function sync(){
@@ -49,12 +41,11 @@ class firstSyncController extends Controller
             }
 
             Alert::success('Berhasil','Store berhasil di download dari server');
-            return redirect()->route('login');
+            return redirect()->route('roleSync');
         }catch(\Throwable $th){
             dd($th);
             Alert::error('Error !!!');
-            return redirect()->route('login');
+            return redirect()->route('roleSync');
         }
     }
 }
-

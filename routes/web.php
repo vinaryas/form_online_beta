@@ -15,9 +15,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/sync1adm1n', 'FirstSync\adminSyncController@index')->name('adminSync');
+Route::post('/sync1adm1n/sync1', 'FirstSync\adminSyncController@sync')->name('adminSync.sync');
+
+Route::get('/sync2140l3', 'FirstSync\roleSyncController@index')->name('roleSync');
+Route::post('/sync2140l3/sync3', 'FirstSync\roleSyncController@sync')->name('roleSync.sync');
+
+Route::get('/sync3140l3u5314', 'FirstSync\roleUserSyncController@index')->name('roleUserSync');
+Route::post('/sync3140l3u5314/sync3', 'FirstSync\roleUserSyncController@sync')->name('roleUserSync.sync');
+
+Route::get('/sync4Perm15510n', 'FirstSync\permissionSyncController@index')->name('permissionSync');
+Route::post('/sync4Perm15510n/sync2', 'FirstSync\permissionSyncController@sync')->name('permissionSync.sync');
+
+Route::get('/sync5Perm15510n140l3', 'FirstSync\permissionRoleSyncController@index')->name('permissionRoleSync');
+Route::post('/sync5Perm15510n140l3/sync4', 'FirstSync\permissionRoleSyncController@sync')->name('permissionRoleSync.sync');
+
+Route::get('/sync4143910n', 'FirstSync\regionSyncController@index')->name('regionSync');
+Route::post('/sync4143910n/sync5', 'FirstSync\regionSyncController@sync')->name('regionSync.sync');
+
+Route::get('/sync55t0143', 'FirstSync\storeSyncController@index')->name('storeSync');
+Route::post('/sync55t0143/sync5', 'FirstSync\storeSyncController@sync')->name('storeSync.sync');
+
+
 // user Register
-// Route::get('/user', 'firstSyncController@create')->name('user.create');
-// Route::post('/user/sync', 'firstSyncController@sync')->name('user.sync');
+Route::get('/user', 'registerController@create')->name('user.create');
+Route::post('/user/store', 'registerController@store')->name('user.store');
 
 Route::get('/', function () {
     return redirect()->route('login');

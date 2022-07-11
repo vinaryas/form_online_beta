@@ -11,16 +11,16 @@ use RealRashid\SweetAlert\Facades\Alert;
 class UserController extends Controller
 {
     public function index(){
-        $user = userService::getDetail()->get();
+        $users = userService::getDetail()->get();
 
-        return view('user_management.index', compact('user'));
+        return view('user_management.index', compact('users'));
     }
 
     public function edit($id){
-        $user = userService::finId($id)->first();
+        $users = userService::finId($id)->first();
         $regions = regionService::all()->get();
 
-        return view('user_management.edit', compact('user', 'regions'));
+        return view('user_management.edit', compact('users', 'regions'));
     }
 
     public function update(Request $request){

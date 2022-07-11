@@ -7,37 +7,34 @@
 @stop
 
 @section('content')
-<div class="card" >
-    <form action="{{ route('api_user.download') }}" method="POST">
-        {{ csrf_field() }}
-        <div class="card-body">
-            <div class="float-right">
-                <button type="submit" class="btn btn-success">
-                    <i class="fas fa-save"></i> Simpan
-                </button>
-            </div>
-            <table class="table table-bordered table-striped" id="table" style="width: 100%;">
-                <thead>
+<div class="card" method="GET">
+    {{ csrf_field() }}
+     <div class="card-body">
+        <table class="table table-bordered table-striped" id="table" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>Waktu Pembuatan</th>
+                    <th>Name</th>
+                    <th>NIK</th>
+                    <th>Region</th>
+                    <th>Detail</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($user as $detail)
                     <tr>
-                        <th>Name</th>
-                        <th>NIK</th>
-                        <th>Region</th>
-                        <th>Role</th>
+                        <td>{{ $detail->created_at }}</td>
+                        <td>{{ $detail->name }}</td>
+                        <td>{{ $detail->username }}</td>
+                        <td>{{ $detail->region_name }}</td>
+                        <td> <a href="{{ route('management.edit', $detail->user_id) }}"
+                            class="btn btn-info btn-sm"> Edit <i class="fas fa-angle-right"> </i></a>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach ($users['data'] as $detail)
-                        <tr>
-                            <td>{{ $detail['name'] }}</td>
-                            <td>{{ $detail['id'] }}</td>
-                            <td>{{ $detail['region_id'] }}</td>
-                            <td>{{ $detail['role_id'] }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </form>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </div>
 
 @stop
@@ -50,3 +47,4 @@
         });
     </script>
 @stop
+

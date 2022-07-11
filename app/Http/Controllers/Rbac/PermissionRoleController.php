@@ -4,63 +4,34 @@ namespace App\Http\Controllers\Rbac;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Services\Rbac\PermissionService as PermissionService;
-use App;
-use App\Helper\MyHelper;
+use App\Services\Support\PermissionRoleService;
+use App\Services\Support\PermissionService;
+use App\Services\Support\RoleService;
 use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\Facades\DataTables;
+
 
 class PermissionRoleController extends Controller
 {
-    public function dt($role_id)
-    {
-        $permissions = App\PermissionRole::getPermissionRole($role_id);
+    public function index(){
+        $permissions = PermissionService::all()->get();
+        $roles = RoleService::all()->get();
 
-        return DataTables::of($permissions)
-                ->addColumn('action', function ($permissions) {
-
-                    $checked = (!empty($permissions->role_id)) ? 'checked' : '';
-
-                    return '
-                    <input type="checkbox" class="cb_permission" value="' . $permissions->id . '" name="cb_permission[]" '. $checked .'>
-                    ';
-
-                })->make(true);
+        return view('permission_role.index', compact('permissions', 'roles'));
     }
 
-    public function update(Request $request)
-    {
-
-        try {
-            DB::beginTransaction();
-
-            $role = App\Role::find($request->role_id);
-
-            $role->syncPermissions($request->permission_id);
-
+    public function store(Request $request){
+        DB::beginTransaction();
+        try{
+            $data = [
+                'name'=>$request->name,
+                'display_name'=>$request->display_name,
+                'description'=>$request->description,
+            ];
+            $store = PermissionRoleService::store($data);
             DB::commit();
-
-            $output = [
-                'icon' => 'success',
-                'text' => "Permission updated succesfully",
-            ];
-
-        } catch (\Throwable $th) {
-            DB::rollback();
-
-            $output = [
-                'icon' => 'error',
-                'text' => $th->getMessage(),
-            ];
+            return redirect()->route('permissionRole.index');
+        }catch(\Throwable $th){
+            dd($th);
         }
-
-        return MyHelper::toastNotification($output);
-    }
-
-    public function list($role_id)
-    {
-
-        return view('rbac.role.tree_permission', compact('role_id'));
-
     }
 }

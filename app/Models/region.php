@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class region extends Model
 {
     protected $table = 'regions';
-    protected $guarded = ['name'];
+    protected $guarded = [];
 }

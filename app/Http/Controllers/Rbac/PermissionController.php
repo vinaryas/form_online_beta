@@ -8,56 +8,34 @@ use App;
 use Alert;
 
 use App\Helper\MyHelper;
+use App\Services\Support\PermissionService;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
 class PermissionController extends Controller
 {
-    public function index()
-    {
-        return view('rbac.permission.index');
+    public function index(){
+        $parents = PermissionService::all()->get();
+
+        return view('permission.index', compact('parents'));
     }
 
-
-    public function dt()
-    {
-        $permissions = App\Permission::all();
-
-        return DataTables::of($permissions)
-                ->addColumn('action', function ($permissions) {
-                    return '
-                    <a href="#" style="padding-left:10px;" class="" data-toggle="tooltip" data-placement="top" title="Edit data"><i class="fa fa-edit fa-lg"></i></a>
-                    ';
-                })->make(true);
-
-    }
-
-    public function store(Request $request)
-    {
-        // App\Permission::create([
-        //     'name' => 'create-post',
-        //     'display_name' => 'Create Posts',
-        //     'description' => 'Create new blog posts'
-        // ]);
-
-        // $user = App\User::find(1);
-        // $role = App\Role::find(1);
-
-        // $user->attachRole($role);
-
-        try {
-        //    $permission = App\Permission::create($request->except('_token', '_method'));
-
-            $output = [
-                'text' => 'sukses',
+    public function store(Request $request){
+        DB::beginTransaction();
+        try{
+            $data = [
+                'parent_id'=>$request->parent_id,
+                'name'=>$request->name,
+                'display_name'=>$request->display_name,
+                'description'=>$request->description,
             ];
-        } catch (\Throwable $th) {
-            $output = [
-                'text' => $th->getMessage(),
-            ];
+            $store = PermissionService::store($data);
+            DB::commit();
+            return redirect()->route('permission.index');
+        }catch(\Throwable $th){
+            dd($th);
         }
-
-        return MyHelper::toastNotification(['text' => 'Sukses']);
-
-        // return redirect()->route('permission.index');
     }
+
+
 }
