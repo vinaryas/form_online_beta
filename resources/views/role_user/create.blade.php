@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-<form class="card" action="{{route('role.update')}}" method="POST">
+<form class="card" action="{{route('role_user.update')}}" method="POST">
     {{ csrf_field() }}
     <div class="card-body">
         <input type="hidden" value="{{ $user->id }}" name="user_id" id="user_id">
@@ -35,7 +35,7 @@
         </div>
     </div>
     <div class="card-footer">
-    <a href="{{ route('role.index') }}" class="btn btn-info"><i class="fas fa-angle-left"></i> Kembali </a>
+    <a href="{{ route('role_user.index') }}" class="btn btn-info"><i class="fas fa-angle-left"></i> Kembali </a>
         <div class="float-right">
             <button type="submit" class="btn btn-danger" name="delete" id="delete">
                 <i class="fas fa-trash"></i> Delete Role

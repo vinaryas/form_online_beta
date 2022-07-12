@@ -89,26 +89,26 @@ class AppServiceProvider extends ServiceProvider
             ]);
 
             $event->menu->add([
-                'text' => 'User',
+                'text' => 'Auth',
                 'icon' => 'fas fa-users',
                 'permission' => 'auth',
                 'submenu' => [
                     [
-                        'text' => 'Management',
+                        'text' => 'User Management',
                         'url' => route('management.index'),
                         'icon' => '	fas fa-user-edit',
                         'active' => ['management*'],
                         'permission' => 'auth'
                     ],
                     [
-                        'text' => 'Role',
-                        'url' => route('role.index'),
+                        'text' => 'Role User',
+                        'url' => route('role_user.index'),
                         'icon' => 'fas fa-user-shield',
-                        'active' => ['role*'],
+                        'active' => ['role_user*'],
                         'permission' => 'auth'
                     ],
                     [
-                        'text' => 'Store',
+                        'text' => 'Store User',
                         'url' => route('store.index'),
                         'icon' => 'fas fa-house-user',
                         'active' => ['store*'],
@@ -119,6 +119,35 @@ class AppServiceProvider extends ServiceProvider
                         'url' => route('back_register.index'),
                         'icon' => 'fas fa-user',
                         'active' => ['register*'],
+                        'permission' => 'auth'
+                    ],
+                ],
+            ]);
+
+            $event->menu->add([
+                'text' => 'RBAC',
+                'icon' => 'fas fa-users',
+                'permission' => 'auth',
+                'submenu' => [
+                    [
+                        'text' => 'Role',
+                        'url' => route('role.index'),
+                        'icon' => '	fas fa-user-edit',
+                        'active' => ['role.index'],
+                        'permission' => 'auth'
+                    ],
+                    [
+                        'text' => 'Permission',
+                        'url' => route('permission.index'),
+                        'icon' => 'fas fa-user-shield',
+                        'active' => ['permission.index*'],
+                        'permission' => 'auth'
+                    ],
+                    [
+                        'text' => 'Permission Role',
+                        'url' => route('permission_role.index'),
+                        'icon' => 'fas fa-house-user',
+                        'active' => ['permission_role.index'],
                         'permission' => 'auth'
                     ],
                 ],

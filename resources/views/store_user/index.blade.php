@@ -25,7 +25,7 @@
                 @foreach ($user as $detail)
                     <tr>
                         <td>{{ $detail->username }}</td>
-                        <td>{{ $detail->name}}</td>
+                        <td>{{ $detail->user_name}}</td>
                         <td>{{ $detail->region_name }}</td>
                         <td>{{ $detail->display_name }}
                         <td> <a href="{{ route('store.detail', $detail->user_id) }}" class="btn btn-info btn-sm"> Detail <i class="fas fa-angle-right"></i>  </a> </td>

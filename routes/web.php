@@ -118,13 +118,13 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/management/update', 'UserController@update')->name('management.update');
         });
 
-        Route::group(['prefix' => 'role'], function (){
-            Route::get('/role/index', 'roleApprovalController@index')->name('role.index');
-            Route::get('/role/{id}', 'roleApprovalController@create')->name('role.create');
-            Route::post('/role/store', 'roleApprovalController@update')->name('role.update');
+        Route::group(['prefix' => 'role_user'], function (){
+            Route::get('/role/index', 'roleApprovalController@index')->name('role_user.index');
+            Route::get('/role/{id}', 'roleApprovalController@create')->name('role_user.create');
+            Route::post('/role/store', 'roleApprovalController@update')->name('role_user.update');
         });
 
-        Route::group(['prefix' => 'store'], function (){
+        Route::group(['prefix' => 'store_user'], function (){
             Route::get('/index', 'storeApprovalController@index')->name('store.index');
             Route::get('/select/{id}', 'storeApprovalController@create')->name('store.create');
             Route::post('/', 'storeApprovalController@store')->name('store.store');
@@ -132,5 +132,15 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/detail/delete/{id}', 'storeApprovalController@detailDeleteById')->name('store.deleteDetail');
             Route::post('/delete', 'storeApprovalController@delete')->name('store.delete');
         });
+
+        Route::get('/role', 'Rbac\RoleController@index')->name('role.index');
+        Route::post('/role/store', 'Rbac\RoleController@store')->name('role.store');
+
+        Route::get('/permission', 'Rbac\PermissionController@index')->name('permission.index');
+        Route::post('/permission/store', 'Rbac\PermissionController@store')->name('permission.store');
+
+        Route::get('/permission_role', 'Rbac\PermissionRoleController@index')->name('permission_role.index');
+        Route::post('/permission_role/store', 'Rbac\PermissionRoleController@store')->name('permission_role.store');
+
     });
 });

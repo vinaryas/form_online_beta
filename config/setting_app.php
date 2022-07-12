@@ -9,11 +9,11 @@ return [
     ],
     'role_id' => [
         'finish' => 0,
-        'kasir' => 1,
-        'it' => 2,
-        'aux' => 3,
-        'admin' => 4,
-        'bo' => 5,
+        'kasir' => 3,
+        'it' => 5,
+        'aux' => 2,
+        'admin' => 1,
+        'bo' => 4,
     ],
     'status_approval' => [
         'panding' => 0,

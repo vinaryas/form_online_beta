@@ -29,8 +29,5 @@ class RoleController extends Controller
         }catch(\Throwable $th){
             dd($th);
         }
-
     }
-
-
 }

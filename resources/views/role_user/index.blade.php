@@ -7,7 +7,7 @@
 @stop
 
 @section('content')
-<form class="card" action="{{ route('role.index') }}" method="GET">
+<form class="card" action="{{ route('role_user.index') }}" method="GET">
     {{ csrf_field() }}
     <div class="card-body">
         <br>
@@ -27,10 +27,10 @@
                     <tr>
                         <td>{{ $detail->created_at }}</td>
                         <td>{{ $detail->username }}</td>
-                        <td>{{ $detail->name}}</td>
+                        <td>{{ $detail->user_name}}</td>
                         <td>{{ $detail->region_name }}</td>
                         <td>{{ $detail->display_name }}</td>
-                        <td> <a href="{{ route('role.create', $detail->user_id) }}" class="btn btn-info btn-sm"> Select Role <i class="fas fa-angle-right"></i>  </a> </td>
+                        <td> <a href="{{ route('role_user.create', $detail->user_id) }}" class="btn btn-info btn-sm"> Select Role <i class="fas fa-angle-right"></i>  </a> </td>
                     </tr>
                 @endforeach
             </tbody>

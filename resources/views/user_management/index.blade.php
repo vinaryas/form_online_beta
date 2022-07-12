@@ -21,10 +21,10 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($user as $detail)
+                @foreach ($users as $detail)
                     <tr>
                         <td>{{ $detail->created_at }}</td>
-                        <td>{{ $detail->name }}</td>
+                        <td>{{ $detail->user_name }}</td>
                         <td>{{ $detail->username }}</td>
                         <td>{{ $detail->region_name }}</td>
                         <td> <a href="{{ route('management.edit', $detail->user_id) }}"

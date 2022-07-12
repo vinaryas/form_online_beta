@@ -36,6 +36,4 @@ class PermissionController extends Controller
             dd($th);
         }
     }
-
-
 }

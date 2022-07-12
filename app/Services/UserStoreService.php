@@ -38,6 +38,7 @@ class UserStoreService
             'users.id as user_id',
             'users.name as user_name',
             'users.role_id as role_id',
+            'users.username as username',
             'user_store.id as id',
             'stores.id as store_id',
             'stores.name as store_name'

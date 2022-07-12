@@ -32,7 +32,6 @@
                 <tr>
                     <th> Nama </th>
                     <th >NIK</th>
-                    <th> Region </th>
                     <th> Store </th>
                     <th> Ajukan Penghapusan </th>
                 </tr>
@@ -40,10 +39,9 @@
             <tbody>
                 @foreach ($form as $detail)
                     <tr>
-                        <td>{{ $detail->name }}</td>
+                        <td>{{ $detail->user_name }}</td>
                         <td>{{ $detail->username }}</td>
-                        <td>{{ $detail->region_name }}</td>
-                        <td>{{ $detail->store }}</td>
+                        <td>{{ $detail->store_name }}</td>
                         <td> <a href="{{ route('form-penghapusan.create', $detail->user_id) }}" class="btn btn-info">
                             <i class="fas fa-file"></i> Buat Form </a>
                         </td>

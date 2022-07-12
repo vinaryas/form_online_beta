@@ -81,6 +81,9 @@ class approvalPenghapusanController extends Controller
                 ];
                 $updateStatus = formPenghapusanService::update($dataUpdate, $storeApprove->form_penghapusan_id);
 
+                $userUpdate = ['status_penghapusan'=> 0];
+                $statusUser = userService::update($userUpdate, $request->user_id);
+
                 DB::commit();
 
                 Alert::success('Approved', 'form has been approved');
@@ -111,6 +114,9 @@ class approvalPenghapusanController extends Controller
                     'status'=> config('setting_app.status_approval.disapprove'),
                 ];
                 $updateStatus = formPenghapusanService::update($dataUpdate, $storeApprove->form_penghapusan_id);
+
+                $userUpdate = ['status_penghapusan'=> 0];
+                $statusUser = userService::update($userUpdate, $request->user_id);
 
                 DB::commit();
 

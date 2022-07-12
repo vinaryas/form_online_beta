@@ -15,21 +15,21 @@ class PermissionRoleController extends Controller
     public function index(){
         $permissions = PermissionService::all()->get();
         $roles = RoleService::all()->get();
+        $permissionRoles = PermissionRoleService::getDetail()->get();
 
-        return view('permission_role.index', compact('permissions', 'roles'));
+        return view('permission_role.index', compact('permissions', 'roles', 'permissionRoles'));
     }
 
     public function store(Request $request){
         DB::beginTransaction();
         try{
             $data = [
-                'name'=>$request->name,
-                'display_name'=>$request->display_name,
-                'description'=>$request->description,
+                'permission_id'=>$request->permission_id,
+                'role_id'=>$request->role_id,
             ];
             $store = PermissionRoleService::store($data);
             DB::commit();
-            return redirect()->route('permissionRole.index');
+            return redirect()->route('permission_role.index');
         }catch(\Throwable $th){
             dd($th);
         }

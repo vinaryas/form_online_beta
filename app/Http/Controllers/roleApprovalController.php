@@ -33,7 +33,7 @@ class roleApprovalController extends Controller
         if(isset($_POST["save"]))
         {
             try{
-                if($request->role_id == 2 || $request->role_id == 0){
+                if($request->role_id == config('setting_app.role_id.kasir') || $request->role_id == config('setting_app.role_id.aux')){
                     $data =[
                         'role_id' =>$request->role_id,
                         'all_store' =>'n',
@@ -59,10 +59,10 @@ class roleApprovalController extends Controller
                 DB::commit();
 
                 Alert::success('Success', 'role change');
-                return redirect()->route('role.index');
+                return redirect()->route('role_user.index');
             }catch(\Throwable $th){
                 dd($th);
-                return redirect()->route('role.index');
+                return redirect()->route('role_user.index');
             }
         }elseif(isset($_POST["delete"])){
             try{
@@ -75,10 +75,10 @@ class roleApprovalController extends Controller
                 DB::commit();
 
                 Alert::warning('Deleted', 'role deleted');
-                return redirect()->route('role.index');
+                return redirect()->route('role_user.index');
             }catch(\Throwable $th){
                 dd($th);
-                return redirect()->route('role.index');
+                return redirect()->route('role_user.index');
             }
         }
     }
